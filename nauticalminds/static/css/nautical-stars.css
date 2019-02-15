@@ -21,6 +21,7 @@ iframe {
 
 
 body {
+  background: black;
   background-size: cover;
   background-repeat: repeat;
   background-image: url('../images/nautical-stars.png');
