@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
+app.db
 venv/
+app/static/music/
+app/static/node_modules/

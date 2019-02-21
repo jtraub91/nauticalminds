@@ -1,1 +1,1 @@
-# nautical-minds-prod
+# nauticalminds

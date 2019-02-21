@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+
+{% block navbar_content %}
+  <h1 style="position: relative; left: 50%; transform: translate(-50%);">
+    Nautical Admin
+  </h1>
+
+  <div class="link-nav d-flex flex-row justify-content-center align-items-center">
+    <a class="link mx-2 d-inline-flex" href="#">
+      <div class="my-auto" style="color: dodgerblue;">Post</div>
+    </a>
+    <a class="link mx-2 d-inline-flex" href="#">
+      <div class="my-auto" style="color: dodgerblue;">Manage</div>
+    </a>
+  </div>
+{% endblock navbar_content %}
+
+{% block content %}
+
+  <form action="/admin" method="post">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+      <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
+      <div>
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username">
+      </div>
+      <div>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password">
+      </div>
+      <button class="btn btn-outline-primary" type="submit">Submit</button>
+    </div>
+  </form>
+
+{% endblock content %}
