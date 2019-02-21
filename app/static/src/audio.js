@@ -1,4 +1,7 @@
-import WaveSurfer from '../node_modules/wavesurfer.js';
+import AudioBar from './components/AudioBar.jsx';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import WaveSurfer from 'wavesurfer.js';
 
 export default class MusicPlayer {
     constructor() {
@@ -11,6 +14,7 @@ export default class MusicPlayer {
             6: ["Off The Clock", "off_the_clock"]
         };
         this.surfer = null;
+        this.audioCtx = null;
         this.state = {
             "track_no": 1,
             "next_track_no": 2,
@@ -42,6 +46,7 @@ export default class MusicPlayer {
                 console.log("not true");
             }
         });
+        this.createAudioBar();
     }
 
     next () {
@@ -92,4 +97,9 @@ export default class MusicPlayer {
             "auto_play": true
         };
     }
+
+    createAudioBar() {
+        ReactDOM.render(<AudioBar audioCtx={this.surfer}/>, document.getElementById("react"));
+    }
+
 }
