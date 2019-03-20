@@ -10472,42 +10472,46 @@ return jQuery;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _misc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../misc */ "./src/misc.js");
-/* harmony import */ var _node_modules_jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var _node_modules_jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 
 
 var _csrf_token = document.getElementsByName("_csrf_token").valueOf()[0].value;
-_node_modules_jquery__WEBPACK_IMPORTED_MODULE_1___default.a.ajaxSetup({
+jquery__WEBPACK_IMPORTED_MODULE_1___default.a.ajaxSetup({
   beforeSend: function beforeSend(xhr, settings) {
     if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
       xhr.setRequestHeader("X-CSRFToken", _csrf_token);
     }
   }
 });
-_node_modules_jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_form").submit(function (e) {
+jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_form").submit(function (e) {
   var _this = this;
 
   e.preventDefault();
   var form = {
     email: this.email.value
   };
-  _node_modules_jquery__WEBPACK_IMPORTED_MODULE_1___default.a.ajax({
+  jquery__WEBPACK_IMPORTED_MODULE_1___default.a.ajax({
     type: "POST",
     url: "/",
     contentType: "application/json",
     data: JSON.stringify(form),
     dataType: "json",
     success: function success(response) {
+      var formContainer = document.getElementById("form_container");
       var alert = document.createElement("div");
       alert.id = "subscribe_alert";
-      alert.addEventListener('click', function () {
-        _this.removeChild(alert);
-      });
-      alert.className = "alert alert-primary text-center";
-      alert.innerHTML = response.return_message;
+      alert.className = "alert alert-primary text-center my-3";
+      alert.innerHTML = "Thanks for subscribing!";
       _this.email.value = "";
-
-      _this.appendChild(alert);
+      formContainer.appendChild(alert);
+      alert.addEventListener('click', function () {
+        formContainer.removeChild(alert);
+      });
+      setTimeout(function () {
+        //formContainer.removeChild(alert);
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_alert").fadeOut('fast');
+      }, 5000);
     },
     error: function error(e) {
       console.log("error");

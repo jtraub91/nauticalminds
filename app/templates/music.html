@@ -5,34 +5,48 @@
   <div class="container-fluid">
     <div class="m-5 d-flex flex-column">
 
-      <div class="w-100" id="gotta_let_you_know">
-        <h3>1. Gotta Let you Know</h3>
-      </div>
+      <div class="d-flex flex-column align-items-center justify-content-center" id="music_player">
 
-      <div class="w-100" id="aint_gotta_care">
-        <h3>2. Ain't Gotta Care</h3>
-      </div>
+        <h3><u>Track List</u></h3>
 
-      <div class="w-100" id="funk1">
-        <h3>3. Funk 1</h3>
-      </div>
+        <div class="d-flex flex-column align-items-center justify-content-center" id="gotta_let_you_know">
+          <h4>Gotta Let You Know</h4>
+          <audio src="../static/music/nautical_minds_ep/mp3/gotta_let_you_know.mp3"></audio>
+        </div>
 
-      <div class="w-100" id="spacy_stacy">
-        <h3>4. Spacy Stacy</h3>
-      </div>
+        <div class="d-flex flex-column align-items-center justify-content-center" id="aint_gotta_care">
+          <h4>Ain't Gotta Care</h4>
+          <audio src="../static/music/nautical_minds_ep/mp3/aint_gotta_care.mp3"></audio>
+        </div>
 
-      <div class="w-100" id="sidestreet_robbery">
-        <h3>5. Sidestreet Robbery</h3>
-      </div>
+        <div class="d-flex flex-column align-items-center justify-content-center" id="funk_1">
+          <h4>Funk 1</h4>
+          <audio src="../static/music/nautical_minds_ep/mp3/funk1.mp3"></audio>
+        </div>
 
-      <div class="w-100" id="off_the_clock">
-        <h3>6. Off The Clock</h3>
+        <div class="d-flex flex-column align-items-center justify-content-center" id="spacy_stacy">
+          <h4>Spacy Stacy</h4>
+          <audio src="../static/music/nautical_minds_ep/mp3/spacy_stacy.mp3"></audio>
+        </div>
+
+        <div class="d-flex flex-column align-items-center justify-content-center" id="sidestreet_robbery">
+          <h4>Side Street Robbery</h4>
+          <audio src="../static/music/nautical_minds_ep/mp3/sidestreet_robbery.mp3"></audio>
+        </div>
+
+        <div class="d-flex flex-column align-items-center justify-content-center" id="off_the_clock">
+          <h4>Off The Clock</h4>
+          <audio src="../static/music/nautical_minds_ep/mp3/off_the_clock.mp3"></audio>
+        </div>
+
       </div>
 
     </div>
   </div>
 
-  <div id="react"></div>
+{#  <div id="audio_bar">#}
+{#    <!-- React Component -->#}
+{#  </div>#}
 {% endblock content %}
 
 {% block script %}

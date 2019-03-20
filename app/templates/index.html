@@ -51,14 +51,16 @@
                   allowfullscreen></iframe>
         </div>
 
-        <form class="form-inline" id="subscribe_form">
-          <div class="d-inline-flex">
-            <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
-            <label class="my-auto mx-3" for="email">Join our mailing list: </label>
-            <input class="my-auto mx-1" type="email" name="email" id="email" placeholder="Email">
-            <button class="btn btn-sm btn-outline-primary mx-3" type="submit">Submit</button>
-          </div>
-        </form>
+        <div class="d-flex flex-column justify-content-center align-items-center" id="form_container">
+          <form class="form-inline" id="subscribe_form">
+            <div class="d-inline-flex">
+              <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
+              <label class="my-auto mx-3" for="email">Join our mailing list: </label>
+              <input class="my-auto mx-1" type="email" name="email" id="email" placeholder="Email">
+              <button class="btn btn-sm btn-outline-primary mx-3" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
 
         <div id="test"></div>
 
@@ -85,6 +87,7 @@
         </div>
       </div>
 
+    <footer class="my-3 text-center">Nautical Minds &copy; 2019</footer>
     </div>
     {% endblock content %}
 
