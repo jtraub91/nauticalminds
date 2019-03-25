@@ -28,9 +28,9 @@ export default class Song extends React.Component{
                 top: "-18px",
             };
             if (this.props.isPlaying){
-                imgStyle = $.extend({}, {
-                    animation: "pulsing infinite 1s linear",
-                }, imgStyle);
+                // imgStyle = $.extend({}, {
+                //     animation: "pulsing infinite 1s linear",
+                // }, imgStyle);
             }
         } else {
             imgStyle = {
@@ -47,7 +47,7 @@ export default class Song extends React.Component{
                 <div className="d-flex h-100" style={{width: "25px"}}>
                     <i className={playButtonClass} onClick={this.onPlay}/>
                 </div>
-                <h4 className="my-auto mx-2" style={{display: "block", width: "auto"}}>
+                <h4 className="my-auto mx-2" style={{display: "block", width: "auto", whiteSpace: "nowrap"}}>
                     {this.props.songTitle}
                 </h4>
                 <div className="my-auto" style={{display: "inline-block", color: "gray", width: "25px", height: "auto"}}>

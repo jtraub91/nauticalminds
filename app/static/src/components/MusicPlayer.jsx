@@ -17,17 +17,6 @@ export default class MusicPlayer extends React.Component{
             isMuted: false,
             gain: 1,
         };
-        this.style = {
-            rocket: {
-                position: "relative",
-                display: "block",
-                margin: "auto",
-                height: "40px",
-                width: "auto",
-                transform: "translateY(-5px)",
-                top: 100 * (this.state.trackNo - 1) / 6,
-            },
-        };
 
         // assigned in componentDidMount
         this.audioElement = null;
@@ -131,6 +120,7 @@ export default class MusicPlayer extends React.Component{
     }
 
     next(){
+        console.log("next");
         this.audioElement.pause();
 
         let nextTrackNo = this.state.trackNo + 1;
@@ -145,9 +135,11 @@ export default class MusicPlayer extends React.Component{
     }
 
     moveRocket(trackNo){
+        console.log("moveRocket");
         let img = document.querySelector("#rocket");
         img.style.transition = "transform 1s ease 0.1s";
         img.style.transform = "translateY(" + ((trackNo - 1) * 35) + "px)";
+        console.log((trackNo - 1) * 35);
     }
 
     playPause(){
@@ -210,43 +202,16 @@ export default class MusicPlayer extends React.Component{
         });
     }
     volDown(){
-        let volNotification = document.createElement("div");
-        volNotification.style.position = "relative";
-        volNotification.style.top = "-50px";
-
         let step = 0.05;
         if (this.gainNode.gain.value > 0) {
             this.gainNode.gain.value = this.gainNode.gain.value - step;
         }
-
-        volNotification.innerHTML = "Volume: " + this.gainNode.gain.value * 100 + "%";
-
-        let navbar = document.getElementById("audioNavbar");
-        navbar.appendChild(volNotification)
-
-        setTimeout(()=>{
-            navbar.removeChild(volNotification);
-        }, 1000);
     }
     volUp(){
-        let volNotification = document.createElement("div");
-        volNotification.style.position = "relative";
-        volNotification.style.top = "-50px";
-
         let step = 0.05;
         if (this.gainNode.gain.value < 1) {
             this.gainNode.gain.value = this.gainNode.gain.value + step;
         }
-
-        volNotification.innerHTML = "Volume: " + this.gainNode.gain.value * 100 + "%";
-
-        let navbar = document.getElementById("audioNavbar");
-        navbar.appendChild(volNotification)
-
-        setTimeout(()=>{
-            navbar.removeChild(volNotification);
-        }, 1000);
-
     }
 
     setTrackNo(trackNo){
@@ -334,7 +299,7 @@ export default class MusicPlayer extends React.Component{
         return (
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <audio src={this.props.trackList[this.state.trackNo].url} autoPlay={this.state.autoPlay}/>
-                <h3><u>Track List</u></h3>
+                <h3 style={{whiteSpace: "nowrap"}}><u>Track List</u></h3>
                 <div className="d-flex flex-column">
                     <Song trackNo={1} songTitle={this.props.trackList[1].title}
                           isPlaying={this.state.trackNo === 1 && this.state.isPlaying}

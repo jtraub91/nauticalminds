@@ -42300,17 +42300,6 @@ function (_React$Component) {
       isPlaying: false,
       isMuted: false,
       gain: 1
-    };
-    _this.style = {
-      rocket: {
-        position: "relative",
-        display: "block",
-        margin: "auto",
-        height: "40px",
-        width: "auto",
-        transform: "translateY(-5px)",
-        top: 100 * (_this.state.trackNo - 1) / 6
-      }
     }; // assigned in componentDidMount
 
     _this.audioElement = null;
@@ -42424,6 +42413,7 @@ function (_React$Component) {
   }, {
     key: "next",
     value: function next() {
+      console.log("next");
       this.audioElement.pause();
       var nextTrackNo = this.state.trackNo + 1;
 
@@ -42439,9 +42429,11 @@ function (_React$Component) {
   }, {
     key: "moveRocket",
     value: function moveRocket(trackNo) {
+      console.log("moveRocket");
       var img = document.querySelector("#rocket");
       img.style.transition = "transform 1s ease 0.1s";
       img.style.transform = "translateY(" + (trackNo - 1) * 35 + "px)";
+      console.log((trackNo - 1) * 35);
     }
   }, {
     key: "playPause",
@@ -42512,40 +42504,20 @@ function (_React$Component) {
   }, {
     key: "volDown",
     value: function volDown() {
-      var volNotification = document.createElement("div");
-      volNotification.style.position = "relative";
-      volNotification.style.top = "-50px";
       var step = 0.05;
 
       if (this.gainNode.gain.value > 0) {
         this.gainNode.gain.value = this.gainNode.gain.value - step;
       }
-
-      volNotification.innerHTML = "Volume: " + this.gainNode.gain.value * 100 + "%";
-      var navbar = document.getElementById("audioNavbar");
-      navbar.appendChild(volNotification);
-      setTimeout(function () {
-        navbar.removeChild(volNotification);
-      }, 1000);
     }
   }, {
     key: "volUp",
     value: function volUp() {
-      var volNotification = document.createElement("div");
-      volNotification.style.position = "relative";
-      volNotification.style.top = "-50px";
       var step = 0.05;
 
       if (this.gainNode.gain.value < 1) {
         this.gainNode.gain.value = this.gainNode.gain.value + step;
       }
-
-      volNotification.innerHTML = "Volume: " + this.gainNode.gain.value * 100 + "%";
-      var navbar = document.getElementById("audioNavbar");
-      navbar.appendChild(volNotification);
-      setTimeout(function () {
-        navbar.removeChild(volNotification);
-      }, 1000);
     }
   }, {
     key: "setTrackNo",
@@ -42637,7 +42609,11 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("audio", {
         src: this.props.trackList[this.state.trackNo].url,
         autoPlay: this.state.autoPlay
-      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("u", null, "Track List")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", {
+        style: {
+          whiteSpace: "nowrap"
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("u", null, "Track List")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "d-flex flex-column"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Song_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
         trackNo: 1,
@@ -42816,10 +42792,9 @@ function (_React$Component) {
           top: "-18px"
         };
 
-        if (this.props.isPlaying) {
-          imgStyle = jquery__WEBPACK_IMPORTED_MODULE_1___default.a.extend({}, {
-            animation: "pulsing infinite 1s linear"
-          }, imgStyle);
+        if (this.props.isPlaying) {// imgStyle = $.extend({}, {
+          //     animation: "pulsing infinite 1s linear",
+          // }, imgStyle);
         }
       } else {
         imgStyle = {
@@ -42854,7 +42829,8 @@ function (_React$Component) {
         className: "my-auto mx-2",
         style: {
           display: "block",
-          width: "auto"
+          width: "auto",
+          whiteSpace: "nowrap"
         }
       }, this.props.songTitle), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "my-auto",
