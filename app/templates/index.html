@@ -10,30 +10,29 @@
 
     <!-- CSS files -->
     <link href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-          crossorigin="anonymous">
+    <link href="../static/style/fontawesome-free-5.8.1-web/css/all.min.css" rel="stylesheet">
     <link href="../static/css/nautical.css" rel="stylesheet">
   </head>
 
   <body>
+
     <nav class="navbar">
       {% block navbar_content %}
-      <h1 style="position: relative; left: 50%; transform: translate(-50%);">
+      <h1 style="position: relative; left: 50%; transform: translate(-50%); white-space: nowrap" id="header">
         <a href="/">Nautical Minds</a>
       </h1>
 
       <div class="link-nav d-flex flex-row justify-content-center align-items-center">
         <!-- link class is used in nautical.js -->
-        <a class="link mx-2 d-inline-flex" href="/about">
-          <div class="my-auto" style="color: dodgerblue;">About</div>
+        <a class="link my-auto mx-2 d-inline-flex" href="/about">
+          About
         </a>
-        <a class="link mx-2 d-inline-flex" href="/music">
-          <div class="my-auto" style="color: dodgerblue;">Music</div>
+        <a class="link my-auto mx-2 d-inline-flex" href="/music">
+          Music
         </a>
-        <a class="link mx-2 d-inline-flex" href="/store">
-          <div class="my-auto" style="color: dodgerblue;">Store</div>
-        </a>
+{#        <a class="link my-auto mx-2 d-inline-flex" href="/store">#}
+{#          Store#}
+{#        </a>#}
       </div>
       {% endblock navbar_content %}
     </nav>
@@ -51,18 +50,16 @@
                   allowfullscreen></iframe>
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center" id="form_container">
-          <form class="form-inline" id="subscribe_form">
-            <div class="d-inline-flex">
-              <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
-              <label class="my-auto mx-3" for="email">Join our mailing list: </label>
-              <input class="my-auto mx-1" type="email" name="email" id="email" placeholder="Email">
-              <button class="btn btn-sm btn-outline-primary mx-3" type="submit">Submit</button>
-            </div>
-          </form>
-        </div>
-
-        <div id="test"></div>
+{#        <div class="d-flex flex-column justify-content-center align-items-center" id="form_container">#}
+{#          <form class="form-inline" id="subscribe_form" action="/" method="post">#}
+{#            <div class="d-inline-flex">#}
+{#              <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">#}
+{#              <label class="my-auto mx-3" for="email">Be a nautical fan: </label>#}
+{#              <input class="my-auto mx-1" type="email" name="email" id="email" placeholder="Email">#}
+{#              <button class="btn btn-sm btn-outline-primary mx-3" type="submit">Submit</button>#}
+{#            </div>#}
+{#          </form>#}
+{#        </div>#}
 
         <img class="my-5" alt="image not found" src="../static/images/NauticalMinds.jpg" style="width: 350px; height: auto"/>
         <h2>
@@ -87,7 +84,7 @@
         </div>
       </div>
 
-    <footer class="my-3 text-center">Nautical Minds &copy; 2019</footer>
+    <footer class="my-5 text-center palatino">Nautical Minds, LLC &copy; 2019</footer>
     </div>
     {% endblock content %}
 

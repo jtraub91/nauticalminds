@@ -1,52 +1,60 @@
 {% extends "index.html" %}
 
+{% block navbar_content %}
+  <h1 style="position: relative; left: 50%; transform: translate(-50%); white-space: nowrap" id="header">
+    <a href="/">Nautical Minds</a>
+  </h1>
+
+  <div class="link-nav d-flex flex-row justify-content-center align-items-center">
+    <!-- link class is used in nautical.js -->
+    <a class="link my-auto mx-2 d-inline-flex" href="/about">
+      About
+    </a>
+    <a class="link link-active my-auto mx-2 d-inline-flex" href="/music">
+      Music
+    </a>
+{#        <a class="link my-auto mx-2 d-inline-flex" href="/store">#}
+{#          Store#}
+{#        </a>#}
+  </div>
+{% endblock navbar_content %}
+
 
 {% block content %}
   <div class="container-fluid">
-    <div class="m-5 d-flex flex-column">
+    <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
 
-      <div class="d-flex flex-column align-items-center justify-content-center" id="music_player">
-
+    <div id="music_player">
+      <div class="d-flex flex-column justify-content-center align-items-center">
         <h3><u>Track List</u></h3>
-
-        <div class="d-flex flex-column align-items-center justify-content-center" id="gotta_let_you_know">
+        <div id="gotta_let_you_know">
           <h4>Gotta Let You Know</h4>
           <audio src="../static/music/nautical_minds_ep/mp3/gotta_let_you_know.mp3"></audio>
         </div>
-
-        <div class="d-flex flex-column align-items-center justify-content-center" id="aint_gotta_care">
+        <div id="aint_gotta_care">
           <h4>Ain't Gotta Care</h4>
           <audio src="../static/music/nautical_minds_ep/mp3/aint_gotta_care.mp3"></audio>
         </div>
-
-        <div class="d-flex flex-column align-items-center justify-content-center" id="funk_1">
+        <div id="funk_1">
           <h4>Funk 1</h4>
           <audio src="../static/music/nautical_minds_ep/mp3/funk1.mp3"></audio>
         </div>
-
-        <div class="d-flex flex-column align-items-center justify-content-center" id="spacy_stacy">
+        <div id="spacy_stacy">
           <h4>Spacy Stacy</h4>
           <audio src="../static/music/nautical_minds_ep/mp3/spacy_stacy.mp3"></audio>
         </div>
-
-        <div class="d-flex flex-column align-items-center justify-content-center" id="sidestreet_robbery">
+        <div id="sidestreet_robbery">
           <h4>Side Street Robbery</h4>
           <audio src="../static/music/nautical_minds_ep/mp3/sidestreet_robbery.mp3"></audio>
         </div>
-
-        <div class="d-flex flex-column align-items-center justify-content-center" id="off_the_clock">
+        <div id="off_the_clock">
           <h4>Off The Clock</h4>
           <audio src="../static/music/nautical_minds_ep/mp3/off_the_clock.mp3"></audio>
         </div>
-
       </div>
-
     </div>
-  </div>
 
-{#  <div id="audio_bar">#}
-{#    <!-- React Component -->#}
-{#  </div>#}
+  </div>
 {% endblock content %}
 
 {% block script %}

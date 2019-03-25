@@ -1,10 +1,10 @@
+import 'jquery';
+import 'popper.js';
+import 'bootstrap';
+
 import '../misc';
-import '../components/AudioManager.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AudioBar from '../components/AudioBar.jsx';
-import Song from '../components/Song.jsx';
-import MusicPlayer from "../components/MusicPlayer";
-
+import MusicPlayer from "../components/MusicPlayer.jsx";
 
 ReactDOM.render(<MusicPlayer/>, document.getElementById("music_player"));

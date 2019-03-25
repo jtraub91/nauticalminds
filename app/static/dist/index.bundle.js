@@ -10476,14 +10476,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var _csrf_token = document.getElementsByName("_csrf_token").valueOf()[0].value;
-jquery__WEBPACK_IMPORTED_MODULE_1___default.a.ajaxSetup({
-  beforeSend: function beforeSend(xhr, settings) {
-    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-      xhr.setRequestHeader("X-CSRFToken", _csrf_token);
-    }
-  }
-});
 jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_form").submit(function (e) {
   var _this = this;
 
@@ -10498,19 +10490,19 @@ jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_form").submit(function
     data: JSON.stringify(form),
     dataType: "json",
     success: function success(response) {
-      var formContainer = document.getElementById("form_container");
+      var container = document.getElementById("form_container");
       var alert = document.createElement("div");
-      alert.id = "subscribe_alert";
-      alert.className = "alert alert-primary text-center my-3";
-      alert.innerHTML = "Thanks for subscribing!";
-      _this.email.value = "";
-      formContainer.appendChild(alert);
-      alert.addEventListener('click', function () {
-        formContainer.removeChild(alert);
-      });
+      alert.id = "alert_1";
+      alert.className = "my-auto mx-auto";
+      alert.style.backgroundColor = "rgba(0,0,0,0.5)";
+      alert.innerHTML = "Thanks! We'll be in touch :)";
+      container.appendChild(alert); // alert.addEventListener('click', () => {
+      //     document.removeChild(alert);
+      // });
+
       setTimeout(function () {
         //formContainer.removeChild(alert);
-        jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_alert").fadeOut('fast');
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()("#alert_1").fadeOut('fast');
       }, 5000);
     },
     error: function error(e) {
@@ -10538,15 +10530,27 @@ jquery__WEBPACK_IMPORTED_MODULE_1___default()("#subscribe_form").submit(function
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+ // let img = document.createElement('img');
+// img.src = "https://openclipart.org/download/261339/big-rocket-blast-off-fat.svg";
+// img.style.height = "50px";
+// img.style.width = "auto";
+// $(".link").hover(function () {
+//     this.prepend(img);
+// }, function () {
+//     this.removeChild(img);
+// });
 
-var img = document.createElement('img');
-img.src = "https://openclipart.org/download/261339/big-rocket-blast-off-fat.svg";
-img.style.height = "50px";
-img.style.width = "auto";
-jquery__WEBPACK_IMPORTED_MODULE_0___default()(".link").hover(function () {
-  this.prepend(img);
-}, function () {
-  this.removeChild(img);
+var _csrf_token = document.getElementsByName("_csrf_token").valueOf()[0].value;
+jquery__WEBPACK_IMPORTED_MODULE_0___default.a.ajaxSetup({
+  beforeSend: function beforeSend(xhr, settings) {
+    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader("X-CSRFToken", _csrf_token);
+    }
+  }
+}); // enable bootstrap tooltips
+
+jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('[data-toggle="tooltip"]').tooltip();
 });
 
 /***/ })

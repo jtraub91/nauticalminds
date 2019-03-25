@@ -1,16 +1,6 @@
 import '../misc';
 import $ from 'jquery';
 
-var _csrf_token = document.getElementsByName("_csrf_token").valueOf()[0].value;
-
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", _csrf_token);
-        }
-    }
-});
-
 $("#subscribe_form").submit(function (e) {
     e.preventDefault();
 
@@ -25,21 +15,21 @@ $("#subscribe_form").submit(function (e) {
         data: JSON.stringify(form),
         dataType: "json",
         success: (response) => {
-            let formContainer = document.getElementById("form_container");
+            let container = document.getElementById("form_container");
             let alert = document.createElement("div");
-            alert.id = "subscribe_alert";
+            alert.id = "alert_1";
 
-            alert.className = "alert alert-primary text-center my-3";
-            alert.innerHTML = "Thanks for subscribing!";
-            this.email.value = "";
+            alert.className = "my-auto mx-auto";
+            alert.style.backgroundColor = "rgba(0,0,0,0.5)";
+            alert.innerHTML = "Thanks! We'll be in touch :)";
 
-            formContainer.appendChild(alert);
-            alert.addEventListener('click', () => {
-                formContainer.removeChild(alert);
-            });
+            container.appendChild(alert);
+            // alert.addEventListener('click', () => {
+            //     document.removeChild(alert);
+            // });
             setTimeout(()=>{
                 //formContainer.removeChild(alert);
-                $("#subscribe_alert").fadeOut('fast');
+                $("#alert_1").fadeOut('fast');
             }, 5000);
         },
         error: (e) => {

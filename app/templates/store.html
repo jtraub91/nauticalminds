@@ -1,18 +1,38 @@
 {% extends "index.html" %}
 
+{% block navbar_content %}
+  <h1 style="position: relative; left: 50%; transform: translate(-50%);">
+    <a href="/">Nautical Minds</a>
+  </h1>
+  <div class="d-inline-flex justify-content-center align-items-center" style="height: 100%; width: 100px">
+    <i class="fa fa-shopping-cart fa-2x my-auto"></i>
+  </div>
+
+  <div class="link-nav d-flex flex-row justify-content-center align-items-center">
+    <!-- link class is used in nautical.js -->
+    <a class="link my-auto mx-2 d-inline-flex" href="/about">
+      About
+    </a>
+    <a class="link my-auto mx-2 d-inline-flex" href="/music">
+      Music
+    </a>
+    <a class="link my-auto mx-2 d-inline-flex" href="/store">
+      Store
+    </a>
+  </div>
+{% endblock navbar_content %}
 
 {% block content %}
 
   <div class="container-fluid my-3 col col-md-6">
-  <div class="d-flex">
-    <div class="card" style="width: 15rem">
-      <img class="card-img-top" src="../static/images/NauticalMinds.jpg">
-      <div class="card-body d-flex flex-column align-items-center justify-content-center">
-        <h3 style="color: black">Nautical Minds EP</h3>
-        <a class="btn btn-primary" href="#">Buy Now</a>
+    <div class="d-flex">
+      <div class="card" style="width: 15rem">
+        <img class="card-img-top" src="../static/images/NauticalMinds.jpg">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+          <div style="color: black; font-size: 0.5rem">Nautical Minds EP (MP3 / WAV)</div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 
 {% endblock content %}

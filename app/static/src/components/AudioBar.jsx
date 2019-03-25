@@ -1,36 +1,43 @@
-import MusicPlayer from '../components/MusicPlayer.js';
-import AudioClock from './AudioClock.jsx';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import AudioClock from './AudioClock.jsx';
 
 export default class AudioBar extends React.Component{
     constructor(props) {
         super(props);
     }
-
-
     render() {
         let playButtonClass;
         if (this.props.isPlaying) {
-            playButtonClass = "fa fa-pause my-auto mx-1 p-1";
+            playButtonClass = "fa fa-pause my-auto mx-1 p-1 hover";
         } else {
-            playButtonClass = "fa fa-play my-auto mx-1 p-1";
+            playButtonClass = "fa fa-play my-auto mx-1 p-1 hover";
+        }
+
+        let muteStyle = {};
+        if (this.props.isMuted){
+            muteStyle = {
+                color: "dodgerblue",
+            };
         }
         return (
-            <nav className="navbar fixed-bottom bg-dark" id="audio_bar">
-                <div className="d-inline-flex w-100 justify-content-between">
-                    <div className="d-flex m-auto w-100" id="audioBar">
-                        <i className="fas fa-step-backward my-auto mx-1 p-1" id="step_backward_button"
-                           onClick={this.props.onPrev}/>
-                        <i className={playButtonClass} aria-hidden="true" id="play_pause_button"
-                           onClick={this.props.onPlayPause}/>
-                        <i className="fas fa-step-forward my-auto mx-1 p-1" id="step_forward_button"
-                           onClick={this.props.onNext}/>
-                        {/*<AudioClock audioCtx={this.props.audioCtx}/>*/}
-                        <input className="my-auto mx-2" type="checkbox" name="autoplay" id="autoplay"/>
-                        <label className="my-auto mx-2" htmlFor="autoplay" id="autoplay_label"
-                               onClick={null}>Autoplay</label>
+            <nav className="navbar fixed-bottom bg-dark" id="audioNavbar">
+                <div className="d-inline-flex w-100">
+                    <i className="fas fa-volume-mute my-auto mx-2 hover" style={muteStyle}
+                       data-toggle="tooltip" data-placement="top" title="Mute" onClick={this.props.onMute}/>
+                    <i className="fas fa-volume-down my-auto mx-2 hover"
+                       data-toggle="tooltip" data-placement="top" title="Vol Down" onClick={this.props.onVolDown}/>
+                    <i className="fas fa-volume-up my-auto mx-2 hover"
+                       data-toggle="tooltip" data-placement="top" title="Vol Up" onClick={this.props.onVolUp}/>
+                    <i className="fas fa-step-backward my-auto ml-2 mr-1 hover" id="step_backward_button"
+                       data-toggle="tooltip" data-placement="top" title="Back" onClick={this.props.onPrev}/>
+                    <i className={playButtonClass} aria-hidden="true" id="play_pause_button"
+                       data-toggle="tooltip" data-placement="top" title="Play" onClick={this.props.onPlayPause}/>
+                    <i className="fas fa-step-forward my-auto mx-1 hover" id="step_forward_button"
+                       data-toggle="tooltip" data-placement="top" title="Forward" onClick={this.props.onNext}/>
+                    <div className="mx-3 my-auto" style={{fontFamily: 'Bookman', fontSize: "1.25rem"}} id="nowPlaying">
+                        {this.props.nowPlaying}
                     </div>
+                    <AudioClock trackTime={this.props.trackTime} trackDuration={this.props.trackDuration}/>
                 </div>
             </nav>
         )
@@ -38,5 +45,9 @@ export default class AudioBar extends React.Component{
 }
 
 AudioBar.defaultProps = {
-    isPlaying: false
+    isPlaying: false,
+    onAutoPlay: null,
+    autoPlay: false,
+    nowPlaying: null,
+    onMute: null,
 };

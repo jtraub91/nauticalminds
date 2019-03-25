@@ -4,39 +4,12 @@ import React from 'react';
 export default class AudioClock extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            duration: this.props.audioCtx.getDuration(),
-            currentTime: this.props.audioCtx.getCurrentTime()
-        };
-        this.style = {
-            span: {
-                fontFamily: "ZCOOL QingKe HuangYou"
-            },
-            div: {
-                backgroundColor: "black",
-            }
-        };
-    }
-
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.getTime(),
-            1000
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    getTime() {
-        this.setState({
-            currentTime: this.props.audioCtx.getCurrentTime(),
-            duration: this.props.audioCtx.getDuration(),
-        })
     }
 
     secondsToMMSS(float_time) {
+        if (float_time === null || float_time === undefined){
+            return "--:--";
+        }
         let sec = Math.floor(float_time);
         let minutes = Math.floor(sec / 60);
         let seconds = Math.floor(float_time - (minutes * 60));
@@ -51,29 +24,15 @@ export default class AudioClock extends React.Component {
     }
 
     render() {
-        let currentTime;
-        let duration;
-        let slash;
-
-        if (this.state.currentTime) {
-            currentTime = this.secondsToMMSS(this.state.currentTime);
-        } else {
-            currentTime = "";
-        }
-
-        if (this.state.duration) {
-            duration = this.secondsToMMSS(this.state.duration);
-            slash = "/";
-        } else {
-            duration = "";
-            slash = "";
-        }
-
         return (
-            <div className="my-auto mx-1" style={this.style.div} id="clock">
-                <span className="my-auto mx-1" style={this.style.span} id="current_clock">{currentTime}</span>
-                <span className="my-auto" style={this.style.span}>{slash}</span>
-                <span className="my-auto mx-1" style={this.style.span} id="total_clock">{duration}</span>
+            <div className="my-auto mx-2" style={{fontFamily: "Bookman", fontSize: "1.25rem"}}>
+                <span className="my-auto mx-1" id="current_clock">
+                    {this.secondsToMMSS(this.props.trackTime)}
+                </span>
+                <span className="my-auto mx-1">|</span>
+                <span className="my-auto mx-1">
+                    {this.secondsToMMSS(this.props.trackDuration)}
+                </span>
             </div>
         )
     }

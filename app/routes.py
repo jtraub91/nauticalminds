@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Fan
+from app.models import Fan, Song
 from app.email import send_email
 from flask import abort, render_template, request, jsonify
 
@@ -59,7 +59,31 @@ def subscribe():
         return abort(500)
 
 
-
 # @app.route('/blog')
 # def blog():
 #     return render_template("blog.html")
+
+
+@app.route("/plays/<song_name>", methods=['GET', 'POST'])
+def plays(**kwargs):
+    if request.method == 'POST':
+        song_name = kwargs.get('song_name', None)
+        song = Song.query.filter_by(name=song_name).first()
+        song.plays = song.plays + 1
+        db.session.add(song)
+        db.session.commit()
+        return jsonify({
+            "type": "POST",
+            "result": "success",
+            "name": song_name,
+            "plays": song.plays
+        })
+    elif request.method == 'GET':
+        song_name = kwargs.get('song_name', None)
+        song = Song.query.filter_by(name=song_name).first()
+        return jsonify({
+            "type": "GET",
+            "result": "success",
+            "name": song_name,
+            "plays": song.plays,
+        })
