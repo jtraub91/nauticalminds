@@ -5,15 +5,15 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-from config import Develop
+from config import Develop, Production
 
 
 app = Flask(__name__)
-app.config.from_object(Develop)
+app.config.from_object(Production)
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
 # login = LoginManager(app)
-mail = Mail(app)
+# mail = Mail(app)
 migrate = Migrate(app, db)
 
 from app import routes, models

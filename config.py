@@ -15,3 +15,11 @@ class Develop(object):
     MAIL_SERVER = 'localhost'
     MAIL_PORT = os.environ.get('MAIL_PORT') or 5025
     """Run python -m smtpd -n -c DebuggingServer localhost:5025"""
+
+
+class Production(object):
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'forgotten-plants-smirnoff-angels-in-western-carriages'
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgresql://nautical:minds@localhost/nauticalminds'
+

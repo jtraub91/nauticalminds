@@ -1,6 +1,6 @@
 from app import app, db
 from app.models import Fan, Song
-from app.email import send_email
+# from app.email import send_email
 from flask import abort, render_template, request, jsonify
 
 
@@ -31,14 +31,14 @@ def about():
     return render_template("about.html")
 
 
-@app.route('/admin')
-def admin():
-    return render_template("admin/index.html")
+# @app.route('/admin')
+# def admin():
+#    return render_template("admin/index.html")
 
 
-@app.route('/history')
-def history():
-    return render_template("history.html")
+# @app.route('/history')
+# def history():
+#    return render_template("history.html")
 
 
 @app.route('/music')
@@ -46,17 +46,17 @@ def music():
     return render_template("music.html")
 
 
-@app.route('/store')
-def store():
-    return render_template("store.html")
+# @app.route('/store')
+# def store():
+#    return render_template("store.html")
 
 
-@app.route('/subscribe', methods=['POST'])
-def subscribe():
-    if request.is_json:
-        pass
-    else:
-        return abort(500)
+# @app.route('/subscribe', methods=['POST'])
+# def subscribe():
+#     if request.is_json:
+#         pass
+#     else:
+#         return abort(500)
 
 
 # @app.route('/blog')
