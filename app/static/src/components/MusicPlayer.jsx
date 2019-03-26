@@ -70,11 +70,8 @@ export default class MusicPlayer extends React.Component{
                 type: 'POST',
                 contentType: "application/json",
                 success: (data)=>{
-                    console.log("success");
-                    console.log(data);
                 },
                 error: (e)=>{
-                    console.log("error");
                     console.log(e);
                 }
             });
@@ -89,13 +86,9 @@ export default class MusicPlayer extends React.Component{
                 type: 'GET',
                 contentType: "application/json",
                 success: (data)=>{
-                    console.log("success");
-                    console.log(data);
                     this.state[songTags[i]] = data.plays
                 },
                 error: (e)=>{
-                    console.log("error");
-                    console.log(e);
                 }
             });
         }

@@ -1,8 +1,6 @@
 const path = require('path');
 
 module.exports = {
-    mode: "production",
-    watch: true,
     entry: {
         index: "./src/entry/index.js",
         music: "./src/entry/music.js"
@@ -11,7 +9,6 @@ module.exports = {
         "path": path.resolve(__dirname, "dist"),
         "filename": "[name].bundle.js"
     },
-    devtool: "source-map",
     module: {
         rules: [
             {
