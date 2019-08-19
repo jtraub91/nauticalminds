@@ -46,9 +46,9 @@ def music():
     return render_template("music.html")
 
 
-# @app.route('/store')
-# def store():
-#    return render_template("store.html")
+@app.route('/store')
+def store():
+   return render_template("store.html")
 
 
 # @app.route('/subscribe', methods=['POST'])

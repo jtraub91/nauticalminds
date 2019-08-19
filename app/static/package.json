@@ -13,6 +13,7 @@
     "bootstrap": "^4.3.1",
     "fontawesome": "^5.6.3",
     "jquery": "^3.3.1",
+    "popper": "^1.0.1",
     "popper.js": "^1.14.7",
     "react": "^16.8.2",
     "react-dom": "^16.8.2"
@@ -26,8 +27,8 @@
     "node-sass": "^4.11.0",
     "redux-devtools": "^3.5.0",
     "sass-loader": "^7.1.0",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.1"
   }
 }

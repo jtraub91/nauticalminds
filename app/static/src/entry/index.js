@@ -1,5 +1,7 @@
 import '../misc';
 import $ from 'jquery';
+import 'popper.js';
+import 'bootstrap';
 
 $("#subscribe_form").submit(function (e) {
     e.preventDefault();
