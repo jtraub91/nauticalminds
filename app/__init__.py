@@ -9,7 +9,10 @@ from config import Develop, Production
 
 
 app = Flask(__name__)
-app.config.from_object(Production)
+if app.config['ENV'] == 'production':
+    app.config.from_object(Production)
+elif app.config['ENV'] == 'development':
+    app.config.from_object(Develop)
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
 # login = LoginManager(app)
@@ -17,6 +20,16 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from app import routes, models
+
+from app.models import Song
+
+# initialize songs in db, if applicable
+SONGS = ['gotta_let_you_know', 'aint_gotta_care', 'funk1', 'spacy_stacy', 'side_street_robbery', 'off_the_clock']
+for song_name in SONGS:
+    if not Song.query.filter_by(name=song_name):
+        song = Song(name=song_name)
+        db.session.add(song)
+        db.session.commit()
 
 # from flask_admin.contrib.sqla import ModelView
 #
