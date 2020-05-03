@@ -1,0 +1,85 @@
+.dark-modal {
+    background-color: rgba(0,0,0,0.75);
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease-in-out;
+  }
+  
+  .form-alert {
+    color: rgb(190,0,0);
+    margin: 0 auto;
+    font-family: "ZCOOL QingKe HuangYou";
+    text-align: center;
+    z-index: 1005;
+    width: 300px;
+    height: 30px;
+    display: flex;
+  }
+  
+  .form-success {
+    color: rgb(0,190,0);
+    margin: 0 auto;
+    font-family: "ZCOOL QingKe HuangYou";
+    text-align: center;
+    z-index: 1005;
+    width: 300px;
+    height: 30px;
+    display: flex;
+  }
+  
+  .form-alert span {
+    margin: auto;
+  }
+  
+  .flex-group{
+    display: flex;
+  }
+  
+  .mr-15 {
+    margin-right: 15px;
+  }
+  .ml-15 {
+    margin-left: 15px;
+  }
+  
+  .form-container {
+    border-radius: 3px;
+    width: 450px;
+    height: 350px;
+    z-index: 1001;
+    /* background-color:dodgerblue; */
+  }
+  
+  form.flex-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto 0;
+  }
+  
+  form input {
+    font-family: 'Courier';
+    margin: 10px auto;
+    width: 69%;
+    height: 30px;
+    caret-color: white;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    text-align: center;
+    padding: 3px 30px;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid white;
+    font-size: 1.1rem;
+  }
+  
+  form input::placeholder{
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+  }
+  
+  form button {
+    width: 100px;
+    margin: 10px auto;
+  }

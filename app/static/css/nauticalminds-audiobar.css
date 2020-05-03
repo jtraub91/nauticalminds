@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
+
+button.blue {
+  transition: background-color 0.13s ease-in;
+  border: 1px dodgerblue solid;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+}
+
+button.green {
+  transition: background-color 0.1s ease-in, color 0.1s ease-in;
+  border: 1px lawngreen solid;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+}
+button.green:hover {
+  border: 1px lawngreen solid;
+  background-color: lawngreen;
+  color: black;
+}
+button.yellow {
+  transition: background-color 0.13s ease-in;
+  border: 1px yellow solid;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+}
+
+.audioBar {
+  background-image: linear-gradient(to right, rgba(0,1,39, 0.45), rgba(0,0,0,0.09), rgba(30,145,255,0.1));
+}
+
+.status {
+  letter-spacing: 1px;
+  font-family: 'ZCOOL QingKe HuangYou';
+  border: solid 2px black;
+  background-color: rgba(0,0,0,0.5);
+  width: 300px;
+  height: 33px;
+  margin: auto 3px;
+}
+
+.status-invert {
+  backdrop-filter: invert(100%);
+  -webkit-backdrop-filter: invert(100%);
+  border-right: 1px solid hotpink;
+}
+
+.clock {
+  letter-spacing: 1px;
+  font-family: 'ZCOOL QingKe HuangYou';
+  border: solid 2px black;
+  background-color: rgba(0,0,0,0.5);
+  
+}
+
+.audioBarControls { 
+  margin: auto 5px;
+}
+
+.flex-group {
+  flex-direction: row;
+  display: flex;
+}
+
+.ctrl-btn {
+  border: 1px solid rgb(0,1,39);
+  background-color: rgba(0,0,0,0.1);
+  color: rgb(0,1,39);
+  transition: color 0.3s ease-in;
+}
+
+.ctrl-btn:hover{
+  color: white;
+  background-color: rgb(0,1,39);
+}

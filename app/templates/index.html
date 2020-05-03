@@ -1,3 +1,4 @@
+{% import "macros/modals.j2" as modals %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,85 +12,39 @@
     <!-- CSS files -->
     <link href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../static/style/fontawesome-free-5.8.1-web/css/all.min.css" rel="stylesheet">
-    <link href="../static/css/nautical.css" rel="stylesheet">
+    <link href="../static/css/nauticalminds.css" rel="stylesheet">
+    <link href="../static/css/nauticalminds-audiobar.css" rel="stylesheet">
+    <link href="../static/css/forms.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <nav class="navbar">
-      {% block navbar_content %}
-      <h1 style="position: relative; left: 50%; transform: translate(-50%); white-space: nowrap" id="header">
-        <a href="/">Nautical Minds</a>
-      </h1>
-
-      <div class="link-nav d-flex flex-row justify-content-center align-items-center">
-        <!-- link class is used in nautical.js -->
-        <a class="link my-auto mx-2 d-inline-flex" href="/about">
-          About
-        </a>
-        <a class="link my-auto mx-2 d-inline-flex" href="/music">
-          Music
-        </a>
-        <a class="link my-auto mx-2 d-inline-flex" href="/store">
-          Store
-        </a>
-      </div>
-      {% endblock navbar_content %}
-    </nav>
-
     {% block content %}
-    <div class="container-fluid">
 
-      <div class="d-flex flex-column justify-content-center align-items-center">
-
-        <div class="my-5">
-          <iframe width="560" height="315"
-                  src="https://www.youtube-nocookie.com/embed/uCdglojfI0w"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-        </div>
-
-{#        <div class="d-flex flex-column justify-content-center align-items-center" id="form_container">#}
-{#          <form class="form-inline" id="subscribe_form" action="/" method="post">#}
-{#            <div class="d-inline-flex">#}
-{#              <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">#}
-{#              <label class="my-auto mx-3" for="email">Be a nautical fan: </label>#}
-{#              <input class="my-auto mx-1" type="email" name="email" id="email" placeholder="Email">#}
-{#              <button class="btn btn-sm btn-outline-primary mx-3" type="submit">Submit</button>#}
-{#            </div>#}
-{#          </form>#}
-{#        </div>#}
-
-        <img class="my-5" alt="image not found" src="../static/images/NauticalMinds.jpg" style="width: 350px; height: auto"/>
-        <h2>
-            Nautical Minds EP out now!
-        </h2>
-        <div class="store-links">
-          <div class="store" id="itunes">
-            <a href="https://geo.itunes.apple.com/us/album/nautical-minds-ep/1044297183?app=itunes">
-              <img src="../static/images/itunes/us_uk/US_UK/iTunes_Store_Badge/Get_it_on/SVG/US_UK_iTunes_Store_Get_Badge_RGB_012618.svg">
-            </a>
-          </div>
-          <div class="store" id="google_play">
-            <a href='https://play.google.com/store/music/album/Nautical_Minds_Nautical_Minds?id=Bvhogtmzyybiprnwlveya2wwxo4'>
-              <img alt='Get it on Google Play' src="../static/images/google-play/Get_it_on_Google_play.svg">
-            </a>
-          </div>
-          <div class="store" id="bandcamp">
-            <a href="https://nauticalminds.bandcamp.com/releases">
-              <img src="../static/images/bandcamp/Bandcamp-logotype-light.svg">
-            </a>
-          </div>
-        </div>
+    <div class="nautical-minds-container" id="nauticalMindsContainer">
+        
+      <div class="header">
+        <button href="/about">
+          About
+        </Button>
+        <h1>Nautical Minds</h1>
+        <button href="/join" id="loginButton">
+          Join
+        </button>
       </div>
-
-    <footer class="my-5 text-center palatino">&copy; 2019</footer>
+      <div class="content-container">
+      </div>
+      <div class="video-container center-relative" id="videoContainer" style="display: none;">
+        <i class="fab fa-youtube center-relative" id="playMusicVideo"></i>
+      </div>
+      <div id="audioBar"><!-- React Component --></div>
+      
     </div>
+    {{ modals.login_modal() }}
     {% endblock content %}
 
     {% block script %}
-      <script src="../static/dist/index.bundle.js"></script>
+      <script src="../static/dist/nauticalminds.bundle.js"></script>
     {% endblock script %}
   </body>
 </html>

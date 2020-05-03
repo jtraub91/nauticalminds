@@ -1,0 +1,13 @@
+{% macro login_modal() %}
+<div class="container dark-modal" id="loginModal">
+  <div class="form-container center-relative" id="form1">
+    <form class="flex-col center-relative" method="POST" action="/onboard">
+      <input type="email" placeholder="Email" name="onboardEmail">
+      <input type="password" placeholder="Password" name="onboardPassword">
+      <button class="login" type="submit" id="submitButton" style="margin-top: 25px;">
+        Be Nautical
+      </button>
+    </form>
+  </div>
+</div>
+{% endmacro %}

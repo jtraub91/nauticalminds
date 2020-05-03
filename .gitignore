@@ -4,4 +4,6 @@ __pycache__/
 app.db
 venv/
 app/static/music/
+app/static/video/
 app/static/node_modules/
+app/static/dist/
