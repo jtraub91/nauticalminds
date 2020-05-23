@@ -23,13 +23,13 @@ from app import routes, models
 
 from app.models import Song
 
-# initialize songs in db, if applicable
-SONGS = ['gotta_let_you_know', 'aint_gotta_care', 'funk1', 'spacy_stacy', 'side_street_robbery', 'off_the_clock']
-for song_name in SONGS:
-    if not Song.query.filter_by(name=song_name):
-        song = Song(name=song_name)
-        db.session.add(song)
-        db.session.commit()
+# # initialize songs in db, if applicable
+# SONGS = ['gotta_let_you_know', 'aint_gotta_care', 'funk1', 'spacy_stacy', 'side_street_robbery', 'off_the_clock']
+# for song_name in SONGS:
+#     if not Song.query.filter_by(name=song_name):
+#         song = Song(name=song_name)
+#         db.session.add(song)
+#         db.session.commit()
 
 # from flask_admin.contrib.sqla import ModelView
 #

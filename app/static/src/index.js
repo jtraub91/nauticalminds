@@ -28,37 +28,43 @@ ReactDOM.render(<AudioBar
       src: "/static/music/nautical_minds_ep/mp3/gotta_let_you_know.mp3",
       title: "Nautical Minds - Gotta Let You Know",
       releaseDate: "September 11, 2015",
-      artist: "Nautical Minds"
+      artist: "Nautical Minds",
+      infoUrl: "/static/music/nautical_minds_ep/mp3/gotta_let_you_know.json"
     },
     {
       src: "/static/music/nautical_minds_ep/mp3/aint_gotta_care.mp3",
       title: "Nautical Minds - Ain't Gotta Care",
       releaseDate: "September 11, 2015",
-      artist: "Nautical Minds"
+      artist: "Nautical Minds",
+      infoUrl: "/static/music/nautical_minds_ep/mp3/aint_gotta_care.json"
     },
     {
       src: "/static/music/nautical_minds_ep/mp3/funk1.mp3",
       title: "Nautical Minds - Funk 1 (ft. B.I.G. Jay)",
       releaseDate: "September 11, 2015",
-      artist: "Nautical Minds"
+      artist: "Nautical Minds",
+      infoUrl: "/static/music/nautical_minds_ep/mp3/funk1.json"
     },
     {
       src: "/static/music/nautical_minds_ep/mp3/spacy_stacy.mp3",
       title: "Nautical Minds - Spacy Stacy",
       releaseDate: "September 11, 2015",
-      artist: "Nautical Minds"
+      artist: "Nautical Minds",
+      infoUrl: "/static/music/nautical_minds_ep/mp3/spacy_stacy.json"
     },
     {
       src: "/static/music/nautical_minds_ep/mp3/sidestreet_robbery.mp3",
       title: "Nautical Minds - Side Street Robbery",
       releaseDate: "September 11, 2015",
-      artist: "Nautical Minds"
+      artist: "Nautical Minds",
+      infoUrl: "/static/music/nautical_minds_ep/mp3/sidestreet_robbery.json"
     }, 
     {
       src: "/static/music/nautical_minds_ep/mp3/off_the_clock.mp3",
       title: "Nautical Minds - Off The Clock",
       releaseDate: "September 11, 2015",
-      artist: "Nautical Minds"
+      artist: "Nautical Minds",
+      infoUrl: "/static/music/nautical_minds_ep/mp3/off_the_clock.json"
     },
   ]} id="audioBar"/>,
   document.getElementById("audioBar")

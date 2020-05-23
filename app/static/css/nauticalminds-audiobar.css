@@ -1,24 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
 
-button.blue {
+.blue {
   transition: background-color 0.13s ease-in;
   border: 1px dodgerblue solid;
   background-color: rgba(0,0,0,0.1);
   color: white;
 }
 
-button.green {
+.green {
   transition: background-color 0.1s ease-in, color 0.1s ease-in;
   border: 1px lawngreen solid;
   background-color: rgba(0,0,0,0.1);
   color: white;
 }
-button.green:hover {
+.green-active {
   border: 1px lawngreen solid;
   background-color: lawngreen;
   color: black;
 }
-button.yellow {
+.green:hover {
+  border: 1px lawngreen solid;
+  background-color: lawngreen;
+  color: black;
+}
+.yellow {
   transition: background-color 0.13s ease-in;
   border: 1px yellow solid;
   background-color: rgba(0,0,0,0.1);
@@ -42,7 +47,7 @@ button.yellow {
 .status-invert {
   backdrop-filter: invert(100%);
   -webkit-backdrop-filter: invert(100%);
-  border-right: 1px solid hotpink;
+  border-right: 1px solid lawngreen;
 }
 
 .clock {
@@ -72,4 +77,14 @@ button.yellow {
 .ctrl-btn:hover{
   color: white;
   background-color: rgb(0,1,39);
+}
+
+.bars-container-item {
+  font-family: 'ZCOOL QingKe HuangYou';
+  font-size: 1.25rem;
+  transition: background-color 0.33s linear;
+}
+
+.bars-container-item:hover {
+  background-color: #7cfc0080;
 }

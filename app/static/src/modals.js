@@ -1,10 +1,10 @@
 var loginButton = document.getElementById("loginButton");
 var loginModal = document.getElementById("loginModal");
 
-loginButton.onclick = function (e) {
-  loginModal.style.visibility = "visible";
-  loginModal.style.opacity = 1;
-}
+// loginButton.onclick = function (e) {
+//   loginModal.style.visibility = "visible";
+//   loginModal.style.opacity = 1;
+// }
 
 var csb = document.getElementById("cancelSignupButton");
 // csb.onclick = (e) => {
