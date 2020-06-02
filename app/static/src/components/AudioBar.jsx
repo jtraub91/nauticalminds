@@ -21,6 +21,7 @@ export default class AudioBar extends React.Component{
       commentContainer: `comment_container_${timestamp}`,
       barsButton: `bars_button_${timestamp}`,
       barsContainer: `bars_container_${timestamp}`,
+      volumeButton: `volume_button_${timestamp}`,
     }
     this.style = {
       audioBar: {
@@ -34,7 +35,7 @@ export default class AudioBar extends React.Component{
         height: "33px",
         width: "33px",
         margin: "auto 4px",
-        display: "block"
+        display: "flex"
       },
       expandButton: {
         width: "auto",
@@ -79,12 +80,12 @@ export default class AudioBar extends React.Component{
         border: "1px solid lawngreen",
         backgroundColor: "rgba(0,0,0,0.5)",
         transition: "height 0.3s linear, width 0.3s linear",
-        fontFamily: "ZCOOL QingKe HuangYou",
-        fontSize: "1rem",
-        letterSpacing: "2px",
+        fontFamily: "Courier New",
+        fontSize: "0.75rem",
         color: "white",
         padding: "10px",
         display: "none",
+        borderRadius: "3px"
       },
       commentContainer: {
         display: "none",
@@ -98,10 +99,13 @@ export default class AudioBar extends React.Component{
         transition: "height 0.3s linear, width 0.3s linear",
         fontFamily: "Courier New",
         fontSize: "12px",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        borderRadius: "3px"
       },
       barsContainer: {
         display: "none",
-        width: "250px",
+        width: "300px",
         height: "auto",
         position: "absolute",
         transform: "translate(-90%, -120%)",
@@ -109,9 +113,10 @@ export default class AudioBar extends React.Component{
         backgroundColor: "rgba(0,0,0,0.5)",
         transition: "height 0.3s linear, width 0.3s linear",
         fontFamily: "Courier New",
-        fontSize: "12px",
+        fontSize: "1rem",
         color: "white",
         overflowY: "scroll",
+        borderRadius: "3px"
       },
       barsContainerItem: {
         height: "25px",
@@ -121,6 +126,7 @@ export default class AudioBar extends React.Component{
 
     this.state = {
       audioPlaying: false,
+      audioMuted: false,
       audioTime: null,
       audioDuration: null,
       audioSrc: undefined,
@@ -134,13 +140,30 @@ export default class AudioBar extends React.Component{
         height: "100%",
         width: "0",
       },
+      mouseoverStatusBarStyle: {
+        position: "absolute",
+        height: "100%",
+        width: "0",
+        display: "none"
+      },
       buttonStyle: {
         height: "33px",
         width: "33px",
         margin: "auto 4px",
         display: "none",
       },
-      infoData: {}
+      volumeButtonStyle:{
+        height: "33px",
+        width: "33px",
+        minWidth: "33px",
+        margin: "auto 4px",
+        display: "none",
+      },
+      infoData: {},
+      volumeSliderStyle: {
+        display: "none"
+      },
+      controlOpen: null, // variable to denote which control is open (info, comment, etc.) assuming only 1 is open at a time 
     }
 
     if (typeof(props.src) == 'string'){
@@ -165,6 +188,8 @@ export default class AudioBar extends React.Component{
     this.onComment = this.onComment.bind(this);
     this.onBars = this.onBars.bind(this);
     this.onClickBarsItem = this.onClickBarsItem.bind(this);
+    this.onMute = this.onMute.bind(this);
+    this.createCommentContainer = this.createCommentContainer.bind(this);
   }
   mdMediaMatchListener () {
     if (this.mdMediaMatch.matches){
@@ -174,7 +199,14 @@ export default class AudioBar extends React.Component{
               height: "33px",
               width: "33px",
               margin: "auto 4px",
-              display: "block"
+              display: "flex"
+          },
+          volumeButtonStyle: { 
+              height: "33px",
+              width: "33px",
+              minWidth: "33px",
+              margin: "auto 4px",
+              display: "flex"
           }
         }
       });
@@ -186,10 +218,44 @@ export default class AudioBar extends React.Component{
               width: "33px",
               margin: "auto 4px",
               display: "none"
+          },
+          volumeButtonStyle: {
+            height: "33px",
+            width: "33px",
+            minWidth: "33px",
+            margin: "auto 4px",
+            display: "none"
           }
         }
       });
     }
+  }
+  createCommentContainer(){
+    let commentContainer = document.createElement("div");
+    commentContainer.id = this.id.commentContainer;
+    Object.assign(commentContainer.style, this.style.commentContainer);
+    
+    let form = document.createElement("form");
+
+    let header = document.createElement("h5");
+    header.innerHTML = "Comment Box";
+    let textarea = document.createElement("textarea");
+    let sendBtn = document.createElement("button");
+    sendBtn.type = "submit";
+    sendBtn.innerHTML = "Send";
+    sendBtn.className = "blue";
+    let clearBtn = document.createElement("button");
+    clearBtn.type = "reset";
+    clearBtn.className ="blue";
+    clearBtn.innerHTML = "Clear";
+
+    form.appendChild(header);
+    form.appendChild(textarea);
+    form.appendChild(sendBtn);
+    form.appendChild(clearBtn);
+
+    commentContainer.appendChild(form);
+    return commentContainer
   }
 
   componentDidMount () {
@@ -198,6 +264,12 @@ export default class AudioBar extends React.Component{
     this.statusTextClientWidth = Number(this.statusText.getClientRects()[0].width);
     this.statusBarContainer = document.getElementById(this.id.statusBarContainer);
     this.nauticalRocket = document.getElementById("nauticalRocket");
+    
+    this.infoElement = document.getElementById(this.id.infoContainer);
+    this.commentContainer = this.createCommentContainer();
+    this.parentElement.appendChild(this.commentContainer);
+    this.barsContainer = document.getElementById(this.id.barsContainer);
+
     this.statusBarContainer.onclick = (e) => {
       // e = Mouse click event.
       let rect = this.statusBarContainer.getBoundingClientRect();
@@ -218,8 +290,31 @@ export default class AudioBar extends React.Component{
         }
       });
     };
+    this.statusBarContainer.addEventListener("mousemove", (e)=>{
+      let rect = this.statusBarContainer.getBoundingClientRect();
+      let x = e.clientX - rect.left; //x position within the element.
+      this.setState(()=>{
+        return {
+          mouseoverStatusBarStyle: {
+            position: "absolute",
+            height: "100%",
+            width: (100 * x / this.statusBarContainer.offsetWidth) + "%",
+            borderRight: "1px solid lawngreen",
+          }
+        }
+      })
+    });
+    this.statusBarContainer.addEventListener("mouseleave", (e)=>{
+      this.setState(()=>{
+        return {
+          mouseoverStatusBarStyle: {
+            display: "none"
+          }
+        }
+      })
+    });
     this.mdMediaMatch = window.matchMedia("screen and (min-width: 520px)");
-    this.mdMediaMatchListener()
+    this.mdMediaMatchListener();
     this.mdMediaMatch.addListener(this.mdMediaMatchListener);
     
     this.audioCtx = new AudioContext();
@@ -259,6 +354,18 @@ export default class AudioBar extends React.Component{
       this.onNext();  // auto go to next song
     });
     this.audioElement.addEventListener("pause", (e)=>{
+      $.post({
+        url: `/pauses?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
+        headers: {
+          "X-CSRFToken": document.getElementById("_csrf_token").value
+        },
+        success: (res)=>{
+          console.log(res)
+        },
+        error: (e)=>{
+          console.log(e)
+        }
+      });
       this.setState({
         audioPlaying: false,
       });
@@ -280,8 +387,17 @@ export default class AudioBar extends React.Component{
     });
     this.audioElement.addEventListener("play", (e)=>{
       $.post({
-        url: `/data/plays?song_id=${this.state.trackNo}`
-      })
+        url: `/plays?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
+        headers: {
+          "X-CSRFToken": document.getElementById("_csrf_token").value
+        },
+        success: (res)=>{
+          console.log(res)
+        },
+        error: (e)=>{
+          console.log(e)
+        }
+      });
       this.audioElement.autoplay = true;
       this.setState({
         audioPlaying: true,
@@ -306,6 +422,68 @@ export default class AudioBar extends React.Component{
         });
       }, 1000);
     });
+
+    // other listeners
+    this.volBtn = document.getElementById(this.id.volumeButton);
+    this.volBtnSldr = this.volBtn.getElementsByTagName("input")[0];
+    this.volBtn.addEventListener("mouseenter",
+      ()=>{
+        this.setState(()=>{
+          return {
+            volumeButtonStyle: { 
+              height: "33px",
+              width: "350px",
+              margin: "auto 4px",
+              display: "flex",
+            },
+            volumeSliderStyle: {
+              display: "inline-block",
+              width: "100%",
+              "margin": "auto 10px"
+            }
+          }
+        });
+      }
+    );
+    this.volBtn.addEventListener("click",
+      ()=>{
+        this.setState(()=>{
+          return {
+            volumeButtonStyle: { 
+              height: "33px",
+              width: "350px",
+              margin: "auto 4px",
+              display: "flex",
+            },
+            volumeSliderStyle: {
+              display: "inline-block",
+              width: "100%",
+              margin: "auto 10px",
+            }
+          }
+        });
+      }
+    );
+    this.volBtn.addEventListener("mouseleave",
+      ()=>{
+        this.setState(()=>{
+          return {
+            volumeButtonStyle: { 
+              height: "33px",
+              width: "33px",
+              minWidth: "33px",
+              margin: "auto 4px",
+              display: "flex"
+            },
+            volumeSliderStyle: {
+              display: "none"
+            }
+          }
+        });
+      }
+    );
+
+    // timers
     this.statusAnimationTimerId = setInterval(()=>{
       if (parseInt(this.state.dx) > this.STATUS_DX - Math.floor(4.5 * this.statusTextClientWidth)){
         this.setState(() =>{
@@ -331,6 +509,12 @@ export default class AudioBar extends React.Component{
           }
         });
         // clearInterval(this.statusAnimationTimerId);
+      }
+      // update gain value
+      if (this.state.audioMuted){
+        this.gainNode.gain.value = 0;
+      } else {
+        this.gainNode.gain.value = 10 ** (parseFloat(this.volBtnSldr.value) / 20);  // log scale
       }
     }, 500);
   }
@@ -415,31 +599,32 @@ export default class AudioBar extends React.Component{
     }
   }
   onInfo(){
-    // if (this.infoElement){
-      this.getInfo(this.props.src[this.state.trackNo]);
-      let infoBtn = document.getElementById(this.id.infoButton);
-      if (infoBtn.className.endsWith("green-active")){
-        infoBtn.className = infoBtn.className.split(" green-active")[0] + " green";
-        this.infoElement.style.display = "none";
-      } else {
-        infoBtn.className = infoBtn.className.split(" green")[0] + " green-active";
-        this.infoElement.style.display = "";
-      }
-    // } else {
-    //   this.getInfo(this.props.src[this.state.trackNo])
-    //   this.infoBtn = document.getElementById(this.id.infoButton);
-    //   this.infoBtn.className = this.infoBtn.className.split(" green")[0] + " green-active";
-
-    //   this.infoElement.style.width = "250px";
-    //   this.infoElement.style.height = "auto";
-    //   this.infoElement.style.minHeight = "100px";
-      
-    // }
-    
+    this.getInfo(this.props.src[this.state.trackNo]);
+    let infoBtn = document.getElementById(this.id.infoButton);
+    if (this.state.controlOpen === "info") {
+      this.infoElement.style.display = "none";
+      this.commentContainer.style.display = "none";
+      this.barsContainer.style.display = "none";
+      this.setState(()=>{
+        return {
+          controlOpen: null
+        }
+      })
+    } else {
+      this.infoElement.style.display = "block";
+      this.commentContainer.style.display = "none";
+      this.barsContainer.style.display = "none";
+      this.setState(()=>{
+        return {
+          controlOpen: "info"
+        }
+      })
+    }
   }
   getInfo(src){
+    // todo: inject spinner until info is retrieved
+    // todo: obtain info only once per page refresh
     if (src.infoUrl){
-      this.infoElement = document.getElementById(this.id.infoContainer);
       var xhr = new XMLHttpRequest();
       var URL = src.infoUrl;
       xhr.onreadystatechange = ()=>{
@@ -453,82 +638,108 @@ export default class AudioBar extends React.Component{
       xhr.send();
       
     } else {
-      console.debug("No info found for this track.")
+      console.debug("No info url provided for this track.")
     }
   }
   onComment(){
-    if (!this.commentContainer){
-      // this.commentContainer = document.getElementById(this.id.commentContainer);
-      // create comment container
-      this.commentContainer = document.createElement("div");
-      this.commentContainer.id = this.id.commentContainer;
-      Object.assign(this.commentContainer.style, this.style.commentContainer);
-      
-      let form = document.createElement("form");
-
-      let header = document.createElement("h5");
-      header.innerHTML = "Comment";
-      let textarea = document.createElement("textarea");
-      let sendBtn = document.createElement("button");
-      sendBtn.type = "submit";
-      sendBtn.innerHTML = "Send";
-      sendBtn.className = "blue";
-      let clearBtn = document.createElement("button");
-      clearBtn.type = "reset";
-      clearBtn.className ="blue";
-      clearBtn.innerHTML = "Clear";
-
-      form.appendChild(header);
-      form.appendChild(textarea);
-      form.appendChild(sendBtn);
-      form.appendChild(clearBtn);
-
-      this.commentContainer.appendChild(form);
-      document.getElementById("nauticalMindsContainer").appendChild(this.commentContainer);
-    }
-    let comBtn = document.getElementById(this.id.commentButton);
-    if (comBtn.className.endsWith("green-active")){
-      comBtn.className = comBtn.className.split(" green-active")[0] + " green";
+    if (this.state.controlOpen === "comment") {
+      this.infoElement.style.display = "none";
       this.commentContainer.style.display = "none";
+      this.barsContainer.style.display = "none";
+      this.setState(()=>{
+        return {
+          controlOpen: null
+        }
+      })
     } else {
-      comBtn.className = comBtn.className.split(" green")[0] + " green-active";
-      this.commentContainer.style.display = "";
+      this.infoElement.style.display = "none";
+      this.commentContainer.style.display = "block";
+      this.barsContainer.style.display = "none";
+      this.setState(()=>{
+        return {
+          controlOpen: "comment"
+        }
+      })
     }
   }
-  onBars(){
-    if (!this.barsContainer){
-      this.barsContainer = document.getElementById(this.id.barsContainer);
-    }
-    let barsBtn = document.getElementById(this.id.barsButton);
-    if (barsBtn.className.endsWith("green-active")){
-      barsBtn.className = barsBtn.className.split(" green-active")[0] + " green";
+  onBars(){    
+    if (this.state.controlOpen === "bars") {
+      this.infoElement.style.display = "none";
+      this.commentContainer.style.display = "none";
       this.barsContainer.style.display = "none";
+      this.setState(()=>{
+        return {
+          controlOpen: null
+        }
+      })
     } else {
-      barsBtn.className = barsBtn.className.split(" green")[0] + " green-active";
-      this.barsContainer.style.display = "";
+      this.infoElement.style.display = "none";
+      this.commentContainer.style.display = "none";
+      this.barsContainer.style.display = "block";
+      this.setState(()=>{
+        return {
+          controlOpen: "bars"
+        }
+      })
     }
-    
   }
   onClickBarsItem(src){
     let index = this.props.src.findIndex((el)=>{
       return el === src
     });
-    console.log(index);
     this.setState(()=>{
       return {
         trackNo: index,
       }
     })
+  }
 
+  onMute(){
+    console.log("onmute");
+    this.setState(()=>{
+      return {
+        audioMuted: !this.state.audioMuted
+      }
+    });
   }
   render() {
     let playButtonClass;
     if (this.state.audioPlaying == true){
-      playButtonClass = "fa fa-pause ctrl-btn";
+      playButtonClass = "fa fa-pause ctrl-btn audiobar-btn";
     } else {
-      playButtonClass = "fa fa-play ctrl-btn";
+      playButtonClass = "fa fa-play ctrl-btn audiobar-btn";
     }
     
+    let volumeButtonClass;
+    if (this.state.audioMuted){
+      volumeButtonClass = "fa fa-volume-off extend ctrl-btn audiobar-btn";
+    } else {
+      volumeButtonClass = "fa fa-volume-up extend ctrl-btn audiobar-btn";
+    }
+    
+
+    let infoClass;
+    let commentClass;
+    let barsClass;
+    if (this.state.controlOpen === null){
+      infoClass = "fas fa fa-info-circle green audiobar-btn";
+      commentClass = "far fa-comment alt green audiobar-btn";
+      barsClass = "fas fa-bars green audiobar-btn";
+    } else if (this.state.controlOpen === "info") {
+      infoClass = "fas fa fa-info-circle green-active audiobar-btn";
+      commentClass = "far fa-comment alt green audiobar-btn";
+      barsClass = "fas fa-bars green audiobar-btn";
+    } else if (this.state.controlOpen === "comment") {
+      infoClass = "fas fa fa-info-circle green audiobar-btn";
+      commentClass = "far fa-comment alt green-active audiobar-btn";
+      barsClass = "fas fa-bars green audiobar-btn";
+    } else if (this.state.controlOpen === "bars") {
+      infoClass = "fas fa fa-info-circle green audiobar-btn";
+      commentClass = "far fa-comment alt green audiobar-btn";
+      barsClass = "fas fa-bars green-active audiobar-btn";
+    }
+
+
     // let expandButtonClassName;
     // if (this.state.expanded === true){
     //   this.parentElement.style.height = this._EXPANDED_HEIGHT;
@@ -542,12 +753,16 @@ export default class AudioBar extends React.Component{
         <div style={this.style.audioBar}>
           {/* <i style={this.style.expandButton} className={expandButtonClassName} onClick={this.expandCollapse}/> */}
           <div style={this.style.controls} className="audioBarControls ml-15">
-            <button className="fas fa-step-backward ctrl-btn" style={this.state.buttonStyle}
+            <button className="fas fa-step-backward ctrl-btn audiobar-btn" style={this.state.buttonStyle}
               title="Back" onClick={this.props.onPrev ? this.props.onPrev : this.onPrev}/>
             <button className={playButtonClass} style={this.style.button} id="playButton"
               title="Play" onClick={this.onPlayPause}/>
-            <button className="fas fa-step-forward ctrl-btn" style={this.state.buttonStyle}
+            <button className="fas fa-step-forward ctrl-btn audiobar-btn" style={this.state.buttonStyle}
               title="Forward" onClick={this.props.onNext ? this.props.onNext : this.onNext}/>
+            <i className={volumeButtonClass} style={this.state.volumeButtonStyle} id={this.id.volumeButton}>
+              <div style={{position: "fixed", height: "33px", width: "33px"}} onClick={this.onMute}></div>
+              <input type="range" min="-36" max="6" step="0.5" defaultValue="0" style={this.state.volumeSliderStyle}></input>
+            </i>
           </div>
           <div className="flex-group">
             <div className="flex-group">
@@ -571,6 +786,7 @@ export default class AudioBar extends React.Component{
               <div style={this.style.status} className="status">
                 <div style={this.style.statusBarContainer} id={this.id.statusBarContainer}>
                   <div style={this.state.statusBarStyle} className="status-invert"/>
+                  <div style={this.state.mouseoverStatusBarStyle}/>
                 </div>
                 <svg viewBox="0 0 100 100" width="95%" height="20px" className="m-auto">
                   <text fill="lawngreen" x="-520" y="87" dx={this.state.dx} dy={this.state.dy} fontSize="100" letterSpacing="20" id={this.id.statusText}>
@@ -580,45 +796,41 @@ export default class AudioBar extends React.Component{
               </div>
             </div>
             <div className="flex-group" style={{margin: "auto 25px"}}>
-              <button className="fas fa fa-info-circle green" 
+              <button className={infoClass} 
                 onClick={this.onInfo} id={this.id.infoButton}
                 style={this.state.buttonStyle}>
                   <div style={this.style.infoContainer} id={this.id.infoContainer}>
                     <u>Information:</u><br/>
-                    Song: {this.state.infoData.song}<br/>
-                    Artist: {this.state.infoData.artist}<br/>
-                    Release Date: {this.state.infoData.releaseDate}<br/>
-                    Recorded In: {this.state.infoData.recordedIn}<br/><br/>
+                    Song: {this.state.infoData ? this.state.infoData.name : null}<br/>
+                    Artist: {this.state.infoData ? this.state.infoData.artist : null}<br/>
+                    Release Date: {this.state.infoData.info ? this.state.infoData.info.releaseDate : null}<br/>
+                    Recorded In: {this.state.infoData.info ? this.state.infoData.info.recordedIn : null}<br/><br/>
                     <u>Statistics:</u><br/>
-                    All-time plays: {this.state.infoData.plays}<br/>
-                    All-time donwloads: {this.state.infoData.downloads}
+                    All-time plays: {this.state.infoData ? this.state.infoData.plays : null}<br/>
+                    All-time downloads: {null}
                   </div>
                 </button>
-              <button className="far fa-comment alt green" id={this.id.commentButton}
+              <button className={commentClass} id={this.id.commentButton}
                 onClick={this.onComment}
                 style={this.state.buttonStyle}>
-                <div style={this.style.commentContainer} id={this.id.commentContainer}>
-                  <form>
-                    <h6>Comment</h6>
-                    <textarea/>
-                    <button type="submit" className="blue">Send</button>
-                    <button type="reset" className="blue">Clear</button>
-                  </form>
-                </div>
+                {/* comment container built in componentDidMount */}
               </button>
-              <button className="fas fa-bars green" id={this.id.barsButton}
+              <button className={barsClass} id={this.id.barsButton}
                 onClick={this.onBars}
                 style={this.state.buttonStyle}>
                 <div style={this.style.barsContainer} id={this.id.barsContainer}>
                   <ol>
-                    {this.props.src.map(
+                    {
+                      this.props.src.map(
                       (src)=>
-                        <li style={this.style.barsContainerItem} 
+                        <li key={`bars_track${this.props.src.indexOf(src)}`}
+                          style={this.style.barsContainerItem} 
                           className="bars-container-item"
                           onClick={()=>this.onClickBarsItem(src)}>
                           {src.title.split(" - ").slice(-1)[0]}
-                          </li>
-                        )}
+                        </li>
+                      )
+                    }
                   </ol>
                 </div>
               </button>

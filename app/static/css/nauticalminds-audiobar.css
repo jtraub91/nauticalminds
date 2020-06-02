@@ -15,12 +15,12 @@
 }
 .green-active {
   border: 1px lawngreen solid;
-  background-color: lawngreen;
+  background-color: lawngreen !important;
   color: black;
 }
 .green:hover {
   border: 1px lawngreen solid;
-  background-color: lawngreen;
+  background-color: lawngreen !important;
   color: black;
 }
 .yellow {
@@ -60,6 +60,7 @@
 
 .audioBarControls { 
   margin: auto 5px;
+  width: 100%;
 }
 
 .flex-group {
@@ -67,11 +68,15 @@
   display: flex;
 }
 
+.audiobar-btn {
+  border-radius: 3px;
+  background-color: rgba(0,0,0,0.1);
+  transition: color 0.3s ease-in;
+}
+
 .ctrl-btn {
   border: 1px solid rgb(0,1,39);
-  background-color: rgba(0,0,0,0.1);
   color: rgb(0,1,39);
-  transition: color 0.3s ease-in;
 }
 
 .ctrl-btn:hover{
@@ -80,11 +85,103 @@
 }
 
 .bars-container-item {
-  font-family: 'ZCOOL QingKe HuangYou';
-  font-size: 1.25rem;
+  padding: 4px;
   transition: background-color 0.33s linear;
 }
 
 .bars-container-item:hover {
   background-color: #7cfc0080;
+}
+
+.fa-volume-up:before{
+  margin: auto;
+  margin-left: 5px;
+}
+
+.fa-volume-off:before {
+  margin: auto;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.extend {
+  transition: width 0.69s ease;
+  width: 33px;
+}
+
+/* volume slider */
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+
+  background-color: dodgerblue;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+  margin-top: -7px;
+}
+
+input[type=range]::-moz-range-thumb{
+  background-color: dodgerblue;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+}
+
+input[type=range]::-ms-thumb{
+  background-color: dodgerblue;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+}
+
+input[type=range]::-webkit-slider-runnable-track{
+  height: 2px;
+  margin: auto;
+  cursor: pointer;
+  width: inherit;
+  background: lawngreen;
+}
+
+input[type=range]::-moz-range-track{
+
+}
+
+input[type=range]::-ms-track{
+
+}
+
+input[type=range]::-ms-fill-lower{
+
+}
+
+input[type=range]:focus::-ms-fill-lower{
+
+}
+
+input[type=range]::-ms-fill-upper{
+
+}
+
+input[type=range]:focus::-ms-fill-upper{
+
 }

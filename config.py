@@ -7,7 +7,7 @@ class Develop(object):
     SECRET_KEY = "forgotten-plants-smirnoff-angels-in-western-carriages"
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = 'postgresql://nautical_test:nautical_test@161.35.114.25/nauticalminds_test'
 
     # MAIL_DEBUG = True
     # MAIL_SERVER = 'localhost'
@@ -20,4 +20,5 @@ class Production(object):
         self.SECRET_KEY = os.environ['SECRET_KEY']
 
         self.SQLALCHEMY_TRACK_MODIFICATIONS = False
-        self.SQLALCHEMY_DATABASE_URI = 'postgresql://nautical:minds@localhost/nauticalminds'
+        self.SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
+        # self.SQLALCHEMY_DATABASE_URI = 'postgresql://nauticalminds:nautical123@161.35.114.25/nauticalminds'
