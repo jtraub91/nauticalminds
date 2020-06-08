@@ -6,11 +6,23 @@
   background-color: rgba(0,0,0,0.1);
   color: white;
 }
+.blue:hover{
+  background-color: dodgerblue;
+}
+.dark-grey {
+  transition: background-color 0.13s ease-in;
+  border: 1px rgb(5,5,5) solid;
+  color: white;
+  background-color: rgb(0,0,0,0.1);
+}
+.dark-grey:hover{
+  background-color: rgb(5,5,5);
+}
 
 .green {
   transition: background-color 0.1s ease-in, color 0.1s ease-in;
   border: 1px lawngreen solid;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.2);
   color: white;
 }
 .green-active {
@@ -68,14 +80,9 @@
   display: flex;
 }
 
-.audiobar-btn {
-  border-radius: 3px;
-  background-color: rgba(0,0,0,0.1);
-  transition: color 0.3s ease-in;
-}
-
 .ctrl-btn {
   border: 1px solid rgb(0,1,39);
+  background-color: rgba(0,1,39,0.3);
   color: rgb(0,1,39);
 }
 
@@ -95,14 +102,20 @@
 
 .fa-volume-up:before{
   margin: auto;
-  margin-left: 5px;
+  margin-left: 5px !important;
 }
 
 .fa-volume-off:before {
   margin: auto;
-  margin-left: 5px;
-  margin-right: 10px;
+  margin-left: 5px !important;
+  margin-right: 10px !important;
 }
+
+
+.fa::before, .fas::before, .far::before {
+  margin: auto;
+}
+
 
 .extend {
   transition: width 0.69s ease;

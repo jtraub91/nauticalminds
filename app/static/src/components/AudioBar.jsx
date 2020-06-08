@@ -89,8 +89,7 @@ export default class AudioBar extends React.Component{
       },
       commentContainer: {
         display: "none",
-        width: "450px",
-        height: "450px",
+        width: "350px",
         position: "absolute",
         bottom: "100px",
         right: "100px",
@@ -192,6 +191,7 @@ export default class AudioBar extends React.Component{
     this.createCommentContainer = this.createCommentContainer.bind(this);
   }
   mdMediaMatchListener () {
+    console.log(this.mdMediaMatch);
     if (this.mdMediaMatch.matches){
       this.setState((state) => {
         return {
@@ -210,6 +210,7 @@ export default class AudioBar extends React.Component{
           }
         }
       });
+      
     } else {
       this.setState((state) => {
         return {
@@ -236,23 +237,51 @@ export default class AudioBar extends React.Component{
     Object.assign(commentContainer.style, this.style.commentContainer);
     
     let form = document.createElement("form");
+    Object.assign(
+      form.style, 
+      {
+        display: "flex", 
+        flexDirection: "column",
+      }
+    );
 
     let header = document.createElement("h5");
     header.innerHTML = "Comment Box";
+    header.style.margin = "auto";
     let textarea = document.createElement("textarea");
+    Object.assign(textarea.style, {
+      width: "275px",
+      height: "150px",
+      margin: "10px auto",
+      fontFamily: "Comic Sans MS",
+      padding: "20px 30px",
+      letterSpacing: "1px",
+      fontSize: "14px",
+      textAlign: "center"
+    })
+
+    let btnContainer = document.createElement("div");
+    Object.assign(btnContainer.style, {
+      display: "flex",
+      flexDirection: "row",
+      margin: "10px 25px"
+    });
+
     let sendBtn = document.createElement("button");
     sendBtn.type = "submit";
     sendBtn.innerHTML = "Send";
-    sendBtn.className = "blue";
+    sendBtn.className = "limegreen form-btn";
     let clearBtn = document.createElement("button");
     clearBtn.type = "reset";
-    clearBtn.className ="blue";
+    clearBtn.className ="dark-grey form-btn";
     clearBtn.innerHTML = "Clear";
+
+    btnContainer.appendChild(sendBtn);
+    btnContainer.appendChild(clearBtn);
 
     form.appendChild(header);
     form.appendChild(textarea);
-    form.appendChild(sendBtn);
-    form.appendChild(clearBtn);
+    form.appendChild(btnContainer);
 
     commentContainer.appendChild(form);
     return commentContainer
@@ -313,7 +342,7 @@ export default class AudioBar extends React.Component{
         }
       })
     });
-    this.mdMediaMatch = window.matchMedia("screen and (min-width: 520px)");
+    this.mdMediaMatch = window.matchMedia("screen and (min-width: 775px)");
     this.mdMediaMatchListener();
     this.mdMediaMatch.addListener(this.mdMediaMatchListener);
     

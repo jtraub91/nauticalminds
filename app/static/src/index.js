@@ -71,4 +71,21 @@ ReactDOM.render(<AudioBar
 );
 
 
-ReactDOM.render(<AudioBar src=""/>, document.getElementById("audioBar"));
+var colors = ['blue', 'orange', 'green']
+var i = 0;
+// animations
+setInterval(()=>{
+  requestAnimationFrame(()=>loginButton.className = "color-wheel bg-" + colors[i]);
+  i += 1;
+  if (i > colors.length - 1){
+    i = 0;
+  }
+}, 1000);
+
+
+function startColorWheel(){
+
+  loginButton.style.backgroundColor = `rgb()`
+
+  requestAnimationFrame(startColorWheel);
+}

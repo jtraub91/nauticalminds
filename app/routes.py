@@ -9,6 +9,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route('/onboard', methods=['POST'])
+def onboard():
+    return jsonify({})
+
+
 # @app.route('/about')
 # def about():
 #     return render_template("about.html")

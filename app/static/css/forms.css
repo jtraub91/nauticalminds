@@ -1,85 +1,156 @@
 .dark-modal {
-    background-color: rgba(0,0,0,0.75);
-    z-index: 1000;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.5s ease-in-out;
-  }
-  
-  .form-alert {
-    color: rgb(190,0,0);
-    margin: 0 auto;
-    font-family: "ZCOOL QingKe HuangYou";
-    text-align: center;
-    z-index: 1005;
-    width: 300px;
-    height: 30px;
-    display: flex;
-  }
-  
-  .form-success {
-    color: rgb(0,190,0);
-    margin: 0 auto;
-    font-family: "ZCOOL QingKe HuangYou";
-    text-align: center;
-    z-index: 1005;
-    width: 300px;
-    height: 30px;
-    display: flex;
-  }
-  
-  .form-alert span {
-    margin: auto;
-  }
-  
-  .flex-group{
-    display: flex;
-  }
-  
-  .mr-15 {
-    margin-right: 15px;
-  }
-  .ml-15 {
-    margin-left: 15px;
-  }
-  
-  .form-container {
-    border-radius: 3px;
-    width: 450px;
-    height: 350px;
-    z-index: 1001;
-    /* background-color:dodgerblue; */
-  }
-  
-  form.flex-col {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: auto 0;
-  }
-  
-  form input {
-    font-family: 'Courier';
-    margin: 10px auto;
-    width: 69%;
-    height: 30px;
-    caret-color: white;
-    background-color: rgba(0,0,0,0);
-    color: white;
-    text-align: center;
-    padding: 3px 30px;
-    border-radius: 5px;
-    border: none;
-    border-bottom: 1px solid white;
-    font-size: 1.1rem;
-  }
-  
-  form input::placeholder{
-    color: rgba(255,255,255,0.5);
-    text-align: center;
-  }
-  
-  form button {
-    width: 100px;
-    margin: 10px auto;
-  }
+  background-color: rgba(0,0,0,0.3);
+  border: 1px solid black;  /* lives matter */
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s ease-in-out;
+}
+.backdrop {
+  transition: visibility 0s, opacity 0.5s ease-in-out;
+}
+
+form input:focus {
+  outline: none
+}
+
+input.join-input{
+  margin: 10px 10px 10px auto;
+}
+
+.button-container {
+  margin: 10px;
+  display: flex;
+}
+
+.button-container > .submit-btn {
+  margin: auto auto auto 0;
+}
+
+.button-container > .reset-btn {
+  margin: auto 0 auto auto;
+}
+
+.form-header {
+  margin: 10px auto 10px 10px;
+}
+
+.form-alert {
+  color: red;
+  margin: 0 auto;
+  font-family: "ZCOOL QingKe HuangYou";
+  text-align: center;
+  z-index: 1005;
+  display: flex;
+  position: absolute;
+  top: 25px;
+  right: 0;
+  margin: 5px 10px;
+}
+
+.form-success {
+  color: rgb(0,190,0);
+  margin: 0 auto;
+  font-family: "ZCOOL QingKe HuangYou";
+  text-align: center;
+  z-index: 1005;
+  width: 300px;
+  height: 30px;
+  display: flex;
+}
+
+.form-alert span {
+  margin: auto;
+}
+
+.flex-group{
+  display: flex;
+}
+
+.mr-15 {
+  margin-right: 15px;
+}
+.ml-15 {
+  margin-left: 15px;
+}
+
+.form-container {
+  width: 450px;
+  height: 350px;
+}
+
+form.flex-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+.input-container {
+  margin: 10px 10px auto 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container > hr {
+  margin: 5px;
+  color: grey;
+}
+
+.input-container > h6 {
+  font-size: 0.75rem;
+  font-style: italic;
+  margin: 5px;
+}
+
+form input {
+  font-family: 'Palatino', Georgia, 'Times New Roman', Times, serif;
+  margin-right: 0;
+  width: 300px;
+  height: 30px;
+  caret-color: white;
+  background-color: rgba(0,0,0,0);
+  color: white;
+  text-align: center;
+  padding: 3px 30px;
+  border: none;
+  border-bottom: 1px solid white;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+form input::placeholder{
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+}
+
+form button {
+  width: 100px;
+  margin: 10px auto;
+}
+
+.text-center{
+  text-align: center;
+}
+
+button.form-btn {
+  text-decoration: none;
+  margin: 10px auto;
+  font-family: 'Comic Sans MS';
+  font-size: 18px;
+  color: white;
+  background-color: rgba(0,0,0,0.1);
+  z-index: 2;
+  border-radius: 2px;
+
+}
+
+button.limegreen {
+  transition: background-color 0.1s ease-in, color 0.1s ease-in;
+  border: 1px limegreen solid;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+}
+button.limegreen:hover {
+  background-color: limegreen !important;
+}
