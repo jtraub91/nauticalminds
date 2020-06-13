@@ -1,12 +1,47 @@
 var MODAL_OPEN = false;
 var rootContainer = document.getRootNode().body;
 var backdrop = null;
+var backdrop2 = null;
 
 var aboutButton = document.getElementById("aboutButton");
 var aboutModal = document.getElementById("aboutModal")
 
+var aboutContainer = null;
 aboutButton.onclick = function (e) {
+  e.preventDefault();
+  if (aboutContainer === null){
+    aboutContainer = document.createElement("div");
+    aboutContainer.className = "about-container center-relative dark-modal";
+    aboutContainer.id = "aboutContainer"
+    let header = document.createElement("h3");
+    header.className = "form-header";
+    header.innerHTML = "About";
 
+    let div = document.createElement("div");
+    div.innerHTML = "\n"
+
+    let p = document.createElement("p");
+    p.innerHTML = "Nautical Minds is a music duo formed in Florida in 2012, consisting of Jason Marcus (vox) and Jason Traub (guitar)."
+    aboutContainer.appendChild(header);
+    aboutContainer.appendChild(p);
+
+    backdrop2 = document.createElement("div");
+    backdrop2.className = "nautical-minds-container backdrop"
+    backdrop2.style.backgroundColor = "rgba(0,0,0,0.25)";
+    backdrop2.onclick = function () {
+      aboutContainer.style.opacity = 0;
+      this.style.opacity = 0;
+      this.style.zIndex = 0;
+    }
+    rootContainer.appendChild(backdrop2);
+    rootContainer.appendChild(aboutContainer);
+  }
+  aboutContainer.style.visibility = "visible";
+  aboutContainer.style.opacity = 1;
+  backdrop2.style.visibility = "visible";
+  backdrop2.style.opacity = 1;
+  backdrop2.style.zIndex = 2;
+  
 }
 
 var loginButton = document.getElementById("loginButton");
@@ -30,26 +65,26 @@ function submitForm(submitEvent){
         email: email,
         password: password
       }))
-      xhr.onload = (d) => {
-        console.log(d);
-        console.log(xhr);
-        if (JSON.parse(xhr.response).result === false) {
+      xhr.onload = (resp) => {
+        if (xhr.status !== 200) {
           let div = document.createElement("div")
-          document.getElementById("form1").appendChild(div);
-          div.className = "form-alert";
-          div.innerHTML = `<span>${JSON.parse(xhr.response).message}</span>`
+          formContainer.appendChild(div);
+          div.className = "form-alert error";
+          div.innerHTML = `<span>${xhr.status}:${xhr.statusText}</span>`
           setTimeout(()=>{
             div.style = "display: none; transition: display 1s ease-out";
           }, 3000);
         } else {
-          loginButton.innerHTML = "Welcome";
           let div = document.createElement("div")
           formContainer.appendChild(div);
-          div.className = "form-success";
+          div.className = "form-alert success";
+          console.log(xhr.response);
           div.innerHTML = `<span>${JSON.parse(xhr.response).message}</span>`
           setTimeout(()=>{
-            loginModal.style.visibility = "hidden";
-            loginModal.style.opacity = 0;
+            formContainer.style.visibility = "hidden";
+            formContainer.style.opacity = 0;
+            backdrop.style.opacity = 0;
+            backdrop.style.zIndex = 0;
           }, 3000);
         }
       }
@@ -58,7 +93,7 @@ function submitForm(submitEvent){
       }
     } else {
       let div = document.createElement("div")
-      div.className = "form-alert";
+      div.className = "form-alert error";
       div.innerHTML = "<span>Password must be at least 8 characters.</span>"
       formContainer.appendChild(div);
       setTimeout(()=>{
@@ -68,7 +103,7 @@ function submitForm(submitEvent){
   } else {
     let div = document.createElement("div")
     div.style = "display: none; transition: display 1s ease-in";
-    div.className = "form-alert";
+    div.className = "form-alert error";
     div.innerHTML = "<span>Invalid email. Please try again.</span>";
     div.style.display = "block";
     formContainer.appendChild(div);
@@ -87,16 +122,26 @@ function validatePassword(password){
   return password.length >= 8
 }
 
-
-loginButton.onclick = function (e) {
-
+function join(e) {
+  e.preventDefault();
   if (formContainer === null){
     formContainer = document.createElement("div");
     formContainer.className = "form-container center-relative dark-modal";
     formContainer.id = "formConatiner"
+
     let header = document.createElement("h3");
     header.className = "form-header";
     header.innerHTML = "Join Nautical Minds";
+    
+    let altHeader = document.createElement("h6");
+    altHeader.innerHTML = '<i>or </i><a href="/login">Login</a';
+    altHeader.style.margin = "10px 10px 10px auto";
+
+    let headerContainer = document.createElement("div");
+    headerContainer.style.display = "flex";
+    headerContainer.appendChild(header);
+    headerContainer.appendChild(altHeader);
+
     let form = document.createElement("form");
     form.className = "flex-col";
     let email = document.createElement("input");
@@ -148,7 +193,7 @@ loginButton.onclick = function (e) {
     buttonContainer.appendChild(submit);
     buttonContainer.appendChild(reset);
 
-    form.appendChild(header);
+    form.appendChild(headerContainer);
     form.appendChild(inputContainer);
     form.appendChild(buttonContainer);
 
@@ -173,3 +218,7 @@ loginButton.onclick = function (e) {
   backdrop.style.zIndex = 2;
   backdrop.style.backdropFilter = "blur(15px)";
 };
+loginButton.onclick = join;
+
+var joinLink = document.getElementById("joinLink");
+joinLink.onclick = join;

@@ -36,7 +36,6 @@ input.join-input{
 }
 
 .form-alert {
-  color: red;
   margin: 0 auto;
   font-family: "ZCOOL QingKe HuangYou";
   text-align: center;
@@ -47,16 +46,11 @@ input.join-input{
   right: 0;
   margin: 5px 10px;
 }
-
-.form-success {
+.form-alert.error {
+  color: red;
+}
+.form-alert.success {
   color: rgb(0,190,0);
-  margin: 0 auto;
-  font-family: "ZCOOL QingKe HuangYou";
-  text-align: center;
-  z-index: 1005;
-  width: 300px;
-  height: 30px;
-  display: flex;
 }
 
 .form-alert span {
@@ -75,8 +69,26 @@ input.join-input{
 }
 
 .form-container {
-  width: 450px;
-  height: 350px;
+  max-width: 450px;
+  min-width: 320px;
+  width: 80vw;
+  /* height: 350px; */
+}
+
+.about-container{
+  max-width: 450px;
+  min-width: 320px;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-container p {
+  width: 80%;
+  color: white;
+  font-size: 1rem;
+  margin: auto;
+  text-align: center;
 }
 
 form.flex-col {

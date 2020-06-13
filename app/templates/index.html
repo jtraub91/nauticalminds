@@ -22,49 +22,59 @@
     <div class="nautical-minds-container" id="nauticalMindsContainer">
       <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
       <div class="header">
-        <button class="nautical-btn" href="/about" id="aboutButton">
-          About
-        </button>
-        <h1>Nautical Minds</h1>
-        <button class="color-wheel" href="/join" id="loginButton">
-          Join
-        </button>
+        <div class="button-group">
+          <button class="header-button nautical-btn purple" id="aboutButton">
+            <a href="/about">About</a>
+          </button>
+          <button class="header-button nautical-btn green">
+            <a href="/shop">Shop</a>
+          </button>
+          <button class="header-button nautical-btn yellow">
+            <a href="/vault">Vault</a>
+          </button>
+        </div>
+        <h1 id="nauticalMindsHeader">Nautical Minds</h1>
+        <div class="button-group" id="userPanel">
+          <button class="header-button nautical-btn color-wheel" id="loginButton">
+            <a href="/join">Join</a>
+          </button>
+        </div>
       </div>
       <div class="content-container">
-        <blockquote>
-          <h4 class="quote orange">if it's important to ya', don't let it go...</h4>
-        </blockquote>
+        <h4 class="quote orange">if it's important to ya', don't let it go...</h4>
+        <p class="mx-auto">
+          <a href="/join" id="joinLink">Join</a> today to listen to and download Nautical Minds EP!
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam totam cum velit consectetur recusandae quas voluptatem voluptatibus, magni ad unde iure laudantium necessitatibus debitis ratione cupiditate nemo quam harum magnam.
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad ea numquam porro voluptates velit eum perferendis consequatur accusamus. Possimus quia nam voluptatem odit animi assumenda porro ducimus sequi suscipit nemo?
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ipsum architecto dolore repudiandae accusamus, officia, quia quae repellat labore dolorum corporis nesciunt, aliquid cupiditate facere quo qui quibusdam nisi blanditiis!
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis sit temporibus quibusdam quo distinctio qui adipisci esse animi, illum accusamus optio cupiditate. Eaque velit quo eligendi, voluptas nostrum vel et.
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat aperiam, doloribus voluptas asperiores ex consectetur, iure sunt, recusandae maiores quo in! Accusamus voluptate dolore excepturi, aliquid iure ratione non? Sequi!
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia dolorum at sed iusto quam magni excepturi deserunt, consequuntur facilis maiores vero aliquam quaerat deleniti distinctio ullam! Odit totam alias labore.
+        </p>
+        <p class="mx-auto">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam illo asperiores quis, ab in commodi dignissimos molestiae eum corrupti. Repellendus, consequatur quisquam? Expedita, vel incidunt distinctio commodi esse non fugiat?
+        </p>
+        <p class="mx-auto">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum rerum, atque labore dolorum veniam, at fugit quidem laborum aliquam animi asperiores reiciendis officiis perspiciatis ipsa dolores quam. Obcaecati, velit assumenda.
+        </p>
       </div>
       <div class="video-container center-relative" id="videoContainer" style="display: none;">
         <i class="fab fa-youtube center-relative" id="playMusicVideo"></i>
       </div>
       <div id="audioBar"><!-- React Component --></div>
       
-    </div>
-
-    <div id="aboutModal">
-      <p>
-        Message from the artist:
-
-
-      </p>
-
-      <p>
-        Nautical Minds was formed in Florida in 2012.
-        Nautical Minds EP was recorded in Gainesville, FL.
-        Nautical Minds 
-      </p>
-
-      <p>
-        <h6>
-          Links:
-        </h6>
-        <ul>
-          <li>
-
-          </li>
-        </ul>
-      </p>
     </div>
     {% endblock content %}
 

@@ -41,6 +41,18 @@
   background-color: rgba(0,0,0,0.1);
   color: white;
 }
+.yellow:hover {
+  background-color: yellow !important;
+  color: black;
+}
+.purple {
+  border: 1px solid indigo;
+  transition: background-color 0.13s ease-in;
+}
+.purple:hover {
+  background-color: indigo;
+  transition: background-color 0.13s ease-in;
+}
 
 .audioBar {
   background-image: linear-gradient(to right, rgba(0,1,39, 0.45), rgba(0,0,0,0.09), rgba(30,145,255,0.1));
@@ -83,7 +95,7 @@
 .ctrl-btn {
   border: 1px solid rgb(0,1,39);
   background-color: rgba(0,1,39,0.3);
-  color: rgb(0,1,39);
+  color: white;
 }
 
 .ctrl-btn:hover{
@@ -118,7 +130,7 @@
 
 
 .extend {
-  transition: width 0.69s ease;
+  transition: width 0.69s ease, height 0.69s ease;
   width: 33px;
 }
 

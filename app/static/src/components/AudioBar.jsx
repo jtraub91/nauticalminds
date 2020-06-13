@@ -134,6 +134,7 @@ export default class AudioBar extends React.Component{
       trackTitle: undefined,
       dx: "0",
       dy: "0",
+      clockDisplay: false,
       statusBarStyle: {
         position: "absolute",
         height: "100%",
@@ -149,16 +150,16 @@ export default class AudioBar extends React.Component{
         height: "33px",
         width: "33px",
         margin: "auto 4px",
-        display: "none",
+        display: "flex",
       },
       volumeButtonStyle:{
         height: "33px",
         width: "33px",
         minWidth: "33px",
         margin: "auto 4px",
-        display: "none",
+        display: "flex",
       },
-      infoData: {},
+      infoData: null,
       volumeSliderStyle: {
         display: "none"
       },
@@ -189,9 +190,102 @@ export default class AudioBar extends React.Component{
     this.onClickBarsItem = this.onClickBarsItem.bind(this);
     this.onMute = this.onMute.bind(this);
     this.createCommentContainer = this.createCommentContainer.bind(this);
+    this.setVolumeOrientation = this.setVolumeOrientation.bind(this);
+    this.handleMouseEnterX = this.handleMouseEnterX.bind(this);
+    this.handleMouseLeaveX = this.handleMouseLeaveX.bind(this);
+    this.handleMouseEnterY = this.handleMouseEnterY.bind(this);
+    this.handleMouseLeaveY = this.handleMouseLeaveY.bind(this);
+  }
+  handleMouseEnterX(){
+    this.setState(()=>{
+      return {
+        volumeButtonStyle: { 
+          height: "33px",
+          width: "300px",
+          margin: "auto 4px",
+          display: "flex",
+        },
+        volumeSliderStyle: {
+          display: "inline-block",
+          width: "100%",
+          "margin": "auto 10px"
+        }
+      }
+    });
+  }
+  handleMouseLeaveX(){
+    this.setState(()=>{
+      return {
+        volumeButtonStyle: { 
+          height: "33px",
+          width: "33px",
+          minWidth: "33px",
+          margin: "auto 4px",
+          display: "flex"
+        },
+        volumeSliderStyle: {
+          display: "none"
+        }
+      }
+    });
+  }
+  handleMouseEnterY(){
+    this.setState(()=>{
+      return {
+        volumeButtonStyle: { 
+          height: "300px",
+          width: "33px",
+          margin: "auto 4px",
+          display: "flex",
+          transform: "translateY(-258px)"
+        },
+        volumeSliderStyle: {
+          display: "inline-block",
+          width: "100%",
+          "margin": "auto 10px"
+        }
+      }
+    });
+  }
+  
+  handleMouseLeaveY(){
+    this.setState(()=>{
+      return {
+        volumeButtonStyle: { 
+          height: "33px",
+          width: "33px",
+          minWidth: "33px",
+          margin: "auto 4px",
+          display: "flex"
+        },
+        volumeSliderStyle: {
+          display: "none"
+        }
+      }
+    });
+  }
+  setVolumeOrientation(){
+    console.log(this.volMatch)
+    if (this.volMatch.matches){
+      this.volBtn.addEventListener("mouseenter", this.handleMouseEnterX);
+      this.volBtn.addEventListener("click", this.handleMouseEnterX);
+      this.volBtn.addEventListener("mouseleave", this.handleMouseLeaveX);
+
+      this.volBtn.removeEventListener("mouseenter", this.handleMouseEnterY);
+      this.volBtn.removeEventListener("click", this.handleMouseEnterY);
+      this.volBtn.removeEventListener("mouseleave", this.handleMouseLeaveY);
+    } else {
+      this.volBtn.addEventListener("mouseenter", this.handleMouseEnterY);
+      this.volBtn.addEventListener("click", this.handleMouseEnterY);
+      this.volBtn.addEventListener("mouseleave", this.handleMouseLeaveY);
+
+      this.volBtn.removeEventListener("mouseenter", this.handleMouseEnterX);
+      this.volBtn.removeEventListener("click", this.handleMouseEnterX);
+      this.volBtn.removeEventListener("mouseleave", this.handleMouseLeaveX);
+    }
   }
   mdMediaMatchListener () {
-    console.log(this.mdMediaMatch);
+
     if (this.mdMediaMatch.matches){
       this.setState((state) => {
         return {
@@ -207,26 +301,29 @@ export default class AudioBar extends React.Component{
               minWidth: "33px",
               margin: "auto 4px",
               display: "flex"
-          }
+          },
+          clockDisplay: true
         }
       });
       
     } else {
       this.setState((state) => {
         return {
-          buttonStyle: {
-              height: "33px",
-              width: "33px",
-              margin: "auto 4px",
-              display: "none"
-          },
-          volumeButtonStyle: {
-            height: "33px",
-            width: "33px",
-            minWidth: "33px",
-            margin: "auto 4px",
-            display: "none"
-          }
+          // buttonStyle: {
+          //     height: "33px",
+          //     width: "33px",
+          //     margin: "auto 4px",
+          //     display: "none"
+          // },
+          // volumeButtonStyle: {
+          //   height: "33px",
+          //   width: "33px",
+          //   minWidth: "33px",
+          //   margin: "auto 4px",
+          //   display: "none"
+          // }
+          clockDisplay: false
+
         }
       });
     }
@@ -345,9 +442,8 @@ export default class AudioBar extends React.Component{
     this.mdMediaMatch = window.matchMedia("screen and (min-width: 775px)");
     this.mdMediaMatchListener();
     this.mdMediaMatch.addListener(this.mdMediaMatchListener);
-    
+
     this.audioCtx = new AudioContext();
-    
     
     if (this.props.videoSrc){
       this.audioSource = this.audioCtx.createMediaElementSource(this.props.videoSrc)
@@ -455,62 +551,9 @@ export default class AudioBar extends React.Component{
     // other listeners
     this.volBtn = document.getElementById(this.id.volumeButton);
     this.volBtnSldr = this.volBtn.getElementsByTagName("input")[0];
-    this.volBtn.addEventListener("mouseenter",
-      ()=>{
-        this.setState(()=>{
-          return {
-            volumeButtonStyle: { 
-              height: "33px",
-              width: "350px",
-              margin: "auto 4px",
-              display: "flex",
-            },
-            volumeSliderStyle: {
-              display: "inline-block",
-              width: "100%",
-              "margin": "auto 10px"
-            }
-          }
-        });
-      }
-    );
-    this.volBtn.addEventListener("click",
-      ()=>{
-        this.setState(()=>{
-          return {
-            volumeButtonStyle: { 
-              height: "33px",
-              width: "350px",
-              margin: "auto 4px",
-              display: "flex",
-            },
-            volumeSliderStyle: {
-              display: "inline-block",
-              width: "100%",
-              margin: "auto 10px",
-            }
-          }
-        });
-      }
-    );
-    this.volBtn.addEventListener("mouseleave",
-      ()=>{
-        this.setState(()=>{
-          return {
-            volumeButtonStyle: { 
-              height: "33px",
-              width: "33px",
-              minWidth: "33px",
-              margin: "auto 4px",
-              display: "flex"
-            },
-            volumeSliderStyle: {
-              display: "none"
-            }
-          }
-        });
-      }
-    );
+    this.volMatch = window.matchMedia("screen and (min-width: 950px)");
+    this.volMatch.addListener(this.setVolumeOrientation);
+    this.setVolumeOrientation();
 
     // timers
     this.statusAnimationTimerId = setInterval(()=>{
@@ -585,14 +628,18 @@ export default class AudioBar extends React.Component{
       this.setState(()=>{
         return {
           trackNo: next,
+          infoData: null,
         }
       });
+      this.getInfo(this.props.src[next]);
     } else {
       this.setState(()=>{
         return {
           trackNo: 0,
+          infoData: null,
         }
       });
+      this.getInfo(this.props.src[0]);
     }
   }
   onPrev(){
@@ -601,14 +648,18 @@ export default class AudioBar extends React.Component{
       this.setState(()=>{
         return {
           trackNo: prev,
+          infoData: null,
         }
       });
+      this.getInfo(this.props.src[prev]);
     } else {
       this.setState(()=>{
         return {
           trackNo: this.state.src.length + prev,
+          infoData: null,
         }
       });
+      this.getInfo(this.props.src[this.state.src.length + prev]);
     }    
   }
 
@@ -640,7 +691,8 @@ export default class AudioBar extends React.Component{
         }
       })
     } else {
-      this.infoElement.style.display = "block";
+      this.infoElement.style.display = "flex";
+      this.infoElement.style.flexDirection = "column";
       this.commentContainer.style.display = "none";
       this.barsContainer.style.display = "none";
       this.setState(()=>{
@@ -795,7 +847,7 @@ export default class AudioBar extends React.Component{
           </div>
           <div className="flex-group">
             <div className="flex-group">
-              <div style={this.style.clock} className="clock">
+              <div style={this.state.clockDisplay ? this.style.clock : {display: "none"}} className="clock">
                 <svg viewBox="0 0 100 50" height="100%">
                   <text fill="lawngreen" x="15" y="39" fontSize="35">
                     {this.secondsToMMSS(this.state.audioTime)}
@@ -824,19 +876,36 @@ export default class AudioBar extends React.Component{
                 </svg>
               </div>
             </div>
-            <div className="flex-group" style={{margin: "auto 25px"}}>
-              <button className={infoClass} 
+            <div className="flex-group my-auto mx-10">
+              <button className={infoClass}
                 onClick={this.onInfo} id={this.id.infoButton}
                 style={this.state.buttonStyle}>
                   <div style={this.style.infoContainer} id={this.id.infoContainer}>
-                    <u>Information:</u><br/>
-                    Song: {this.state.infoData ? this.state.infoData.name : null}<br/>
-                    Artist: {this.state.infoData ? this.state.infoData.artist : null}<br/>
-                    Release Date: {this.state.infoData.info ? this.state.infoData.info.releaseDate : null}<br/>
-                    Recorded In: {this.state.infoData.info ? this.state.infoData.info.recordedIn : null}<br/><br/>
-                    <u>Statistics:</u><br/>
-                    All-time plays: {this.state.infoData ? this.state.infoData.plays : null}<br/>
-                    All-time downloads: {null}
+                    
+                    {
+                      this.state.infoData ? 
+                      <div>
+                        <u>Information:</u><br/>
+                        Song: {this.state.infoData ? this.state.infoData.name : null}<br/>
+                        Artist: {this.state.infoData ? this.state.infoData.artist : null}<br/>
+                        Release Year: {this.state.infoData.info ? 
+                          this.state.infoData.info.releaseDate.split("/")[this.state.infoData.info.releaseDate.split("/").length - 1] : 
+                          null
+                        }
+                        <br/><br/>
+                        All-time plays: {this.state.infoData ? this.state.infoData.plays : null}<br/>
+                        All-time downloads: {null}
+                      </div>
+                      : 
+                      <div className="sk-chase m-auto">
+                        <div className="sk-chase-dot"></div>
+                        <div className="sk-chase-dot"></div>
+                        <div className="sk-chase-dot"></div>
+                        <div className="sk-chase-dot"></div>
+                        <div className="sk-chase-dot"></div>
+                        <div className="sk-chase-dot"></div>
+                      </div>
+                    }                   
                   </div>
                 </button>
               <button className={commentClass} id={this.id.commentButton}
