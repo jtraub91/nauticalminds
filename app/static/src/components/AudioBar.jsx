@@ -917,19 +917,19 @@ export default class AudioBar extends React.Component{
                 onClick={this.onBars}
                 style={this.state.buttonStyle}>
                 <div style={this.style.barsContainer} id={this.id.barsContainer}>
-                  <ol>
+                  <div>
                     {
                       this.props.src.map(
                       (src)=>
-                        <li key={`bars_track${this.props.src.indexOf(src)}`}
+                        <div key={`bars_track${this.props.src.indexOf(src)}`}
                           style={this.style.barsContainerItem} 
                           className="bars-container-item"
                           onClick={()=>this.onClickBarsItem(src)}>
                           {src.title.split(" - ").slice(-1)[0]}
-                        </li>
+                        </div>
                       )
                     }
-                  </ol>
+                  </div>
                 </div>
               </button>
             </div>

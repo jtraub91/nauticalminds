@@ -1,7 +1,6 @@
 var MODAL_OPEN = false;
 var rootContainer = document.getRootNode().body;
 var backdrop = null;
-var backdrop2 = null;
 
 var aboutButton = document.getElementById("aboutButton");
 var aboutModal = document.getElementById("aboutModal")
@@ -21,26 +20,35 @@ aboutButton.onclick = function (e) {
     div.innerHTML = "\n"
 
     let p = document.createElement("p");
+    p.className = "right-justified";
     p.innerHTML = "Nautical Minds is a music duo formed in Florida in 2012, consisting of Jason Marcus (vox) and Jason Traub (guitar)."
     aboutContainer.appendChild(header);
     aboutContainer.appendChild(p);
 
-    backdrop2 = document.createElement("div");
-    backdrop2.className = "nautical-minds-container backdrop"
-    backdrop2.style.backgroundColor = "rgba(0,0,0,0.25)";
-    backdrop2.onclick = function () {
-      aboutContainer.style.opacity = 0;
-      this.style.opacity = 0;
-      this.style.zIndex = 0;
+    if (backdrop === null){
+      backdrop = document.createElement("div");
+      backdrop.className = "nautical-minds-container backdrop"
+      backdrop.style.backgroundColor = "rgba(0,0,0,0.25)";
+      backdrop.onclick = function () {
+        if (formContainer){
+          formContainer.style.opacity = 0;
+        }
+        if (aboutContainer){
+          aboutContainer.style.opacity = 0;
+        }
+        this.style.opacity = 0;
+        this.style.zIndex = 0;
+      }
+      rootContainer.appendChild(backdrop);
     }
-    rootContainer.appendChild(backdrop2);
     rootContainer.appendChild(aboutContainer);
   }
   aboutContainer.style.visibility = "visible";
   aboutContainer.style.opacity = 1;
-  backdrop2.style.visibility = "visible";
-  backdrop2.style.opacity = 1;
-  backdrop2.style.zIndex = 2;
+  backdrop.style.visibility = "visible";
+  backdrop.style.opacity = 1;
+  backdrop.style.zIndex = 2;
+  backdrop.style.backdropFilter = "blur(15px)";
   
 }
 
@@ -199,16 +207,21 @@ function join(e) {
 
     formContainer.appendChild(form);
 
-    backdrop = document.createElement("div");
-    backdrop.className = "nautical-minds-container backdrop"
-    backdrop.onclick = function () {
-      // formContainer.style.visibility = "hidden";
-      formContainer.style.opacity = 0;
-      // this.style.visibility = "hidden";
-      this.style.opacity = 0;
-      this.style.zIndex = 0;
+    if (backdrop === null) {
+      backdrop = document.createElement("div");
+      backdrop.className = "nautical-minds-container backdrop"
+      backdrop.onclick = function () {
+        if (formContainer){
+          formContainer.style.opacity = 0;
+        }
+        if (aboutContainer){
+          aboutContainer.style.opacity = 0;
+        }
+        this.style.opacity = 0;
+        this.style.zIndex = 0;
+      }
+      rootContainer.appendChild(backdrop);
     }
-    rootContainer.appendChild(backdrop);
     rootContainer.appendChild(formContainer);
   }
   formContainer.style.visibility = "visible";
