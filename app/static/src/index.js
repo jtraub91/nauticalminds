@@ -1,4 +1,3 @@
-import './misc';
 import './react';
 import './modals';
 import NauticalStarship from './nauticalStarship';

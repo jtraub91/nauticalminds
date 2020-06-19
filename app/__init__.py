@@ -1,3 +1,6 @@
+import logging
+from logging.handlers import RotatingFileHandler
+
 from flask import Flask
 # from flask_admin import Admin
 # from flask_login import LoginManager
@@ -36,3 +39,13 @@ from app.models import Song
 # app.config['FLASK_ADMIN_SWATCH'] = 'journal'
 # admin = Admin(app, name='nautical minds', template_mode='bootstrap3')
 # admin.add_view(ModelView(models.Fan, db.session))
+
+
+# setup logging
+
+file_handler = RotatingFileHandler(f"{app.config['LOG_DIR']}/nauticalminds.log", "a", 1 * 1024 * 1024, 10)
+file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"))
+app.logger.setLevel(logging.INFO)
+file_handler.setLevel(logging.INFO)
+app.logger.addHandler(file_handler)
+app.logger.info('Nautical Minds flask app startup...')

@@ -20,17 +20,17 @@
     {% block content %}
 
     <div class="nautical-minds-container" id="nauticalMindsContainer">
-      <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"/>
       <div class="header">
         <div class="button-group">
           <button class="header-button nautical-btn purple" id="aboutButton">
             <a href="/about">About</a>
           </button>
-          <button class="header-button nautical-btn green">
+          <!-- <button class="header-button nautical-btn green">
             <a href="/shop">Shop</a>
           </button>
           <button class="header-button nautical-btn yellow">
-            <a href="/vault">Vault</a>
+            <a href="/vault">Vault</a> -->
           </button>
         </div>
         <h1 id="nauticalMindsHeader">Nautical Minds</h1>
@@ -41,10 +41,10 @@
         </div>
       </div>
       <div class="content-container">
-        <h4 class="quote orange">if it's important to ya', don't let it go...</h4>
-        <p class="mx-auto w450">
-          <a href="/join" id="joinLink">Join</a> today to listen to and download Nautical Minds EP!
-        </p>
+        
+        <!-- <p class="par-style-1">
+          <a href="/join" id="joinLink">Join</a> today and download Nautical Minds EP!
+        </p> -->
       </div>
       <div class="video-container center-relative" id="videoContainer" style="display: none;">
         <i class="fab fa-youtube center-relative" id="playMusicVideo"></i>

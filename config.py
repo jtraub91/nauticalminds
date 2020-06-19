@@ -9,6 +9,14 @@ class Develop(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'postgresql://nautical_test:nautical_test@161.35.114.25/nauticalminds_test'
 
+    LOG_DIR = os.path.join(basedir, "logs")
+    if not os.path.exists(LOG_DIR):
+        os.mkdir(LOG_DIR)
+    
+    COMMENTS_DIR = os.path.join(basedir, "comments")
+    if not os.path.exists(COMMENTS_DIR):
+        os.mkdir(COMMENTS_DIR)
+
     # MAIL_DEBUG = True
     # MAIL_SERVER = 'localhost'
     # MAIL_PORT = os.environ.get('MAIL_PORT') or 5025
@@ -22,3 +30,5 @@ class Production(object):
         self.SQLALCHEMY_TRACK_MODIFICATIONS = False
         self.SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
         # self.SQLALCHEMY_DATABASE_URI = 'postgresql://nauticalminds:nautical123@161.35.114.25/nauticalminds'
+        self.LOG_DIR = os.environ['LOG_DIR']
+        self.COMMENTS_DIR = os.environ['COMMENTS_DIR']

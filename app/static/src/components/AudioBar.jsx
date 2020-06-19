@@ -22,6 +22,7 @@ export default class AudioBar extends React.Component{
       barsButton: `bars_button_${timestamp}`,
       barsContainer: `bars_container_${timestamp}`,
       volumeButton: `volume_button_${timestamp}`,
+      volumeSliderInput: `volume_slider_input_${timestamp}`
     }
     this.style = {
       audioBar: {
@@ -89,18 +90,19 @@ export default class AudioBar extends React.Component{
       },
       commentContainer: {
         display: "none",
-        width: "350px",
-        position: "absolute",
-        bottom: "100px",
-        right: "100px",
-        border: "1px solid lawngreen",
-        backgroundColor: "rgba(0,0,0,0.5)",
+        position: "fixed",
+        top: "50%",
+        // border: "1px solid lawngreen",
+        // backgroundColor: "rgba(0,0,0,0.5)",
         transition: "height 0.3s linear, width 0.3s linear",
         fontFamily: "Courier New",
         fontSize: "12px",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        borderRadius: "3px"
+        borderRadius: "3px",
+        minWidth: "280px",
+        maxWidth: "350px",
+        width: "100%",
       },
       barsContainer: {
         display: "none",
@@ -182,6 +184,7 @@ export default class AudioBar extends React.Component{
     this.onPrev = this.onPrev.bind(this);
     this.onPlayPause = this.onPlayPause.bind(this);
     this.expandCollapse = this.expandCollapse.bind(this);
+    this.smMediaMatchListener = this.smMediaMatchListener.bind(this);
     this.mdMediaMatchListener = this.mdMediaMatchListener.bind(this);
     this.onInfo = this.onInfo.bind(this);
     this.getInfo = this.getInfo.bind(this);
@@ -233,11 +236,14 @@ export default class AudioBar extends React.Component{
     this.setState(()=>{
       return {
         volumeButtonStyle: { 
-          height: "300px",
-          width: "33px",
+          height: "33px",
+          width: "300px",
           margin: "auto 4px",
           display: "flex",
-          transform: "translateY(-258px)"
+          transform: "rotate(-90deg)",
+          position: "relative",
+          top: "-134px",
+          left: "-133px"
         },
         volumeSliderStyle: {
           display: "inline-block",
@@ -246,6 +252,7 @@ export default class AudioBar extends React.Component{
         }
       }
     });
+
   }
   
   handleMouseLeaveY(){
@@ -265,7 +272,6 @@ export default class AudioBar extends React.Component{
     });
   }
   setVolumeOrientation(){
-    console.log(this.volMatch)
     if (this.volMatch.matches){
       this.volBtn.addEventListener("mouseenter", this.handleMouseEnterX);
       this.volBtn.addEventListener("click", this.handleMouseEnterX);
@@ -328,6 +334,40 @@ export default class AudioBar extends React.Component{
       });
     }
   }
+  smMediaMatchListener () {
+
+    if (this.smMediaMatch.matches){
+      this.setState((state) => {
+        return {
+          buttonStyle: {
+              display: "none"
+          },
+          volumeButtonStyle: { 
+              display: "none"
+          },
+        }
+      });
+      
+    } else {
+      this.setState((state) => {
+        return {
+          buttonStyle: {
+              height: "33px",
+              width: "33px",
+              margin: "auto 4px",
+              display: "flex"
+          },
+          volumeButtonStyle: {
+            height: "33px",
+            width: "33px",
+            minWidth: "33px",
+            margin: "auto 4px",
+            display: "flex"
+          }
+        }
+      });
+    }
+  }
   createCommentContainer(){
     let commentContainer = document.createElement("div");
     commentContainer.id = this.id.commentContainer;
@@ -342,43 +382,61 @@ export default class AudioBar extends React.Component{
       }
     );
 
-    let header = document.createElement("h5");
-    header.innerHTML = "Comment Box";
-    header.style.margin = "auto";
     let textarea = document.createElement("textarea");
     Object.assign(textarea.style, {
-      width: "275px",
+      width: "auto",
       height: "150px",
-      margin: "10px auto",
+      margin: "4px",
       fontFamily: "Comic Sans MS",
-      padding: "20px 30px",
+      padding: "10px",
       letterSpacing: "1px",
       fontSize: "14px",
-      textAlign: "center"
+      resize: "none",
+      minHeight: "150px",
+      height: "50vh",
+      maxHeight: "720px",
     })
-
-    let btnContainer = document.createElement("div");
-    Object.assign(btnContainer.style, {
-      display: "flex",
-      flexDirection: "row",
-      margin: "10px 25px"
-    });
+    textarea.placeholder = "Leave a comment"
+    const MAX_LENGTH = 1000;
+    textarea.oninput = function(){
+      if (textarea.textLength >= MAX_LENGTH){
+        textarea.value = textarea.value.slice(0, MAX_LENGTH - 1);
+      }
+    }
+    let resetBtn = document.createElement("button");
+    resetBtn.className = "fa fa-undo blue top-right reset-btn";
+    resetBtn.type = "reset";
 
     let sendBtn = document.createElement("button");
     sendBtn.type = "submit";
     sendBtn.innerHTML = "Send";
-    sendBtn.className = "limegreen form-btn";
-    let clearBtn = document.createElement("button");
-    clearBtn.type = "reset";
-    clearBtn.className ="dark-grey form-btn";
-    clearBtn.innerHTML = "Clear";
+    sendBtn.className = "green black bottom-right form-btn";
+    sendBtn.onclick = (e)=>{
+      e.preventDefault();
+      $.post({
+        url: '/comment',  // todo: sync trackNo and song_id from db
+        headers: {
+          "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify({
+          comment: textarea.value,
+        }),
+        dataType: 'json',
+        success: (res)=>{
+          console.log(res)
+        },
+        error: (e)=>{
+          console.log(e)
+        }
+      });
+      this.onComment();
+      textarea.value = "";  // reset textarea
+    }
 
-    btnContainer.appendChild(sendBtn);
-    btnContainer.appendChild(clearBtn);
-
-    form.appendChild(header);
     form.appendChild(textarea);
-    form.appendChild(btnContainer);
+    form.appendChild(resetBtn);
+    form.appendChild(sendBtn);
 
     commentContainer.appendChild(form);
     return commentContainer
@@ -443,6 +501,9 @@ export default class AudioBar extends React.Component{
     this.mdMediaMatchListener();
     this.mdMediaMatch.addListener(this.mdMediaMatchListener);
 
+    this.smMediaMatch = window.matchMedia("screen and (max-width: 560px)");
+    this.smMediaMatch.addListener(this.smMediaMatchListener);
+
     this.audioCtx = new AudioContext();
     
     if (this.props.videoSrc){
@@ -482,7 +543,7 @@ export default class AudioBar extends React.Component{
       $.post({
         url: `/pauses?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
         headers: {
-          "X-CSRFToken": document.getElementById("_csrf_token").value
+          "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
         },
         success: (res)=>{
           console.log(res)
@@ -514,7 +575,7 @@ export default class AudioBar extends React.Component{
       $.post({
         url: `/plays?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
         headers: {
-          "X-CSRFToken": document.getElementById("_csrf_token").value
+          "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
         },
         success: (res)=>{
           console.log(res)
@@ -776,7 +837,6 @@ export default class AudioBar extends React.Component{
   }
 
   onMute(){
-    console.log("onmute");
     this.setState(()=>{
       return {
         audioMuted: !this.state.audioMuted
@@ -793,9 +853,9 @@ export default class AudioBar extends React.Component{
     
     let volumeButtonClass;
     if (this.state.audioMuted){
-      volumeButtonClass = "fa fa-volume-off extend ctrl-btn audiobar-btn";
+      volumeButtonClass = "fa fa-volume-off ctrl-btn audiobar-btn";
     } else {
-      volumeButtonClass = "fa fa-volume-up extend ctrl-btn audiobar-btn";
+      volumeButtonClass = "fa fa-volume-up ctrl-btn audiobar-btn";
     }
     
 
@@ -841,11 +901,12 @@ export default class AudioBar extends React.Component{
             <button className="fas fa-step-forward ctrl-btn audiobar-btn" style={this.state.buttonStyle}
               title="Forward" onClick={this.props.onNext ? this.props.onNext : this.onNext}/>
             <i className={volumeButtonClass} style={this.state.volumeButtonStyle} id={this.id.volumeButton}>
-              <div style={{position: "fixed", height: "33px", width: "33px"}} onClick={this.onMute}></div>
-              <input type="range" min="-36" max="6" step="0.5" defaultValue="0" style={this.state.volumeSliderStyle}></input>
+              {/* <div style={{position: "fixed", height: "33px", width: "33px"}} onClick={this.onMute}/> */}
+              <input type="range" min="-36" max="6" step="0.5" defaultValue="0" 
+                style={this.state.volumeSliderStyle} id={this.id.volumeSliderInput}/>
             </i>
           </div>
-          <div className="flex-group">
+          <div className="flex-group" style={{position: "fixed", right: "0", bottom: "7.5px"}}>
             <div className="flex-group">
               <div style={this.state.clockDisplay ? this.style.clock : {display: "none"}} className="clock">
                 <svg viewBox="0 0 100 50" height="100%">
@@ -894,7 +955,7 @@ export default class AudioBar extends React.Component{
                         }
                         <br/><br/>
                         All-time plays: {this.state.infoData ? this.state.infoData.plays : null}<br/>
-                        All-time downloads: {null}
+                        {/* All-time downloads: {null} */}
                       </div>
                       : 
                       <div className="sk-chase m-auto">

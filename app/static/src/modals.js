@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import UserPanel from './components/UserPanel.jsx';
+
 var MODAL_OPEN = false;
 var rootContainer = document.getRootNode().body;
 var backdrop = null;
@@ -22,8 +26,23 @@ aboutButton.onclick = function (e) {
     let p = document.createElement("p");
     p.className = "right-justified";
     p.innerHTML = "Nautical Minds is a music duo formed in Florida in 2012, consisting of Jason Marcus (vox) and Jason Traub (guitar)."
+
+    // let contact = document.createElement("h3");
+    // contact.className = "form-header";
+    // contact.innerHTML = "Links"
+
+    // let contactInfo = document.createElement("p");
+    // contactInfo.className = "right-justified";
+    // contactInfo.innerHTML = 
+    // "<ul> \
+    //   <li><a href='https://linktr.ee/nauticalminds' target='_blank'>linktr.ee</a></li> \
+    //   <li><a href='https://linktr.ee/nauticalminds' target='_blank'>YouTube</a></li> \
+    // </ul>"
+
     aboutContainer.appendChild(header);
     aboutContainer.appendChild(p);
+    // aboutContainer.appendChild(contact);
+    // aboutContainer.appendChild(contactInfo);
 
     if (backdrop === null){
       backdrop = document.createElement("div");
@@ -32,9 +51,11 @@ aboutButton.onclick = function (e) {
       backdrop.onclick = function () {
         if (formContainer){
           formContainer.style.opacity = 0;
+          formContainer.style.display = "none";
         }
         if (aboutContainer){
           aboutContainer.style.opacity = 0;
+          aboutContainer.style.display = "none";
         }
         this.style.opacity = 0;
         this.style.zIndex = 0;
@@ -45,6 +66,7 @@ aboutButton.onclick = function (e) {
   }
   aboutContainer.style.visibility = "visible";
   aboutContainer.style.opacity = 1;
+  aboutContainer.style.display = "block";
   backdrop.style.visibility = "visible";
   backdrop.style.opacity = 1;
   backdrop.style.zIndex = 2;
@@ -74,7 +96,7 @@ function submitForm(submitEvent){
         password: password
       }))
       xhr.onload = (resp) => {
-        if (xhr.status !== 200) {
+        if (xhr.status !== 200 ){
           let div = document.createElement("div")
           formContainer.appendChild(div);
           div.className = "form-alert error";
@@ -82,17 +104,32 @@ function submitForm(submitEvent){
           setTimeout(()=>{
             div.style = "display: none; transition: display 1s ease-out";
           }, 3000);
+        } else if (JSON.parse(xhr.response).status !== 'success') {
+          let div = document.createElement("div");
+          formContainer.appendChild(div);
+          div.className = "form-alert error";
+          div.innerHTML = `<span>${JSON.parse(xhr.response).message}</span>`
+          setTimeout(()=>{
+            div.style = "display: none; transition: display 1s ease-out";
+          }, 3000);
         } else {
           let div = document.createElement("div")
-          formContainer.appendChild(div);
+          rootContainer.appendChild(div);
           div.className = "form-alert success";
-          console.log(xhr.response);
           div.innerHTML = `<span>${JSON.parse(xhr.response).message}</span>`
           setTimeout(()=>{
             formContainer.style.visibility = "hidden";
             formContainer.style.opacity = 0;
+            div.style = "display: none; transition: display 1s ease-out"
             backdrop.style.opacity = 0;
             backdrop.style.zIndex = 0;
+
+            let siteAlert = document.createElement('div');
+            rootContainer.appendChild(siteAlert);
+            siteAlert.className = "site-alert success w450"
+            siteAlert.innerHTML = `${JSON.parse(xhr.response).message}`;
+            ReactDOM.render(<UserPanel loggedIn={true}/>, document.getElementById("userPanel"));
+
           }, 3000);
         }
       }
@@ -213,9 +250,11 @@ function join(e) {
       backdrop.onclick = function () {
         if (formContainer){
           formContainer.style.opacity = 0;
+          formContainer.style.display = "none";
         }
         if (aboutContainer){
           aboutContainer.style.opacity = 0;
+          aboutContainer.style.display = "none";
         }
         this.style.opacity = 0;
         this.style.zIndex = 0;
@@ -226,6 +265,7 @@ function join(e) {
   }
   formContainer.style.visibility = "visible";
   formContainer.style.opacity = 1;
+  formContainer.style.display = "block";
   backdrop.style.visibility = "visible";
   backdrop.style.opacity = 1;
   backdrop.style.zIndex = 2;
@@ -233,5 +273,5 @@ function join(e) {
 };
 loginButton.onclick = join;
 
-var joinLink = document.getElementById("joinLink");
-joinLink.onclick = join;
+// var joinLink = document.getElementById("joinLink");
+// joinLink.onclick = join;

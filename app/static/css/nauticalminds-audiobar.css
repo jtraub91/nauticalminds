@@ -19,12 +19,28 @@
   background-color: rgb(5,5,5);
 }
 
+.red-orange {
+  transition: background-color 0.13s ease-in, color 0.13s ease-in;
+  border: 1px orangered solid;
+  color: white;
+  background-color: rgba(0,0,0,0.1);
+}
+.red-orange:hover{
+  background-color: orangered;
+  color: black;
+}
+
 .green {
   transition: background-color 0.1s ease-in, color 0.1s ease-in;
   border: 1px lawngreen solid;
   background-color: rgba(0,0,0,0.2);
   color: white;
 }
+
+.green.black {
+  color: black !important;
+}
+
 .green-active {
   border: 1px lawngreen solid;
   background-color: lawngreen !important;
@@ -130,7 +146,7 @@
 
 
 .extend {
-  transition: width 0.69s ease, height 0.69s ease;
+  transition: width 0.33s ease, height 0.33s ease;
   width: 33px;
 }
 

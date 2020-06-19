@@ -84,7 +84,6 @@ input.join-input{
 }
 
 .about-container p {
-  width: 80%;
   color: white;
   font-size: 1rem;
   padding: 15px;
@@ -136,24 +135,18 @@ form input::placeholder{
   text-align: center;
 }
 
-form button {
-  width: 100px;
-  margin: 10px auto;
-}
-
 .text-center{
   text-align: center;
 }
 
 button.form-btn {
   text-decoration: none;
-  margin: 10px auto;
   font-family: 'Comic Sans MS';
   font-size: 18px;
   color: white;
   background-color: rgba(0,0,0,0.1);
   z-index: 2;
-  border-radius: 2px;
+  border-radius: 10px;
 
 }
 
@@ -165,4 +158,22 @@ button.limegreen {
 }
 button.limegreen:hover {
   background-color: limegreen !important;
+}
+
+.bottom-right {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.reset-btn {
+  border-radius: 10px;
+  padding: 5px;
+  color: black;
 }
