@@ -5,57 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no">
     <meta name="description" content="Nautical Minds">
     <meta name="author" content="Jason Traub">
-    <link rel="icon" href="../static/images/NauticalMindsEP.jpg">
+    <link rel="icon" href="/static/images/NauticalMindsEP.jpg">
     <title>Nautical Minds</title>
 
     <!-- CSS files -->
-    <link href="../static/style/fontawesome-free-5.8.1-web/css/all.min.css" rel="stylesheet">
-    <link href="../static/css/nauticalminds.css" rel="stylesheet">
-    <link href="../static/css/nauticalminds-audiobar.css" rel="stylesheet">
-    <link href="../static/css/forms.css" rel="stylesheet">
+    <link href="/static/css/fa/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/nauticalminds.css" rel="stylesheet">
+    <link href="/static/css/nauticalminds-audiobar.css" rel="stylesheet">
+    <link href="/static/css/forms.css" rel="stylesheet">
   </head>
 
   <body>
-
-    {% block content %}
-
     <div class="nautical-minds-container" id="nauticalMindsContainer">
       <input type="hidden" name="_csrf_token" id="_csrf_token" value="{{ csrf_token() }}"/>
-      <div class="header">
-        <div class="button-group">
-          <button class="header-button nautical-btn purple" id="aboutButton">
-            <a href="/about">About</a>
-          </button>
-          <!-- <button class="header-button nautical-btn green">
-            <a href="/shop">Shop</a>
-          </button>
-          <button class="header-button nautical-btn yellow">
-            <a href="/vault">Vault</a> -->
-          </button>
+      <input type="hidden" name="_user_authenticated" id="_user_authenticated" value="{{ logged_in }}"/>
+      <input type="hidden" name="_user_email" id="_user_email" value="{{ user_email }}"/>
+      <div id="reactApp">  
+        <div class="header">
+          <div class="button-group">
+            <button class="header-button nautical-btn purple" id="aboutButton">
+              <a href="/about">About</a>
+            </button>
+            <!-- <button class="header-button nautical-btn green">
+              <a href="/shop">Shop</a>
+            </button> -->
+            <!-- <button class="header-button nautical-btn yellow">
+              <a href="/vault">Vault</a>
+            </button> -->
+          </div>
+          <h1 id="nauticalMindsHeader"><a href="/">Nautical Minds</a></h1>
+          <div class="button-group" id="userPanel">
+            {% block joinLogin %}
+            <button class="header-button nautical-btn color-wheel" id="joinButton">
+              <a href="/join">Join</a>
+            </button>
+            <button class="header-button nautical-btn color-wheel green">
+              <a href="/login">Login</a>
+            </button>
+            {% endblock joinLogin %}
+          </div>
         </div>
-        <h1 id="nauticalMindsHeader">Nautical Minds</h1>
-        <div class="button-group" id="userPanel">
-          <button class="header-button nautical-btn color-wheel" id="loginButton">
-            <a href="/join">Join</a>
-          </button>
+        <div id="app"/>
+        <div class="content-container">
+          {% block content %}
+          <p class="nautical hover">
+            <a class="no-link-style" href="/join"><span class="hover-title blue-violet">Join</span> Nautical Minds to <span class="hover-title orange">listen</span> and <span class="hover-title green-red">download</span>!</a>
+          </p>
+          <p class="cursive">
+            Stream
+          </p>
+          <div class="link-container">
+            <div class="apple">
+              <a href="https://music.apple.com/us/artist/nautical-minds/1039080300" target="_blank">
+                <img src="/static/images/apple/US-UK_Apple_Music_Badge_RGB.svg"/>
+              </a>
+            </div>
+          </div>
+          <div class="link-container">
+            <div>
+              <a href="spotify:artist:6A65EVaN2mxZYACrqkUBwN" target="_blank">
+                <img class="spotify" src="/static/images/spotify/Spotify_Logo_CMYK_Green.png" />
+              </a>
+            </div>
+          </div>
+          <p class="cursive">
+            Follow
+          </p>
+          <div class="flex-row">
+            <div class="link-item">
+              <a href="https://twitter.com/Nautical_Minds" target="_blank">
+                <img class="social-icon twitter" src="/static/images/twitter/Twitter_Social_Icon_Square_White.svg"/>
+              </a>
+            </div>
+            <div class="link-item">
+              <a href="https://www.facebook.com/NauticalMindsMusic" target="_blank">
+                <img class="social-icon facebook" src="/static/images/facebook/f_logo_RGB-Blue_58.png"/>
+              </a>
+            </div>
+            <div class="link-item">
+              <a href="https://www.instagram.com/nautical_minds" target="_blank">
+                <img class="social-icon instagram" src="/static/images/instagram/IG_Glyph_Fill-0.png"/>
+              </a>
+            </div>
+            <div class="link-item">
+              <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fnautical-minds&color=orange_white&size=32" style="width: 32px; height: 32px; margin: auto;"></iframe> 
+            </div>
+          </div>
+          <p class="cursive">Watch</p>
+          <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/uCdglojfI0w" frameborder="0" allow="acceleromter; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          
+          {% endblock content %}
         </div>
       </div>
-      <div class="content-container">
         
-        <!-- <p class="par-style-1">
-          <a href="/join" id="joinLink">Join</a> today and download Nautical Minds EP!
-        </p> -->
-      </div>
-      <div class="video-container center-relative" id="videoContainer" style="display: none;">
-        <i class="fab fa-youtube center-relative" id="playMusicVideo"></i>
-      </div>
-      <div id="audioBar"><!-- React Component --></div>
-      
+      <footer class="footer">
+        &copy; 2020 Nautical Records
+      </footer>
     </div>
-    {% endblock content %}
-
     {% block script %}
-      <script src="../static/dist/nauticalminds.bundle.js"></script>
+    <script src="../static/dist/nauticalminds.bundle.js"></script>
     {% endblock script %}
   </body>
 </html>

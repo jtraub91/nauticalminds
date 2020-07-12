@@ -1,42 +1,20 @@
 {% extends "index.html" %}
 
-{% block navbar_content %}
-  <h1 style="position: relative; left: 50%; transform: translate(-50%); white-space: nowrap" id="header">
-    <a href="/">Nautical Minds</a>
-  </h1>
-
-  <div class="link-nav d-flex flex-row justify-content-center align-items-center">
-    <!-- link class is used in nautical.js -->
-    <a class="link link-active my-auto mx-2 d-inline-flex" href="/about">
-      About
-    </a>
-    <a class="link my-auto mx-2 d-inline-flex" href="/music">
-      Music
-    </a>
-  {#        <a class="link my-auto mx-2 d-inline-flex" href="/store">#}
-  {#          Store#}
-  {#        </a>#}
-  </div>
-{% endblock navbar_content %}
-
 {% block content %}
 
-  <div class="d-flex flex-column justify-content-center align-items-center">
-
-
-    <p class="my-5 text-center">
-      Nautical Minds, consisting of Jason Marcus and Jason Traub, was formed in December of 2012,
-      as a studio project to create dope music. Nautical Minds EP, released in September of 2015,
-      combines elements of rap, rock, hip hop, blues, funk, and more.
+  <div class="about-container center-relative dark-modal" style="visibility: visible; opacity: 1; display: block;">
+    <h3 class="form-header">About</h3>
+    <p class="right-justified">
+      Nautical Minds is a music duo, formed in Florida in 2012, consisting of Jason Marcus (vox) and Jason Traub (guitar).
     </p>
-    <p class="my-5 text-center">
-        We'd love to hear your feedback. <br>
-        If you'd like to get in touch, please send an email to NauticalMindsMusic@gmail.com <br>
-        Peace and Love, <br>
-        Nautical Minds
+    <h3 class="form-header">Contact</h3>
+    <p class="right-justified" style="padding-top: 0; text-align: end">
+      <a class="contact-link" href="mailto:info@nauticalminds.com">info@nauticalminds.com</a>
     </p>
-
-
+    <h3 class="form-header">Links</h3>
+    <p class="right-justified" style="padding-top: 0; text-align: end">
+      <a class="contact-link-blue" href="https://linktr.ee/nauticalminds" target="_blank">linktr.ee</a>
+    </p>
   </div>
 
 {% endblock %}

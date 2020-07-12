@@ -1,14 +1,18 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Lobster|Lobster+Two|ZCOOL+QingKe+HuangYou|Cedarville+Cursive');
 
-.quote {
-  margin: 0 auto;
+.cursive {
+  margin: 25px auto 0 auto;
   color: black;
   text-align: center;
   font-family: "Cedarville Cursive", cursive;
+  font-size: 1.25rem;
 }
 .orange {
   color: orange;
+}
+.mr-15{
+  margin-right: 15px;
 }
 
 @media only screen and (max-width: 600px){
@@ -59,7 +63,7 @@ p.right-justified {
 
 @media screen and (min-aspect-ratio: 5/4){
   #nauticalMindsHeader {
-    font-size: 2.9rem;
+    /* font-size: 2.9rem; */
     color: black;
   }
   #nauticalMindsContainer {
@@ -70,10 +74,11 @@ p.right-justified {
     background-size: cover;
     background-color: white;
   }
+  
 }
 @media screen and (max-aspect-ratio: 5/4){
   #nauticalMindsHeader {
-    font-size: 2.5rem;
+    /* font-size: 2.5rem; */
     color: white;
   }
   #nauticalMindsContainer {
@@ -84,6 +89,16 @@ p.right-justified {
     background-size: contain;
     /* background-color: black; */
   }
+}
+#nauticalVideoContainer {
+  position: absolute;
+  min-width: 320px;
+  width: 100%;
+  height: auto;
+  max-width: 720px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 button > a {
@@ -118,8 +133,8 @@ button {
 /* end bootstrap inheritance */
 
 .header {
+  position: relative;
   z-index: 2;
-  position: fixed;
   height: 50px;
   width: 100%;
   min-width: 320px;
@@ -283,16 +298,47 @@ input {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.09);
   }
 }
 
-.hover:hover{
-  color: lightskyblue;
+a.no-link-style {
+  text-decoration: none;
+  color: inherit;
+}
+a.no-link-style:visited {
+  color: inherit;
+}
+a.no-link-style:active {
+  color: inherit;
+}
+a.no-link-style:hover {
+  color: inherit;
 }
 
-.hover:active{
+
+.hover-title.blue-violet {
   color: dodgerblue;
+  transition: color 0.1s ease-in-out;
+}
+.hover-title.blue-violet:hover{
+  color: violet;
+}
+
+.hover-title.green-red {
+  color: lawngreen;
+  transition: color 0.1s ease-in-out;
+}
+.hover-title.green-red:hover {
+  color: red;
+}
+
+.hover-title.orange {
+  color: orange;
+  transition: color 0.1s ease-in-out;
+}
+.hover-title.orange:hover {
+  color: yellow;
 }
 
 .par-style-1 {
@@ -314,15 +360,38 @@ input {
   /* z-index: 1; */
 }
 
+p.nautical{
+  width: auto;
+  min-width: 250px;
+  max-width: 450px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,0.9);
+  color: white;
+  text-align: center;
+  margin: auto;
+  font-family: "ZCOOL QingKe HuangYou";
+  letter-spacing: 1px;
+  padding: 5px 10px;
+}
+
+.mb-25 {
+  margin: 25px;
+}
+
 .nautical-minds-container {
+  min-width: 320px;
   width: 100vw;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   z-index: 1;
 }
+/* .nautical-minds-container::-webkit-scrollbar{
+  display: none;
+} */
 
 .my-auto{
   margin-top: auto;
@@ -336,8 +405,12 @@ input {
   margin-left: 10px;
   margin-right: 10px;
 }
+.mx-5 {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 
-#audioBar {
+.audioBar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -353,12 +426,18 @@ input {
   top: 0px;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: calc(100% - 125px);
   z-index: 1;
-  overflow-y: scroll;
-  padding-right: 17px;
+  /* overflow-y: scroll; */
+  /* padding-right: 17px; */
   padding-top: 125px;
   box-sizing: content-box;
+  -ms-overflow-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.content-container::-webkit-scrollbar {
+  display: none;
 }
 #joinLink{
   color: dodgerblue;
@@ -371,14 +450,17 @@ input {
   transform: translate(-50%, -50%);
 }
 
-video {
-  width: 100%;
-  height: 100%;
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+.link-item {
+  display: flex;
 }
 
 .video-container {
-  width: 100%;
-  height: 100%;
+  margin: 10px auto 150px auto;
 }
 
 .video {
@@ -392,6 +474,25 @@ video {
   font-size: 5rem;
   color: lawngreen;
   transition: color 0.3s ease-in-out;
+}
+
+img.social-icon {
+  width: 40px;
+  height: auto;
+  margin: 10px;
+}
+img.social-icon.twitter {
+  background-color: #1da1f2;
+}
+img.social-icon.facebook {
+  /* background-color: #0e1f56; */
+}
+img.social-icon.instagram{ 
+  /* background: #f09433; 
+  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+  background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);  */
+  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 ); */
 }
 
 .fa-youtube:hover{
@@ -507,14 +608,14 @@ video {
   padding: 10px;
   border-radius: 5px;
   position: absolute;
-  top: 50px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   z-index: 1;
 }
 
-.site-alert.success {
+.site-alert.msg-success {
   color: lawngreen;
   backdrop-filter: invert(100%);
 }
@@ -531,8 +632,30 @@ video {
   height: 45px;
   width: 45px;
   border-radius: 25px;
-  background-color: rgba(0,0,0,0.5);
-  margin: auto 0 auto auto;
+  background-color: rgba(0,0,0,0.2);
+  margin: 5px 7.5px 0px 5px;
+}
+.user-icon-container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.user-icon-container.inverted {
+  filter: invert(100%);
+}
+.user-icon-container:hover{
+  filter: invert(100%);
+}
+.user-icon-container:active{
+  filter: invert(100%);
+}
+.user-container-item {
+  padding: 4px;
+  transition: background-color 0.33s linear;
+  text-align: center;
+}
+.user-container-item:hover {
+  background-color: #7cfc0080;
 }
 
 .loginIconContainer img {
@@ -540,5 +663,104 @@ video {
   height: 90%;
   width: 90%;
   margin: auto;
-  /* animation: 0.3s pulsing linear infinite; */
+  animation: 1.3s pulsing linear infinite;
+}
+
+.user-dropdown {
+  position: absolute;
+  z-index: 2;
+  top: 50px;
+  right: 50px;
+  display: block;
+  width: auto;
+  height: auto;
+  position: absolute;
+  border: 1px solid lawngreen;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: height 0.3s linear 0s, width 0.3s linear 0s;
+  font-family: "Courier New";
+  font-size: 1rem;
+  color: white;
+  border-radius: 3px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+#nauticalMindsHeader {
+  /* font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width]))); */
+  font-size: calc(23px + (50 - 23) * ((100vw - 300px) / (1600 - 300)));
+  margin: 10px auto;
+}
+
+h1#nauticalMindsHeader > a {
+  text-decoration: none;
+}
+
+a.contact-link {
+  text-decoration: none;
+  color: white;
+  transition: color 0.1s ease-in;
+}
+a.contact-link:hover{
+  color: limegreen;
+}
+a.contact-link:active{
+  color: dodgerblue;
+}
+a.contact-link:visited{
+  color: grey;
+}
+a.contact-link-blue {
+  text-decoration: none;
+  color: white;
+  transition: color 0.1s ease-in;
+}
+a.contact-link-blue:hover{
+  color: dodgerblue;
+}
+a.contact-link:active{
+  color: limegreen;
+}
+a.contact-link:visited{
+  color: grey;
+}
+
+.msg-fail {
+  border: solid 1px red;
+  color: red;
+  font-family: 'Comic Sans MS';
+}
+
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-border {
+  display: inline-block;
+  vertical-align: text-bottom;
+  border: 3px solid lawngreen;
+  width: 50px;
+  height: 50px;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 1s linear infinite;
+  margin: auto;
+}
+
+.link-container {
+  margin: 5px auto;
+  background-color: rgba(0,0,0,0);
+}
+.spotify{
+  width: auto;
+  height: 35px;
+  margin: 17.5px;
 }

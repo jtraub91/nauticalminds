@@ -12,10 +12,9 @@ class Develop(object):
     LOG_DIR = os.path.join(basedir, "logs")
     if not os.path.exists(LOG_DIR):
         os.mkdir(LOG_DIR)
-    
-    COMMENTS_DIR = os.path.join(basedir, "comments")
-    if not os.path.exists(COMMENTS_DIR):
-        os.mkdir(COMMENTS_DIR)
+
+    MUSIC_DIR = os.path.join(basedir, "music")
+    VIDEO_DIR = os.path.join(basedir, "video")
 
     # MAIL_DEBUG = True
     # MAIL_SERVER = 'localhost'
@@ -31,4 +30,4 @@ class Production(object):
         self.SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
         # self.SQLALCHEMY_DATABASE_URI = 'postgresql://nauticalminds:nautical123@161.35.114.25/nauticalminds'
         self.LOG_DIR = os.environ['LOG_DIR']
-        self.COMMENTS_DIR = os.environ['COMMENTS_DIR']
+        self.MUSIC_DIR = os.environ['MUSIC_DIR']

@@ -1,9 +1,10 @@
 .vscode/
 __pycache__/
 *.pyc
-app.db
+
 venv/
-app/static/music/
-app/static/video/
-app/static/node_modules/
-app/static/dist/
+node_modules/
+
+music/
+video/
+logs/

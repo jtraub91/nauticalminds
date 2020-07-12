@@ -1,5 +1,5 @@
 .dark-modal {
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.4);
   border: 1px solid black;  /* lives matter */
   z-index: 1000;
   visibility: hidden;
@@ -12,6 +12,10 @@
 
 form input:focus {
   outline: none
+}
+
+textarea:focus{
+  outline: none;
 }
 
 input.join-input{
@@ -45,6 +49,13 @@ input.join-input{
   top: 25px;
   right: 0;
   margin: 5px 10px;
+}
+.form-alert.big {
+  font-size: 1.25rem;
+}
+.form-alert.comment {
+  left: 5px !important;
+  right: inherit;
 }
 .form-alert.error {
   color: red;
@@ -141,12 +152,12 @@ form input::placeholder{
 
 button.form-btn {
   text-decoration: none;
-  font-family: 'Comic Sans MS';
+  /* font-family: 'Comic Sans MS'; */
   font-size: 18px;
   color: white;
   background-color: rgba(0,0,0,0.1);
   z-index: 2;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 
 }
 
@@ -172,8 +183,8 @@ button.limegreen:hover {
   right: 10px;
 }
 
-.reset-btn {
-  border-radius: 10px;
+.comment-reset-btn {
+  /* border-radius: 10px; */
   padding: 5px;
   color: black;
 }

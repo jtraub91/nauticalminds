@@ -79,7 +79,6 @@
   font-family: 'ZCOOL QingKe HuangYou';
   border: solid 2px black;
   background-color: rgba(0,0,0,0.5);
-  width: 300px;
   height: 33px;
   margin: auto 3px;
 }
@@ -100,13 +99,21 @@
 
 .audioBarControls { 
   margin: auto 5px;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .flex-group {
   flex-direction: row;
   display: flex;
 }
+.flex-col {
+  flex-direction: column;
+  display: flex;
+}
+button.no-border{
+  border: none;
+}
+
 
 .ctrl-btn {
   border: 1px solid rgb(0,1,39);
@@ -204,11 +211,19 @@ input[type=range]::-webkit-slider-runnable-track{
 }
 
 input[type=range]::-moz-range-track{
-
+  height: 2px;
+  margin: auto;
+  cursor: pointer;
+  width: inherit;
+  background: lawngreen;
 }
 
 input[type=range]::-ms-track{
-
+  height: 1px;
+  margin: auto;
+  cursor: pointer;
+  width: inherit;
+  background: lawngreen;
 }
 
 input[type=range]::-ms-fill-lower{
