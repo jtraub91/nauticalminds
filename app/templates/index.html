@@ -9,6 +9,7 @@
     <title>Nautical Minds</title>
 
     <!-- CSS files -->
+    <link href="/static/css/stripe.css" rel="stylesheet">
     <link href="/static/css/fa/css/all.min.css" rel="stylesheet">
     <link href="/static/css/nauticalminds.css" rel="stylesheet">
     <link href="/static/css/nauticalminds-audiobar.css" rel="stylesheet">
@@ -36,76 +37,114 @@
           <h1 id="nauticalMindsHeader"><a href="/">Nautical Minds</a></h1>
           <div class="button-group" id="userPanel">
             {% block joinLogin %}
+            {% if logged_in %}
+            <a href="/logout">Logout</a>
+            <div class="loginIconContainer">
+              <div class="user-icon-container">
+                <img src="/static/images/nauticalstarship-alt.svg" title="Logged in as {{ user_email }}"/>
+              </div>
+            </div>
+            
+            {% else %}
             <button class="header-button nautical-btn color-wheel" id="joinButton">
               <a href="/join">Join</a>
             </button>
             <button class="header-button nautical-btn color-wheel green">
               <a href="/login">Login</a>
             </button>
+            {% endif %}
             {% endblock joinLogin %}
           </div>
         </div>
-        <div id="app"/>
         <div class="content-container">
           {% block content %}
+          {% if logged_in %}
+          <div class="flex-col my-50 bg-dark">
+            <!-- <p class="cursive">
+              Notice
+            </p>
+            <p class="par-1">
+              Javascript appears to be disabled. This site is best experienced with javascript enabled.<br><br>
+              You may continue without JavaScript and download <i>Nautical Minds EP</i> with the following links.
+            </p> -->
+            <h5 class="ep-title">Nautical Minds EP</h5>
+            <ol class="tracklist">
+              <li><a href="/music/nautical_minds_ep/gotta_let_you_know.mp3">Gotta Let You Know</a></li>
+              <li><a href="/music/nautical_minds_ep/aint_gotta_care.mp3">Ain't Gotta Care</a></li>
+              <li><a href="/music/nautical_minds_ep/funk1.mp3">Funk 1 (ft. B.I.G. Jay)</a></li>
+              <li><a href="/music/nautical_minds_ep/spacy_stacy.mp3">Spacy Stacy</a></li>
+              <li><a href="/music/nautical_minds_ep/sidestreet_robbery.mp3">A Side Street Robbery</a></li>
+              <li><a href="/music/nautical_minds_ep/off_the_clock.mp3">Off The Clock</a></li>
+            </ol>
+          
+          </div>
+          {% else %}
           <p class="nautical hover">
             <a class="no-link-style" href="/join"><span class="hover-title blue-violet">Join</span> Nautical Minds to <span class="hover-title orange">listen</span> and <span class="hover-title green-red">download</span>!</a>
           </p>
-          <p class="cursive">
-            Stream
-          </p>
-          <div class="link-container">
-            <div class="apple">
-              <a href="https://music.apple.com/us/artist/nautical-minds/1039080300" target="_blank">
-                <img src="/static/images/apple/US-UK_Apple_Music_Badge_RGB.svg"/>
-              </a>
+          <div class="flex-col my-50 bg-dark">
+            <p class="cursive">
+              Stream
+            </p>
+            <div class="link-container">
+              <div class="apple">
+                <a href="https://music.apple.com/us/artist/nautical-minds/1039080300" target="_blank">
+                  <img src="/static/images/apple/US-UK_Apple_Music_Badge_RGB.svg"/>
+                </a>
+              </div>
+            </div>
+            <div class="link-container">
+              <div>
+                <a href="https://open.spotify.com/artist/6A65EVaN2mxZYACrqkUBwN?si=VvkOYQsHR8uoVLe1CD8JtA"
+                  target="_blank">
+                <!-- <a href="spotify:artist:6A65EVaN2mxZYACrqkUBwN" target="_blank"> -->
+                  <img class="spotify" src="/static/images/spotify/Spotify_Logo_CMYK_Green.png" />
+                </a>
+              </div>
             </div>
           </div>
-          <div class="link-container">
-            <div>
-              <a href="spotify:artist:6A65EVaN2mxZYACrqkUBwN" target="_blank">
-                <img class="spotify" src="/static/images/spotify/Spotify_Logo_CMYK_Green.png" />
-              </a>
+          <div class="flex-col my-50 bg-dark">
+            <p class="cursive">
+              Follow
+            </p>
+            <div class="flex-row">
+              <div class="link-item">
+                <a href="https://twitter.com/Nautical_Minds" target="_blank">
+                  <img class="social-icon twitter" src="/static/images/twitter/Twitter_Social_Icon_Square_White.svg"/>
+                </a>
+              </div>
+              <div class="link-item">
+                <a href="https://www.facebook.com/NauticalMindsMusic" target="_blank">
+                  <img class="social-icon facebook" src="/static/images/facebook/f_logo_RGB-Blue_58.png"/>
+                </a>
+              </div>
+              <div class="link-item">
+                <a href="https://www.instagram.com/nautical_minds" target="_blank">
+                  <img class="social-icon instagram" src="/static/images/instagram/IG_Glyph_Fill-0.png"/>
+                </a>
+              </div>
+              <div class="link-item">
+                <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fnautical-minds&color=orange_white&size=32" style="width: 32px; height: 32px; margin: auto;"></iframe> 
+              </div>
             </div>
           </div>
-          <p class="cursive">
-            Follow
-          </p>
-          <div class="flex-row">
-            <div class="link-item">
-              <a href="https://twitter.com/Nautical_Minds" target="_blank">
-                <img class="social-icon twitter" src="/static/images/twitter/Twitter_Social_Icon_Square_White.svg"/>
-              </a>
-            </div>
-            <div class="link-item">
-              <a href="https://www.facebook.com/NauticalMindsMusic" target="_blank">
-                <img class="social-icon facebook" src="/static/images/facebook/f_logo_RGB-Blue_58.png"/>
-              </a>
-            </div>
-            <div class="link-item">
-              <a href="https://www.instagram.com/nautical_minds" target="_blank">
-                <img class="social-icon instagram" src="/static/images/instagram/IG_Glyph_Fill-0.png"/>
-              </a>
-            </div>
-            <div class="link-item">
-              <iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fnautical-minds&color=orange_white&size=32" style="width: 32px; height: 32px; margin: auto;"></iframe> 
+          <div class="flex-col my-50 bg-dark">
+            <p class="cursive">Watch</p>
+            <div class="video-container">
+              <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/uCdglojfI0w" frameborder="0" allow="acceleromter; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
-          <p class="cursive">Watch</p>
-          <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/uCdglojfI0w" frameborder="0" allow="acceleromter; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          
+          {% endif %}
           {% endblock content %}
+          <footer class="footer">
+            &copy; 2020 Nautical Records
+          </footer>
         </div>
       </div>
-        
-      <footer class="footer">
-        &copy; 2020 Nautical Records
-      </footer>
     </div>
     {% block script %}
-    <script src="../static/dist/nauticalminds.bundle.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="/static/dist/nauticalminds.bundle.js"></script>
     {% endblock script %}
   </body>
 </html>

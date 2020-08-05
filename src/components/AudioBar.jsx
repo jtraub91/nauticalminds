@@ -463,7 +463,7 @@ export default class AudioBar extends React.Component{
           statusBarStyle: {
             position: "absolute",
             height: "100%",
-            width: this.state.audioTime ? (((this.state.audioTime / this.state.audioDuration) * 100) + "%") : "0",
+            width: time ? (((time / this.state.audioDuration) * 100) + "%") : "0",
           }
         }
       });
@@ -875,50 +875,7 @@ export default class AudioBar extends React.Component{
     });
   }
   onDownload(){
-    $.post({
-      url: `/downloads?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
-      headers: {
-        "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
-      },
-      success: (res)=>{
-        // donwload
-        // var req = new XMLHttpRequest();
-        // req.responseType = "blob";
-        // req.addEventListener("progress", (e)=>{
-        //   var percentComplete = (e.loaded / e.total) * 100;
-        //   console.log(percentComplete);
-        // });
-        // req.addEventListener('readystatechange', (e)=>{
-        //   if(req.readyState == 2 && req.status == 200) {
-        //     // Download is being started
-        //     console.log("download started");
-        //   }
-        //   else if(req.readyState == 3) {
-        //     // Download is under progress
-        //     console.log("in progess")
-        //   }
-        //   else if(req.readyState == 4) {
-        //     // Downloaing has finished
-        //     console.log("download finished")
-        //     // req.response holds the file data
-        //     var _OBJECT_URL = URL.createObjectURL(req.response);
-        //     var a = document.createElement("a");
-        //     a.href = _OBJECT_URL;
-        //     a.download = this.props.src[this.state.trackNo].title + ".mp3";
-        //     a.click();
-        //     setTimeout(()=>{
-        //       window.URL.revokeObjectURL(_OBJECT_URL);
-        //     }, 60*1000);
-        //   }
-        // });
-        // req.open("get", this.props.src[this.state.trackNo].src + "?download=True");
-        // req.send();
-      },
-      error: (e)=>{
-        console.log(e)
-      }
-    });
-    window.location = this.props.src[this.state.trackNo].src + "?download=True";
+    window.location = this.props.src[this.state.trackNo].downloadUrl;
   }
   render() {
     let playButtonClass;
@@ -1080,7 +1037,7 @@ export default class AudioBar extends React.Component{
               <button className="fa fa-download alt green audiobar-btn" 
                 style={this.style.button} 
                 title={`Download ${this.state.src[this.state.trackNo].title}`}
-                onClick={this.onDownload}/>
+                onClick={this.props.onDownload ? this.props.onDownload : this.onDownload}/>
             </div>
           </div>
           <audio src={this.state.src[this.state.trackNo].src} id={this.id.audio}></audio>

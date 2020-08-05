@@ -30,6 +30,7 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION
 
 class Song(db.Model):
     
@@ -42,6 +43,10 @@ class Song(db.Model):
     plays = db.Column(db.Integer, default=0)
     pauses = db.Column(db.Integer, default=0)
     downloads = db.Column(db.Integer, default=0)
+    title = db.Column(db.String(256))
+    download_url = db.Column(db.String(256))
+    stream_url = db.Column(db.String(256))
+    duration = db.Column(DOUBLE_PRECISION)
 
     def __init__(self, **kwargs):
         self.absolute_file_path = kwargs.get("absolute_file_path")

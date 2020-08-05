@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster|Lobster+Two|ZCOOL+QingKe+HuangYou|Cedarville+Cursive');
 
 .cursive {
-  margin: 25px auto 0 auto;
-  color: black;
+  margin: 0 auto 0 auto;
+  color: white;
   text-align: center;
   font-family: "Cedarville Cursive", cursive;
   font-size: 1.25rem;
@@ -118,8 +118,17 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   line-height: 1.2;
 }
+h1{
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.75rem;
+}
+h3 {
+  font-size: 1.65rem;
+}
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.45rem;
 }
 h5 {
   font-size: 1.25rem;
@@ -316,7 +325,6 @@ a.no-link-style:hover {
   color: inherit;
 }
 
-
 .hover-title.blue-violet {
   color: dodgerblue;
   transition: color 0.1s ease-in-out;
@@ -373,6 +381,12 @@ p.nautical{
   font-family: "ZCOOL QingKe HuangYou";
   letter-spacing: 1px;
   padding: 5px 10px;
+  transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+p.nautical.hover:hover {
+  color: black;
+  background-color: rgba(255,255,255,0.9);
+  /* border: 1px solid lightgrey; */
 }
 
 .mb-25 {
@@ -420,6 +434,25 @@ p.nautical{
   flex-direction: row;
   z-index: 2;
 }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.bg-dark {
+  background-color: rgba(0,0,0,0.5);
+}
+.my-50 {
+  padding: 15px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-bottom: 50px;
+  margin-right: auto;
+  border-radius: 5px;
+}
 
 .content-container {
   position: absolute;
@@ -460,7 +493,7 @@ p.nautical{
 }
 
 .video-container {
-  margin: 10px auto 150px auto;
+  margin: 10px auto;
 }
 
 .video {
@@ -603,21 +636,30 @@ img.social-icon.instagram{
   } 
 }
 /* endfrom https://tobiasahlin.com/spinkit/ */
-
-.site-alert {
-  padding: 10px;
-  border-radius: 5px;
-  position: absolute;
+.alert-container {
   top: 100px;
   left: 50%;
   transform: translateX(-50%);
+  position: absolute;
+  padding: 10px;
+}
+.site-alert {
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
   text-align: center;
   z-index: 1;
+  background-color: rgba(0,0,0,0.33);
 }
-
-.site-alert.msg-success {
+.msg-success {
   color: lawngreen;
-  backdrop-filter: invert(100%);
+  border: solid 1px lawngreen;
+  font-family: 'Courier New';
+}
+.msg-fail {
+  border: solid 1px red;
+  color: red;
+  font-family: 'Courier New';
 }
 
 .header .header-tagline {
@@ -685,7 +727,7 @@ img.social-icon.instagram{
 }
 
 .footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -732,11 +774,7 @@ a.contact-link:visited{
   color: grey;
 }
 
-.msg-fail {
-  border: solid 1px red;
-  color: red;
-  font-family: 'Comic Sans MS';
-}
+
 
 
 @keyframes spinner-border {
@@ -756,11 +794,74 @@ a.contact-link:visited{
 }
 
 .link-container {
-  margin: 5px auto;
+  margin: 15px auto;
   background-color: rgba(0,0,0,0);
 }
 .spotify{
   width: auto;
-  height: 35px;
+  height: 46px;
   margin: 17.5px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.par-1 {
+  min-width: 280px;
+  width: 100%; 
+  max-width: 350px; 
+  margin: 0 auto; 
+  color: white; 
+  text-align: center;
+}
+ol.tracklist {
+  color: white;
+  width: auto;
+  font-family: 'ZCOOL QingKe HuangYou';
+  margin: 20px auto 0 auto;
+  letter-spacing: 2px;
+}
+ol.tracklist > li > a {
+  text-decoration: none;
+  color: lawngreen;
+}
+ol.tracklist > li > a:hover {
+  color: dodgerblue;
+}
+
+.container-item {
+  margin-top: 50px;
+}
+
+a.link-alt-1 {
+  color: dodgerblue;
+}
+a.link-alt-1:active{
+  color: indigo;
+}
+a.link-alt-1:hover{
+  color: lawngreen;
+}
+a.link-alt-1:visited{
+  color: dodgerblue;
+}
+
+.ep-title {
+  margin: 0 auto; 
+  font-family: Georgia, Palatino, 'Times New Roman', Times, serif;
+  text-align: center;
+}
+
+.coming-soon-overlay {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3000;
+  backdrop-filter: blur(3px);
+}
+.coming-soon-overlay > p {
+  margin: auto;
+  color: white;
+  font-size: 2rem;
 }

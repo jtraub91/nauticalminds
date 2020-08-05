@@ -14,8 +14,5 @@ var nautical = new NauticalStarship({
     left: 0,
     zIndex: -1000,
   },
-});
-nautical.draw(0.99);
-if (document.getElementById("_user_authenticated").value === "True"){
-  ReactDOM.render(<NauticalMinds/>, document.getElementById("reactApp"));
-}
+});nautical.draw(0.99);
+ReactDOM.render(<NauticalMinds/>, document.getElementById("reactApp"));

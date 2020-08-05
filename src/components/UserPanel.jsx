@@ -12,17 +12,7 @@ export default class UserPanel extends React.Component {
       dropdownOpen: false,
     }
   }
-  componentDidMount(){
-    let joinLoginButton = document.getElementById(this.id.joinButton)
-    if (joinLoginButton){
-      joinLoginButton.onclick = this.props.joinLoginOnClick;
-    }
-  }
   render(){
-    let joinLoginClassName = "header-button nautical-btn color-wheel";
-    if (this.props.joinLoginText == "Login") {
-      joinLoginClassName += " green";
-    }
     let iconClassName;
     if (this.props.userIconInverted) {
       iconClassName = "user-icon-container inverted"
@@ -41,9 +31,14 @@ export default class UserPanel extends React.Component {
           </div>
         </div>
         :
-        <button className={joinLoginClassName} id={this.id.joinLoginButton} onClick={this.props.joinLoginOnClick}>
-          <a href={this.props.joinLoginUrl}>{this.props.joinLoginText}</a>
-        </button>
+        <div className="button-group" id="userPanel">
+          <button className="header-button nautical-btn color-wheel" id={this.id.joinLoginButton} onClick={this.props.joinOnClick}>
+            <a href="/join">Join</a>
+          </button>
+          <button className="header-button nautical-btn color-wheel green" onClick={this.props.loginOnClick}>
+            <a href="/login">Login</a>
+          </button>
+        </div>
       }
       </div>
     )

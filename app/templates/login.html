@@ -2,7 +2,13 @@
 
 {% block content %}
 {% if message %}
-<div class="site-alert msg-{{ message.status }}">{{ message.message }}</div>
+<div class="alert-container"></div>
+  {% for msg in message %}
+  <div class="site-alert msg-{{ msg.status }}">
+    {{ msg.message }}
+  </div>
+  {% endfor %}
+</div>
 {% endif %}
 <div class="form-container center-relative dark-modal" style="visibility: visible; opacity: 1;">
   <div style="display: flex">

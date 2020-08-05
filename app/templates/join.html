@@ -5,6 +5,11 @@
 <div class="site-alert msg-{{ message.status }}">{{ message.message }}</div>
 {% endif %}
 <div class="form-container center-relative dark-modal" style="visibility: visible; opacity: 1;">
+  <div class="coming-soon-overlay">
+    <p>
+      Coming Soon!
+    </p>
+  </div>
   <div style="display: flex">
     <h3 class="form-header">Join Nautical Minds</h3>
     <h6 style="margin: 10px 10px 10px auto">
@@ -15,6 +20,8 @@
     <div class="input-container">
       <input type="email" placeholder="Email" name="email" class="join-input" autoComplete="username"/>
       <input type="password" placeholder="Create a password..." name="password" class="join-input" autoComplete="current-password"/>
+      <input type="password" placeholder="Confirm password"
+              name="password_confirm" class="join-input"/>
       <hr/>
     </div>
     <div class="button-container">
@@ -24,4 +31,4 @@
   </form>
 </div>
 
-{% endblock %}
+{% endblock content %}

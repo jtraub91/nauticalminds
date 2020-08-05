@@ -6,11 +6,12 @@ export default class ModalForm extends React.Component {
     let timestamp = Math.round(new Date().getTime());
     this.id = {
       formContainer: `form_container_${timestamp}`,
-      form: `form_${timestamp}`
+      form: `form_${timestamp}`,
     };
     this.state = {
       // display: this.props.display !== null ? this.props.display : false,
       form: this.props.form !== null ? this.props.form : "join",
+      stripeActive: false,
     };
     this.joinText = this.joinText.bind(this);
     this.loginText = this.loginText.bind(this);
@@ -20,7 +21,9 @@ export default class ModalForm extends React.Component {
     this.renderJoinLogin = this.renderJoinLogin.bind(this);
     this.renderAbout = this.renderAbout.bind(this);
     this.renderProfile = this.renderProfile.bind(this);
+    this.renderTip = this.renderTip.bind(this);
   }
+  
   joinText (){
     return {
       headerText: "Join Nautical Minds",
@@ -76,10 +79,12 @@ export default class ModalForm extends React.Component {
               div.parentNode.removeChild(div);
             }, 3000);
           } else {
+            // success
             let div = document.createElement("div")
             document.getElementById(this.id.formContainer).appendChild(div);
             div.className = "form-alert success";
             div.innerHTML = `<span>${JSON.parse(xhr.response).message}</span>`
+            console.log("yolo")
             setTimeout(()=>{
               div.remove();
               this.setState(()=>{
@@ -149,16 +154,24 @@ export default class ModalForm extends React.Component {
           {visibility: "visible", opacity: 1, display: "block"} : 
           {visibility: "visible", opacity: 0, display: "none"}
         }>
+        <div class="coming-soon-overlay" style={{display: this.props.form == "Join" ? "flex" : "none"}}>
+          <p>
+            Coming Soon!
+          </p>
+        </div>
         <div style={{display: "flex"}}>
           <h3 className="form-header">{text.headerText}</h3>
           <h6 style={{margin: "10px 10px 10px auto"}} onClick={this.props.altOnClick}>
-            <i>{text.altHeader.split(" ")[0]} </i><a href={text.altUrl}>{text.altHeader.split(" ")[1]}</a>
+            <i>{text.altHeader.split(" ")[0]} </i><a className="link-alt-1" href={text.altUrl}>{text.altHeader.split(" ")[1]}</a>
           </h6>
         </div>
         <form className="flex-col" id={this.id.form}>
           <div className="input-container">
             <input type="email" placeholder="Email" name="email" className="join-input" autoComplete="username"/>
-            <input type="password" placeholder={text.passwordPlaceholder} name="password" className="join-input" autoComplete="current-password"/>
+            <input type="password" placeholder={text.passwordPlaceholder} 
+              name="password" className="join-input" autoComplete="current-password"/>
+            <input type="password" placeholder="Confirm password" style={{display: this.props.form == "Join" ? "block" : "none"}}
+              name="password_confirm" className="join-input"/>
             <hr/>
           </div>
           <div className="button-container">
@@ -192,6 +205,44 @@ export default class ModalForm extends React.Component {
       </div>
     )
   }
+  componentDidUpdate(){
+    if (this.state.stripeActive !== true){
+      if (document.querySelector("#payment-form-stripe")){
+        this.props.tipMountCallback()
+        this.setState(()=>{
+          return {
+            stripeActive: true
+          }
+        });
+      }
+    }
+  }
+  renderTip(){
+
+    return (
+      <div className="about-container center-relative dark-modal" 
+        style={
+          this.props.display ? 
+          {visibility: "visible", opacity: 1, display: "block"} : 
+          {visibility: "visible", opacity: 0, display: "none"}
+        }>
+        <h3 className="form-header">Tip</h3>
+        <form id="payment-form-stripe">
+          <div id="card-element-stripe"/>
+          <button id="button-stripe" disabled={!this.state.stripeActive}>
+            <div className="spinner hidden" id="spinner"></div>
+            <span id="button-text-stripe">Tip</span>
+          </button>
+          <p id="card-error-stripe" role="alert"></p>
+          <p className="result-message hidden" id="button-text-stripe">
+            Payment succeeded, see the result in your
+            <a href="" target="_blank">Stripe dashboard.</a> 
+            Refresh the page to pay again.
+          </p>
+        </form>
+      </div>
+    )
+  }
   renderAbout(){
     return (
       <div className="about-container center-relative dark-modal" 
@@ -204,11 +255,11 @@ export default class ModalForm extends React.Component {
         <p className="right-justified">
           Nautical Minds is a music duo, formed in Florida in 2012, consisting of Jason Marcus (vox) and Jason Traub (guitar).
         </p>
-        <h3 className="form-header">Contact</h3>
+        <h4 className="form-header">Contact</h4>
         <p className="right-justified" style={{paddingTop: 0, textAlign: "end"}}>
-          <a className="contact-link" href="mailto:info@nauticalminds.com">info@nauticalminds.com</a>
+          <a className="contact-link" href="mailto:nauticalmindsmusic@gmail.com">nauticalmindsmusic@gmail.com</a>
         </p>
-        <h3 className="form-header">Links</h3>
+        <h5 className="form-header">Links</h5>
         <p className="right-justified" style={{paddingTop: 0, textAlign: "end"}}>
           <a className="contact-link-blue" href="https://linktr.ee/nauticalminds" target="_blank">linktr.ee</a>
         </p>
@@ -223,6 +274,8 @@ export default class ModalForm extends React.Component {
       contentFunction = this.renderAbout;
     } else if (this.props.form == "Profile") {
       contentFunction = this.renderProfile;
+    } else if (this.props.form == "Tip") {
+      contentFunction = this.renderTip;
     } else {
       contentFunction = null;
     }
