@@ -8,3 +8,5 @@ node_modules/
 music/
 video/
 logs/
+
+app/static/dist/
