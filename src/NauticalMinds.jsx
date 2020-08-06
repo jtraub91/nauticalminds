@@ -315,7 +315,7 @@ export default class NauticalMinds extends React.Component {
             joinLoginText={this.state.joinLoginText}
             joinLoginUrl={this.state.joinLoginUrl}/>
         </div>
-        <Content userLoggedIn={this.state.userLoggedIn}/>       
+        <Content userLoggedIn={this.state.userLoggedIn} joinLoginOnClick={this.joinLoginOnClick}/>       
         <ModalForm display={this.state.isModalOpen} 
           form={this.state.modalForm} 
           onLogin={this.onLogin}

@@ -13,9 +13,9 @@ from config import Develop, Production
 
 app = Flask(__name__)
 if app.config['ENV'] == 'production':
-    app.config.from_object(Production)
+    app.config.from_object(Production())
 elif app.config['ENV'] == 'development':
-    app.config.from_object(Develop)
+    app.config.from_object(Develop())
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
 login = LoginManager(app)
@@ -32,7 +32,8 @@ from app import routes, models
 
 
 # setup logging
-
+import sys
+print(sys.version)
 file_handler = RotatingFileHandler(f"{app.config['LOG_DIR']}/nauticalminds.log", "a", 1 * 1024 * 1024, 10)
 file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"))
 app.logger.setLevel(logging.INFO)

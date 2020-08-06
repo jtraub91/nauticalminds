@@ -7,7 +7,7 @@ export default class Content extends React.Component {
   render(){
     return (
       <div className="content-container" style={{display: this.props.userLoggedIn ? "none" : "flex"}}>
-        <p className="nautical hover" onClick={this.joinLoginOnClick}>
+        <p className="nautical hover" onClick={this.props.joinLoginOnClick}>
           <a className="no-link-style" href="/join"><span className="hover-title blue-violet">Join</span> Nautical Minds to <span className="hover-title orange">listen</span> and <span className="hover-title green-red">download</span>!</a>
         </p>
         <div className="flex-col my-50 bg-dark container-item">
