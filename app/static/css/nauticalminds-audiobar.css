@@ -90,8 +90,9 @@
 }
 
 .clock {
-  letter-spacing: 1px;
+  letter-spacing: 3px;
   font-family: 'ZCOOL QingKe HuangYou';
+  color: lawngreen;
   border: solid 2px black;
   background-color: rgba(0,0,0,0.5);
   

@@ -7,8 +7,7 @@ export default class AudioBar extends React.Component{
     this.__usage_stats = {};
     this._EXPANDED_HEIGHT = "300px";
     this._COLLAPSED_HEIGHT = "50px";
-    this.STATUS_DX = 63;
-    this.MAX_DX = 500;
+    this.STATUS_DX = 60;
     this.props = props;
     let timestamp = Math.round(new Date().getTime());
     this.id = {
@@ -57,6 +56,7 @@ export default class AudioBar extends React.Component{
         width: "125px",
         height: "33px",
         margin: "auto 2px",
+        letterSpacing: "3px"
       },
       clockSvg: {
         minWidth: "100%",
@@ -617,7 +617,7 @@ export default class AudioBar extends React.Component{
 
     // timers
     this.statusAnimationTimerId = setInterval(()=>{
-      if (parseInt(this.state.dx) > this.STATUS_DX - Math.floor(4.5 * this.statusTextClientWidth)){
+      if (parseInt(this.state.dx) > this.STATUS_DX - Math.floor(3.0 * this.statusTextClientWidth)){
         this.setState(() =>{
           return {
             dx: parseInt(this.state.dx) - this.STATUS_DX,
@@ -632,7 +632,7 @@ export default class AudioBar extends React.Component{
       } else {
         this.setState((state) =>{
           return {
-            dx: "60",
+            dx: "0",
             statusBarStyle: {
               position: "absolute",
               height: "100%",
@@ -721,6 +721,7 @@ export default class AudioBar extends React.Component{
         return {
           trackNo: next,
           infoData: null,
+          dx: "0",
         }
       });
       this.getInfo(this.props.src[next]);
@@ -729,6 +730,7 @@ export default class AudioBar extends React.Component{
         return {
           trackNo: 0,
           infoData: null,
+          dx: "0",
         }
       });
       this.getInfo(this.props.src[0]);
@@ -741,6 +743,7 @@ export default class AudioBar extends React.Component{
         return {
           trackNo: prev,
           infoData: null,
+          dx: "0",
         }
       });
       this.getInfo(this.props.src[prev]);
@@ -749,6 +752,7 @@ export default class AudioBar extends React.Component{
         return {
           trackNo: this.state.src.length + prev,
           infoData: null,
+          dx: "0",
         }
       });
       this.getInfo(this.props.src[this.state.src.length + prev]);
@@ -946,29 +950,23 @@ export default class AudioBar extends React.Component{
           <div className="flex-group" style={{right: "0", bottom: "7.5px", width: "100%", justifyContent: "flex-end"}}>
             <div className="flex-group" style={{width: "100%", justifyContent: "flex-end"}}>
               <div style={this.state.clockDisplay ? this.style.clock : {display: "none"}} className="clock">
-                <svg viewBox="0 0 100 50" height="100%">
-                  <text fill="lawngreen" x="15" y="39" fontSize="35">
-                    {this.secondsToMMSS(this.state.audioTime)}
-                  </text>
-                </svg>
-                <svg viewBox="0 0 30 50" width="15px" height="100%">
-                  <text fill="lawngreen" x="11" y="40" fontSize="40">
-                    |
-                  </text>
-                </svg>
-                <svg viewBox="0 0 100 50" height="100%">
-                  <text fill="lawngreen" x="8" y="39" fontSize="35">
+                <span className="m-auto">
+                  {this.secondsToMMSS(this.state.audioTime)}
+                </span>
+                <span className="m-auto">
+                  |
+                </span>
+                <span className="m-auto">
                     {this.secondsToMMSS(this.state.audioDuration)}
-                  </text>
-                </svg>
+                </span>
               </div>
               <div style={this.style.status} className="status">
                 <div style={this.style.statusBarContainer} id={this.id.statusBarContainer}>
                   <div style={this.state.statusBarStyle} className="status-invert"/>
                   <div style={this.state.mouseoverStatusBarStyle}/>
                 </div>
-                <svg viewBox="0 0 100 100" width="95%" height="20px" className="m-auto">
-                  <text fill="lawngreen" x="-700" y="87" dx={this.state.dx} dy={this.state.dy} fontSize="100" letterSpacing="20" id={this.id.statusText}>
+                <svg viewBox="0 0 100 100" width="95%" height="20px" style={{margin: "auto 5px"}}>
+                  <text fill="lawngreen" x="-870" y="87" dx={this.state.dx} dy={this.state.dy} fontSize="100" letterSpacing="20" id={this.id.statusText}>
                     {this.state.src[this.state.trackNo].title}
                   </text>
                 </svg>
