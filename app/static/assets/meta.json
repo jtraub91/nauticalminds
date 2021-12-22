@@ -1,0 +1,14 @@
+{
+  "tokenId": 0,
+  "name": "Nautical Minds EP",
+  "description": "",
+  "artist": "Nautical Minds",
+  "tracklist": {
+    "1": {"Gotta Let You Know": "ipfs://"},
+    "2": {"Ain't Gotta Care": "ipfs://"},
+    "3": {"Funk 1 (f.t. B.I.G. Jay)": "ipfs://"},
+    "4": {"Spacy Stacy": "ipfs://"},
+    "5": {"A Side Street Robbery": "ipfs://"},
+    "6": {"Off The Clock": "ipfs://"}
+  }
+}

@@ -712,7 +712,7 @@ img.social-icon.instagram{
   position: absolute;
   z-index: 2;
   top: 50px;
-  right: 50px;
+  left: 50px;
   display: block;
   width: auto;
   height: auto;
@@ -738,7 +738,7 @@ img.social-icon.instagram{
 #nauticalMindsHeader {
   /* font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width]))); */
   font-size: calc(23px + (50 - 23) * ((100vw - 300px) / (1600 - 300)));
-  margin: 10px auto;
+  margin: 7.5px;
 }
 
 h1#nauticalMindsHeader > a {

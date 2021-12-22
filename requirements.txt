@@ -1,11 +1,15 @@
 alembic==1.0.7
+asn1crypto==1.4.0
 astroid==2.2.5
 backcall==0.1.0
 blinker==1.4
 certifi==2020.6.20
+cffi==1.15.0
 chardet==3.0.4
 Click==7.0
+coincurve==16.0.0
 colorama==0.4.1
+cryptography==36.0.1
 decorator==4.3.2
 Flask==1.0.2
 Flask-Admin==1.5.3
@@ -33,9 +37,11 @@ prompt-toolkit==2.0.9
 psycopg2==2.7.7
 psycopg2-binary==2.8.5
 ptyprocess==0.6.0
+pycparser==2.21
 Pygments==2.3.1
 PyJWT==1.7.1
 pylint==2.3.1
+pysha3==1.0.2
 python-dateutil==2.8.0
 python-dotenv==0.10.1
 python-editor==1.0.4

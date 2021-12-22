@@ -1,76 +1,146 @@
+import Web3 from 'web3';
+import NauticalMindsEp from "../contracts_build/NauticalMindsEp.json";
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import AudioBar from './components/AudioBar.jsx';
-import About from './routes/About.jsx';
 
-var SRC_LIST = [
-  {
-    src: "/music/nautical_minds_ep/gotta_let_you_know.wav",
-    downloadUrl: "/music/nautical_minds_ep/gotta_let_you_know.mp3?download=True",
-    title: "Nautical Minds - Gotta Let You Know",
-    infoUrl: "/info?song_id=1"
-  },
-  {
-    src: "/music/nautical_minds_ep/aint_gotta_care.wav",
-    downloadUrl: "/music/nautical_minds_ep/aint_gotta_care.mp3?download=True",
-    title: "Nautical Minds - Ain't Gotta Care",
-    infoUrl: "/info?song_id=2"
-  },
-  {
-    src: "/music/nautical_minds_ep/funk1.wav",
-    downloadUrl: "/music/nautical_minds_ep/funk1.mp3?download=True",
-    title: "Nautical Minds - Funk 1 (ft. B.I.G. Jay)",
-    infoUrl: "/info?song_id=3"
-  },
-  {
-    src: "/music/nautical_minds_ep/spacy_stacy.wav",
-    downloadUrl: "/music/nautical_minds_ep/spacy_stacy.mp3?download=True",
-    title: "Nautical Minds - Spacy Stacy",
-    infoUrl: "/info?song_id=4"
-  },
-  {
-    src: "/music/nautical_minds_ep/sidestreet_robbery.wav",
-    downloadUrl: "/music/nautical_minds_ep/sidestreet_robbery.mp3?download=True",
-    title: "Nautical Minds - Side Street Robbery",
-    infoUrl: "/info?song_id=5"
-  }, 
-  {
-    src: "/music/nautical_minds_ep/off_the_clock.wav",
-    downloadUrl: "/music/nautical_minds_ep/off_the_clock.mp3?download=True",
-    title: "Nautical Minds - Off The Clock",
-    infoUrl: "/info?song_id=6"
-  },
-];
+import SRC_LIST from './srcList.json';
 
 export default class NauticalMinds extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.contractAbi = NauticalMindsEp.abi;
+    this.contractAddress = "0x73C9499205a1fdc69539252dbE2Da96c01C8228D";
+
+    if (window.ethereum) {
+      console.log("Metamask installed");
+
+      window.web3 = new Web3(window.ethereum);
+      this.contract = new window.web3.eth.Contract(this.contractAbi, this.contractAddress);
+    } else {
+      console.log("Please install MetaMask");
+    }
+    // functions
+    this.rocketShipOnClick = this.rocketShipOnClick.bind(this);
+    this.connectOnClick = this.connectOnClick.bind(this);
+    this.shortenAddress = this.shortenAddress.bind(this);
+    this.userOnClick = this.userOnClick.bind(this);
+
+    this.state = {
+      userAccounts: [],
+      srcList: SRC_LIST,
+      dropdownOpen: false,
+    }
+  }
+  componentDidMount(){
+    if (window.ethereum.isConnected()){
+      window.ethereum.request({method: "eth_requestAccounts"})
+        .then((accounts)=>{
+          this.setState(()=>{
+            return {
+              userAccounts: accounts,
+            }
+          })
+
+          // sign in request
+        })
+        .catch((data)=>{
+          console.log(data)
+        })
+
+      window.ethereum.on('accountsChanged', (accounts) => {
+        this.setState(()=>{
+          return {
+            userAccounts: accounts
+          }
+        })
+      });
+      window.ethereum.on('chainChanged', (chainId) => {
+        // Handle the new chain.
+        // Correctly handling chain changes can be complicated.
+        // We recommend reloading the page unless you have good reason not to.
+        window.location.reload();
+      });
+    }
+  }
+  rocketShipOnClick(){
+    this.setState(()=>{
+      return {
+        dropdownOpen: !this.state.dropdownOpen
+      }
+    })
+  }
+  connectOnClick(e){
+    window.ethereum.request({method: "eth_requestAccounts"})
+      .then((accounts)=>{
+        this.setState(()=>{
+          return {
+            userAccounts: accounts,
+          }
+        })
+      })
+      .catch((data)=>{
+        console.log(data)
+      })
+  }
+  shortenAddress(address){
+    if (address == undefined){
+      return ""
+    }
+    return address[0] + address[1] + address[2] + address[3] + address[4] +
+      address[5] + "..." + address[address.length - 4] + 
+      address[address.length - 3] + address[address.length - 2] +
+      address[address.length - 1]
+  }
+  userOnClick(){
+    let message = "Sign me in to nauticalminds.com"
+    window.ethereum.request(
+      {method: "personal_sign", params: [message, this.state.userAccounts[0]]}
+    ).then((sig)=>{
+      console.log(sig)
+    }).catch((e)=>console.log(e))
+  }
   render(){
+    let iconContainerClassName = "user-icon-container";
+    if (this.state.dropdownOpen){
+      iconContainerClassName += " inverted"
+    }
     return (
       <div>
-        <div className="header">
-          <div className="button-group">
-            <button className="header-button nautical-btn purple" id="aboutButton">
-              <Link to="/about">About</Link>
-            </button>
-          </div>
-          <h1 style={{margin: "7.5px"}} id="nauticalMindsHeader">
-            <a href="/" onClick={(e)=>e.preventDefault()}>Nautical Minds</a>
-          </h1>
-          <div className="button-group">
-            {/* <button className="header-button nautical-btn green" id="connectButton">
-              <a href="#">Connect</a>
-            </button> */}
-
-            <div className="loginIconContainer">
-              <div className="user-icon-container">
-                <img src="/static/images/nauticalstarship-alt.svg"/>
-              </div>
-            </div>
-          
+        <div style={{display: this.state.dropdownOpen ? "block" : "none"}} className="user-dropdown">
+          <div className="flex-col">
+            <button className="user-container-item no-border" onClick={this.onLogout}>About</button>
           </div>
         </div>
+        <div className="header">
+          <div className="button-group">
+            {/* <button className="header-button nautical-btn purple" id="aboutButton">
+              <Link to="/about">About</Link>
+            </button> */}
+            <div className="loginIconContainer">
+              <div className={iconContainerClassName}>
+                <img onClick={this.rocketShipOnClick} src="/static/images/nauticalstarship-alt.svg"/>
+              </div>
+            </div>
+          </div>
+          <h1 id="nauticalMindsHeader">
+            <Link to="/">Nautical Minds</Link>
+          </h1>
+          {
+            this.state.userAccounts ? 
+              <button className="user-address" onClick={this.userOnClick}>
+                {this.shortenAddress(this.state.userAccounts[0])}
+              </button> :
+              <button onClick={(e)=>{this.connectOnClick(e)}} className="header-button nautical-btn green" id="connectButton">
+                Connect
+              </button>
+          }
+        </div>
         {this.props.children}
-        <AudioBar src={SRC_LIST} id="audioBar"/>
+        <AudioBar src={this.state.srcList} id="audioBar"/>
       </div>
     )
   }

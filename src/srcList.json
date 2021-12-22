@@ -1,0 +1,38 @@
+[
+  {
+    "src": "/music/nautical_minds_ep/gotta_let_you_know.mp3",
+    "downloadUrl": "/music/nautical_minds_ep/gotta_let_you_know.mp3",
+    "title": "Nautical Minds - Gotta Let You Know",
+    "infoUrl": "/static/assets/gottaLetYouKnow.json"
+  },
+  {
+    "src": "/music/nautical_minds_ep/aint_gotta_care.mp3",
+    "downloadUrl": "/music/nautical_minds_ep/aint_gotta_care.mp3",
+    "title": "Nautical Minds - Ain't Gotta Care",
+    "infoUrl": "/static/assets/aintGottaCare.json"
+  },
+  {
+    "src": "/music/nautical_minds_ep/funk1.mp3",
+    "downloadUrl": "/music/nautical_minds_ep/funk1.mp3",
+    "title": "Nautical Minds - Funk 1 (ft. B.I.G. Jay)",
+    "infoUrl": "/static/assets/funk1.json"
+  },
+  {
+    "src": "/music/nautical_minds_ep/spacy_stacy.mp3",
+    "downloadUrl": "/music/nautical_minds_ep/spacy_stacy.mp3",
+    "title": "Nautical Minds - Spacy Stacy",
+    "infoUrl": "/static/assets/spacyStacy.json"
+  },
+  {
+    "src": "/music/nautical_minds_ep/sidestreet_robbery.mp3",
+    "downloadUrl": "/music/nautical_minds_ep/sidestreet_robbery.mp3",
+    "title": "Nautical Minds - Side Street Robbery",
+    "infoUrl": "/static/assets/sideStreetRobbery.json"
+  }, 
+  {
+    "src": "/music/nautical_minds_ep/off_the_clock.mp3",
+    "downloadUrl": "/music/nautical_minds_ep/off_the_clock.mp3",
+    "title": "Nautical Minds - Off The Clock",
+    "infoUrl": "/static/assets/offTheClock.json"
+  }
+]

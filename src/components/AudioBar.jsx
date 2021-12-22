@@ -247,10 +247,10 @@ export default class AudioBar extends React.Component{
           width: "200px",
           margin: "auto 4px",
           display: "flex",
-          transform: "rotate(-90deg)",
+          // transform: "rotate(-90deg)",
           position: "relative",
-          top: "-85px",
-          left: "-85px"
+          // top: "-85px",
+          // left: "-85px"
         },
         volumeSliderStyle: {
           display: "inline-block",
@@ -455,7 +455,9 @@ export default class AudioBar extends React.Component{
 
       // var y = e.clientY - rect.top;  //y position within the element.
       let time = (x / this.statusBarContainer.offsetWidth) * this.state.audioDuration;
+      
       this.audioElement.currentTime = time;
+
       this.setState(()=>{
         return {
           audioTime: time,
@@ -686,7 +688,7 @@ export default class AudioBar extends React.Component{
     clearInterval(this.statusAnimationTimerId);
   }
   secondsToMMSS(floatTime) {
-    if (floatTime === null || floatTime === undefined){
+    if (floatTime == null || floatTime == undefined || floatTime == 0){
         return "--:--";
     }
     let sec = Math.floor(floatTime);
@@ -775,9 +777,9 @@ export default class AudioBar extends React.Component{
     }
   }
   onInfo(){
-    this.getInfo(this.props.src[this.state.trackNo]);
+    let info = this.getInfo(this.props.src[this.state.trackNo]);
     let infoBtn = document.getElementById(this.id.infoButton);
-    if (this.state.controlOpen === "info") {
+    if (this.state.controlOpen === "info" || !info) {
       this.infoElement.style.display = "none";
       this.commentContainer.style.display = "none";
       this.barsContainer.style.display = "none";
@@ -801,7 +803,7 @@ export default class AudioBar extends React.Component{
   getInfo(src){
     // todo: inject spinner until info is retrieved
     // todo: obtain info only once per page refresh
-    if (src.infoUrl){
+    if (src && src.infoUrl){
       var xhr = new XMLHttpRequest();
       var URL = src.infoUrl;
       xhr.onreadystatechange = ()=>{
@@ -814,9 +816,10 @@ export default class AudioBar extends React.Component{
       };
       xhr.open("GET", URL, true);
       xhr.send();
-      
+      return true
     } else {
       console.debug("No info url provided for this track.")
+      return false
     }
   }
   onComment(){
@@ -841,7 +844,7 @@ export default class AudioBar extends React.Component{
     }
   }
   onBars(){    
-    if (this.state.controlOpen === "bars") {
+    if (!this.props.src[this.state.trackNo] || this.state.controlOpen === "bars") {
       this.infoElement.style.display = "none";
       this.commentContainer.style.display = "none";
       this.barsContainer.style.display = "none";
@@ -879,7 +882,9 @@ export default class AudioBar extends React.Component{
     });
   }
   onDownload(){
-    window.location = this.props.src[this.state.trackNo].downloadUrl;
+    if (this.props.src[this.state.trackNo] && this.props.src[this.state.trackNo].downloadUrl){
+      window.location = this.props.src[this.state.trackNo].downloadUrl;
+    }
   }
   render() {
     let playButtonClass;
@@ -916,6 +921,15 @@ export default class AudioBar extends React.Component{
       infoClass = "fas fa fa-info-circle green audiobar-btn";
       commentClass = "far fa-comment alt green audiobar-btn";
       barsClass = "fas fa-bars green-active audiobar-btn";
+    }
+
+    let title; let src;
+    if (this.state.src[this.state.trackNo]){
+      title = this.state.src[this.state.trackNo].title;
+      src = this.state.src[this.state.trackNo].src;
+    } else {
+      title = "";
+      src = "";
     }
 
 
@@ -967,7 +981,7 @@ export default class AudioBar extends React.Component{
                 </div>
                 <svg viewBox="0 0 100 100" width="95%" height="20px" style={{margin: "auto 5px"}}>
                   <text fill="lawngreen" x="-870" y="87" dx={this.state.dx} dy={this.state.dy} fontSize="100" letterSpacing="20" id={this.id.statusText}>
-                    {this.state.src[this.state.trackNo].title}
+                    {title}
                   </text>
                 </svg>
               </div>
@@ -1005,13 +1019,13 @@ export default class AudioBar extends React.Component{
                       </div>
                     }                   
                   </div>
-                </button>
-              <button className={commentClass} id={this.id.commentButton}
+              </button>
+              {/* comment container built in componentDidMount */}
+              {/* <button className={commentClass} id={this.id.commentButton}
                 title="Comment"
                 onClick={this.onComment}
                 style={this.state.buttonsActive.indexOf("comment") >= 0 ? this.style.button : {display: "none"}}>
-                {/* comment container built in componentDidMount */}
-              </button>
+              </button> */}
               <button className={barsClass} id={this.id.barsButton}
                 title="Track List"
                 onClick={this.onBars}
@@ -1019,6 +1033,7 @@ export default class AudioBar extends React.Component{
                 <div style={this.style.barsContainer} id={this.id.barsContainer}>
                   <div>
                     {
+                      this.props.src ? 
                       this.props.src.map(
                       (src)=>
                         <div key={`bars_track${this.props.src.indexOf(src)}`}
@@ -1027,18 +1042,19 @@ export default class AudioBar extends React.Component{
                           onClick={()=>this.onClickBarsItem(src)}>
                           {src.title.split(" - ").slice(-1)[0]}
                         </div>
-                      )
+                      ) :
+                      {}
                     }
                   </div>
                 </div>
               </button>
               <button className="fa fa-download alt green audiobar-btn" 
                 style={this.style.button} 
-                title={`Download ${this.state.src[this.state.trackNo].title}`}
+                title={`Download ${title}`}
                 onClick={this.props.onDownload ? this.props.onDownload : this.onDownload}/>
             </div>
           </div>
-          <audio src={this.state.src[this.state.trackNo].src} id={this.id.audio}></audio>
+          <audio src={src} id={this.id.audio}></audio>
         </div>
       </div>
     );

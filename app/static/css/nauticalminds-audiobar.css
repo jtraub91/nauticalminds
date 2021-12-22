@@ -124,6 +124,7 @@ button.no-border{
 
 .ctrl-btn:hover{
   color: white;
+  border-color: turquoise;
   background-color: rgb(0,1,39);
 }
 
