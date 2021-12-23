@@ -76,7 +76,7 @@ export default class AudioBar extends React.Component{
       infoContainer: {
         width: "250px",
         height: "auto",
-        minHeight: "100px",
+        minHeight: "50px",
         position: "absolute",
         // transform: "translate(-90%, -115%)",
         border: "1px solid lawngreen",
@@ -573,18 +573,18 @@ export default class AudioBar extends React.Component{
       }
     });
     this.audioElement.addEventListener("play", (e)=>{
-      $.post({
-        url: `/plays?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
-        headers: {
-          "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
-        },
-        success: (res)=>{
-          console.log(res)
-        },
-        error: (e)=>{
-          console.log(e)
-        }
-      });
+      // $.post({
+      //   url: `/plays?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
+      //   headers: {
+      //     "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
+      //   },
+      //   success: (res)=>{
+      //     console.log(res)
+      //   },
+      //   error: (e)=>{
+      //     console.log(e)
+      //   }
+      // });
       this.audioElement.autoplay = true;
       this.setState({
         audioPlaying: true,
@@ -607,7 +607,7 @@ export default class AudioBar extends React.Component{
             }
           };
         });
-      }, 1000);
+      }, 500);
     });
 
     // other listeners
@@ -688,7 +688,7 @@ export default class AudioBar extends React.Component{
     clearInterval(this.statusAnimationTimerId);
   }
   secondsToMMSS(floatTime) {
-    if (floatTime == null || floatTime == undefined || floatTime == 0){
+    if (floatTime == null || floatTime == undefined || (floatTime == 0 && !this.audioElement.duration)){
         return "--:--";
     }
     let sec = Math.floor(floatTime);
@@ -883,7 +883,7 @@ export default class AudioBar extends React.Component{
   }
   onDownload(){
     if (this.props.src[this.state.trackNo] && this.props.src[this.state.trackNo].downloadUrl){
-      window.location = this.props.src[this.state.trackNo].downloadUrl;
+      window.location = this.props.src[this.state.trackNo].downloadUrl + "?download=True";
     }
   }
   render() {
@@ -999,14 +999,7 @@ export default class AudioBar extends React.Component{
                         <u>Information:</u><br/>
                         Song: {this.state.infoData ? this.state.infoData.name : null}<br/>
                         Artist: {this.state.infoData ? this.state.infoData.artist : null}<br/>
-                        Release Year: {this.state.infoData.info ? 
-                          this.state.infoData.info.releaseDate.split("/")[this.state.infoData.info.releaseDate.split("/").length - 1] : 
-                          null
-                        }
-                        <hr/>
-                        All-time plays: {this.state.infoData ? this.state.infoData.plays : null}
-                        <br/>
-                        All-time downloads: {this.state.infoData ? this.state.infoData.downloads : null}
+                        Release Year: {this.state.infoData ? this.state.infoData.releaseYear : null}
                       </div>
                       : 
                       <div className="sk-chase m-auto">

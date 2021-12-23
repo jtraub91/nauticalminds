@@ -10,3 +10,5 @@ video/
 logs/
 
 app/static/dist/
+
+contracts_build/

@@ -155,7 +155,6 @@ def stream(album, filename):
 
 
 @app.route('/music/<album>/<filename>')
-@login_required
 def music(album, filename):
     song, ext = os.path.splitext(filename)
     filename_map = {

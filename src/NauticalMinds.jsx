@@ -130,7 +130,7 @@ export default class NauticalMinds extends React.Component {
             <Link to="/">Nautical Minds</Link>
           </h1>
           {
-            this.state.userAccounts ? 
+            this.state.userAccounts.length > 0 ? 
               <button className="user-address" onClick={this.userOnClick}>
                 {this.shortenAddress(this.state.userAccounts[0])}
               </button> :
