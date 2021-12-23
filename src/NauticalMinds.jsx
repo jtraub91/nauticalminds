@@ -36,35 +36,7 @@ export default class NauticalMinds extends React.Component {
     }
   }
   componentDidMount(){
-    if (window.ethereum.isConnected()){
-      window.ethereum.request({method: "eth_requestAccounts"})
-        .then((accounts)=>{
-          this.setState(()=>{
-            return {
-              userAccounts: accounts,
-            }
-          })
-
-          // sign in request
-        })
-        .catch((data)=>{
-          console.log(data)
-        })
-
-      window.ethereum.on('accountsChanged', (accounts) => {
-        this.setState(()=>{
-          return {
-            userAccounts: accounts
-          }
-        })
-      });
-      window.ethereum.on('chainChanged', (chainId) => {
-        // Handle the new chain.
-        // Correctly handling chain changes can be complicated.
-        // We recommend reloading the page unless you have good reason not to.
-        window.location.reload();
-      });
-    }
+    
   }
   rocketShipOnClick(){
     this.setState(()=>{
@@ -74,17 +46,19 @@ export default class NauticalMinds extends React.Component {
     })
   }
   connectOnClick(e){
-    window.ethereum.request({method: "eth_requestAccounts"})
-      .then((accounts)=>{
-        this.setState(()=>{
-          return {
-            userAccounts: accounts,
-          }
+    if (window.ethereum){
+      window.ethereum.request({method: "eth_requestAccounts"})
+        .then((accounts)=>{
+          this.setState(()=>{
+            return {
+              userAccounts: accounts,
+            }
+          })
         })
-      })
-      .catch((data)=>{
-        console.log(data)
-      })
+        .catch((data)=>console.log(data))
+    } else {
+      console.log("please install Metamask")
+    }
   }
   shortenAddress(address){
     if (address == undefined){
