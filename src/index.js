@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 
 import NauticalStarship from './nauticalStarship';
 import NauticalMinds from './NauticalMinds.jsx';
-import About from './routes/About.jsx';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import About from './routes/About.jsx';
 
 var nautical = new NauticalStarship({
   parent: document.getElementsByTagName("body")[0],
@@ -18,13 +17,12 @@ var nautical = new NauticalStarship({
   },
 });
 nautical.draw(0.99);
+console.log(document.cookie);
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<NauticalMinds/>}>
-        <Route path="/about" element={<About/>}/>
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+  <NauticalMinds>
+    <div className="center-rocket-container">
+      <img src="/static/images/nauticalstarship-alt.svg"/>
+    </div>
+  </NauticalMinds>,
   document.getElementById("reactApp")
 );

@@ -156,6 +156,7 @@ def stream(album, filename):
 
 @app.route('/music/<album>/<filename>')
 def music(album, filename):
+    print(request.cookies)
     song, ext = os.path.splitext(filename)
     filename_map = {
         "gotta_let_you_know": "Nautical Minds - Gotta Let You Know",

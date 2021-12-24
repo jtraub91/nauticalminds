@@ -541,18 +541,18 @@ export default class AudioBar extends React.Component{
       this.onNext();  // auto go to next song
     });
     this.audioElement.addEventListener("pause", (e)=>{
-      $.post({
-        url: `/pauses?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
-        headers: {
-          "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
-        },
-        success: (res)=>{
-          console.log(res)
-        },
-        error: (e)=>{
-          console.log(e)
-        }
-      });
+      // $.post({
+      //   url: `/pauses?song_id=${this.state.trackNo+1}`,  // todo: sync trackNo and song_id from db
+      //   headers: {
+      //     "X-CSRF-TOKEN": document.getElementById("_csrf_token").value,
+      //   },
+      //   success: (res)=>{
+      //     console.log(res)
+      //   },
+      //   error: (e)=>{
+      //     console.log(e)
+      //   }
+      // });
       this.setState({
         audioPlaying: false,
       });
@@ -590,12 +590,6 @@ export default class AudioBar extends React.Component{
         audioPlaying: true,
       });
       this.clockId = setInterval(()=>{
-        // let event = new CustomEvent('audio-tick', {detail: {
-        //   id: this.audioElement.id,
-        //   time: Math.floor(this.audioElement.currentTime),
-        //   duration: Math.floor(this.audioElement.duration),
-        // }});
-        // this.lyricBox.dispatchEvent(event);
         this.setState(()=>{
           return {
             audioTime: this.audioElement.currentTime,
@@ -705,6 +699,7 @@ export default class AudioBar extends React.Component{
   }
   play() {
     this.audioElement.play();
+
   }
   pause () {
     this.audioElement.pause();
@@ -1047,7 +1042,7 @@ export default class AudioBar extends React.Component{
                 onClick={this.props.onDownload ? this.props.onDownload : this.onDownload}/>
             </div>
           </div>
-          <audio src={src} id={this.id.audio}></audio>
+          <audio src={src} id={this.id.audio} type="audio/mpeg"></audio>
         </div>
       </div>
     );
