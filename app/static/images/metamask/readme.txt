@@ -1,0 +1,1 @@
+https://app.pickle.finance/wallet/metamask.svg

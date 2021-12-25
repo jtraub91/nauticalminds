@@ -44,17 +44,6 @@ body {
   overflow: hidden;
 }
 
-p {
-  font-family: "Palatino", "Palatino Linotype", "Times New Roman", serif;
-}
-
-p.right-justified {
-  margin: auto 0 auto auto;
-  text-align: right;
-}
-.text-center {
-  text-align: center;
-}
 .w450{
   max-width: 450px;
   min-width: 280px;
@@ -92,7 +81,6 @@ p.right-justified {
 }
 #nauticalVideoContainer {
   position: absolute;
-  min-width: 320px;
   width: 100%;
   height: auto;
   max-width: 720px;
@@ -111,9 +99,6 @@ html {
 }
 
 /* inherited from bootstrap */
-.m-auto {
-  margin: auto;
-}
 h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   line-height: 1.2;
@@ -146,7 +131,6 @@ button {
   z-index: 2;
   height: 50px;
   width: 100%;
-  min-width: 320px;
   display: flex;
   justify-content: space-between;
 }
@@ -394,7 +378,6 @@ p.nautical.hover:hover {
 }
 
 .nautical-minds-container {
-  min-width: 320px;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -584,7 +567,12 @@ img.social-icon.instagram{
   background-color: rgba(0,0,0,0.1);
   transition: color 0.3s ease-in;
 }
-
+.nautical-btn.purple-bg{
+  background-color: rgba(0,1,39,0.7);
+}
+.nautical-btn.green-bg{
+  background-color: rgba(0,100,0,0.7);
+}
 .color-wheel {
   border-radius: 3px;
   background-color: rgba(0,0,0,0.1);
@@ -685,7 +673,7 @@ img.social-icon.instagram{
   width: 45px;
   border-radius: 25px;
   background-color: rgba(0,0,0,0.2);
-  margin: 5px 7.5px 0px 5px;
+  margin: 5px 5px 5px auto;
 }
 .user-icon-container{
   display: flex;
@@ -755,36 +743,23 @@ h1#nauticalMindsHeader > a {
   text-decoration: none;
 }
 
-a.contact-link {
+
+.contact-link-blue {
+  color: lightblue;
   text-decoration: none;
-  color: white;
   transition: color 0.1s ease-in;
 }
-a.contact-link:hover{
-  color: limegreen;
-}
-a.contact-link:active{
+.contact-link-blue:hover{
   color: dodgerblue;
 }
-a.contact-link:visited{
-  color: grey;
-}
-a.contact-link-blue {
+.contact-link-green {
+  color: yellowgreen;
   text-decoration: none;
-  color: white;
   transition: color 0.1s ease-in;
 }
-a.contact-link-blue:hover{
-  color: dodgerblue;
+.contact-link-green:hover{
+  color: greenyellow;
 }
-a.contact-link:active{
-  color: limegreen;
-}
-a.contact-link:visited{
-  color: grey;
-}
-
-
 
 
 @keyframes spinner-border {

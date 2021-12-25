@@ -1,13 +1,37 @@
-.dark-modal {
-  background-color: rgba(0,0,0,0.4);
-  border: 1px solid black;  /* lives matter */
-  z-index: 1000;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.5s ease-in-out;
+.dark-bg {
+  background-color: rgba(0,0,0,0.5);
 }
-.backdrop {
-  transition: visibility 0s, opacity 0.5s ease-in-out;
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+.modal-container.opaque {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-container .modal-content {
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+}
+.modal-container .modal-backdrop {
+  backdrop-filter: blur(10px);
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
 }
 
 form input:focus {
@@ -84,21 +108,6 @@ input.join-input{
   min-width: 320px;
   width: 80vw;
   /* height: 350px; */
-}
-
-.about-container{
-  max-width: 450px;
-  min-width: 320px;
-  width: 80vw;
-  display: flex;
-  flex-direction: column;
-}
-
-.about-container p {
-  color: white;
-  font-size: 1rem;
-  padding: 15px;
-  text-align: center;
 }
 
 form.flex-col {

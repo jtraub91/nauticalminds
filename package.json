@@ -1,15 +1,15 @@
 {
   "name": "nauticalminds",
   "version": "1.0.0",
-  "description": "",
+  "description": "Nautical Minds Website",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.js",
     "minify": "jsmin",
-    "watch": "webpack --config webpack.dev.js --watch"
+    "watch": "webpack --config webpack.dev.js --watch",
+    "tailwind-watch": "npx postcss -w -o ./app/static/css/build/tailwind.css ./src/css/Tailwind.css"
   },
-  "author": "",
+  "author": "Jason Traub",
   "license": "ISC",
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
@@ -30,12 +30,18 @@
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^10.4.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-inline-json-import": "^0.3.2",
+    "css-loader": "^6.5.1",
     "jsmin": "^1.0.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.36.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-merge": "^4.2.1"
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "postcss-loader": "^6.2.1",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.7",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-merge": "^5.8.0"
   }
 }

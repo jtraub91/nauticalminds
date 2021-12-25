@@ -612,39 +612,41 @@ export default class AudioBar extends React.Component{
     this.setVolumeOrientation();
 
     // timers
-    this.statusAnimationTimerId = setInterval(()=>{
-      if (parseInt(this.state.dx) > this.STATUS_DX - Math.floor(3.0 * this.statusTextClientWidth)){
-        this.setState(() =>{
-          return {
-            dx: parseInt(this.state.dx) - this.STATUS_DX,
-            statusBarStyle: {
-              position: "absolute",
-              height: "100%",
-              width: this.state.audioTime ? (((this.state.audioTime / this.state.audioDuration) * 100) + "%") : "0",
+    if (this.props.src.length > 0){
+      this.statusAnimationTimerId = setInterval(()=>{
+        if (parseInt(this.state.dx) > this.STATUS_DX - Math.floor(3.0 * this.statusTextClientWidth)){
+          this.setState(() =>{
+            return {
+              dx: parseInt(this.state.dx) - this.STATUS_DX,
+              statusBarStyle: {
+                position: "absolute",
+                height: "100%",
+                width: this.state.audioTime ? (((this.state.audioTime / this.state.audioDuration) * 100) + "%") : "0",
+              }
             }
-          }
-        });
-       
-      } else {
-        this.setState((state) =>{
-          return {
-            dx: "0",
-            statusBarStyle: {
-              position: "absolute",
-              height: "100%",
-              width: this.state.audioTime ? (((this.state.audioTime / this.state.audioDuration) * 100) + "%") : "0",
+          });
+         
+        } else {
+          this.setState((state) =>{
+            return {
+              dx: "0",
+              statusBarStyle: {
+                position: "absolute",
+                height: "100%",
+                width: this.state.audioTime ? (((this.state.audioTime / this.state.audioDuration) * 100) + "%") : "0",
+              }
             }
-          }
-        });
-        // clearInterval(this.statusAnimationTimerId);
-      }
-      // update gain value
-      if (this.state.audioMuted){
-        this.gainNode.gain.value = 0;
-      } else {
-        this.gainNode.gain.value = 10 ** (parseFloat(this.volBtnSldr.value) / 20);  // log scale
-      }
-    }, 500);
+          });
+          // clearInterval(this.statusAnimationTimerId);
+        }
+        // update gain value
+        if (this.state.audioMuted){
+          this.gainNode.gain.value = 0;
+        } else {
+          this.gainNode.gain.value = 10 ** (parseFloat(this.volBtnSldr.value) / 20);  // log scale
+        }
+      }, 500);
+    }
   }
   setBasedOnMediaMatch(){
     if (this.mdMediaMatch.matches) {
@@ -922,6 +924,9 @@ export default class AudioBar extends React.Component{
     if (this.state.src[this.state.trackNo]){
       title = this.state.src[this.state.trackNo].title;
       src = this.state.src[this.state.trackNo].src;
+    } else if (this.props._disabledStatus) {
+      title = this.props._disabledStatus;
+      src = "";
     } else {
       title = "";
       src = "";

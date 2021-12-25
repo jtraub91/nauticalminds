@@ -20,9 +20,9 @@ module.exports = {
                             "@babel/env",
                             "@babel/react"
                         ]
-                    }
-                }
-            }
+                    },
+                },
+            },
         ]
     }
 };

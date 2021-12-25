@@ -20,9 +20,6 @@ nautical.draw(0.99);
 console.log(document.cookie);
 ReactDOM.render(
   <NauticalMinds>
-    <div className="center-rocket-container">
-      <img src="/static/images/nauticalstarship-alt.svg"/>
-    </div>
   </NauticalMinds>,
   document.getElementById("reactApp")
 );
