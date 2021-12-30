@@ -12,3 +12,4 @@ with open(os.path.join(basedir, "config.json")) as c:
 app = Flask(__name__)
 db_engine = create_engine(config["dbUri"], echo=True)
 
+from nauticalminds import routes
