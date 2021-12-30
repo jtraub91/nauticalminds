@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
+
+.blue {
+  transition: background-color 0.13s ease-in;
+  border: 1px dodgerblue solid;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+}
+.blue:hover{
+  background-color: dodgerblue;
+}
+.dark-grey {
+  transition: background-color 0.13s ease-in;
+  border: 1px rgb(5,5,5) solid;
+  color: white;
+  background-color: rgb(0,0,0,0.1);
+}
+.dark-grey:hover{
+  background-color: rgb(5,5,5);
+}
+
+.red-orange {
+  transition: background-color 0.13s ease-in, color 0.13s ease-in;
+  border: 1px orangered solid;
+  color: white;
+  background-color: rgba(0,0,0,0.1);
+}
+.red-orange:hover{
+  background-color: orangered;
+  color: black;
+}
+
+.green {
+  transition: background-color 0.1s ease-in, color 0.1s ease-in;
+  border: 1px lawngreen solid;
+  background-color: rgba(0,0,0,0.2);
+  color: white;
+}
+
+.green.black {
+  color: black !important;
+}
+
+.green-active {
+  border: 1px lawngreen solid;
+  background-color: lawngreen !important;
+  color: black;
+}
+.green:hover {
+  border: 1px lawngreen solid;
+  background-color: lawngreen !important;
+  color: black;
+}
+.yellow {
+  transition: background-color 0.13s ease-in;
+  border: 1px yellow solid;
+  background-color: rgba(0,0,0,0.1);
+  color: white;
+}
+.yellow:hover {
+  background-color: yellow !important;
+  color: black;
+}
+.purple {
+  border: 1px solid indigo;
+  transition: background-color 0.13s ease-in;
+}
+.purple:hover {
+  background-color: indigo;
+  transition: background-color 0.13s ease-in;
+}
+
+.audioBar {
+  background-image: linear-gradient(to right, rgba(0,1,39, 0.45), rgba(0,0,0,0.09), rgba(30,145,255,0.1));
+}
+
+.status {
+  letter-spacing: 1px;
+  font-family: 'ZCOOL QingKe HuangYou';
+  border: solid 2px black;
+  background-color: rgba(0,0,0,0.5);
+  height: 33px;
+  margin: auto 3px;
+}
+
+.status-invert {
+  backdrop-filter: invert(100%);
+  -webkit-backdrop-filter: invert(100%);
+  border-right: 1px solid lawngreen;
+}
+
+.clock {
+  letter-spacing: 3px;
+  font-family: 'ZCOOL QingKe HuangYou';
+  color: lawngreen;
+  border: solid 2px black;
+  background-color: rgba(0,0,0,0.5);
+  
+}
+
+.audioBarControls { 
+  margin: auto 5px;
+  /* width: 100%; */
+}
+
+.flex-group {
+  flex-direction: row;
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+  display: flex;
+}
+button.no-border{
+  border: none;
+}
+
+
+.ctrl-btn {
+  border: 1px solid rgb(0,1,39);
+  background-color: rgba(0,1,39,0.3);
+  color: white;
+}
+
+.ctrl-btn:hover{
+  color: white;
+  border-color: turquoise;
+  background-color: rgb(0,1,39);
+}
+
+.bars-container-item {
+  padding: 4px;
+  transition: background-color 0.33s linear;
+}
+
+.bars-container-item:hover {
+  background-color: #7cfc0080;
+}
+
+.fa-volume-up:before{
+  margin: auto;
+  margin-left: 5px !important;
+}
+
+.fa-volume-off:before {
+  margin: auto;
+  margin-left: 5px !important;
+  margin-right: 10px !important;
+}
+
+
+.fa::before, .fas::before, .far::before {
+  margin: auto;
+}
+
+
+.extend {
+  transition: width 0.33s ease, height 0.33s ease;
+  width: 33px;
+}
+
+/* volume slider */
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+
+  background-color: dodgerblue;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+  margin-top: -7px;
+}
+
+input[type=range]::-moz-range-thumb{
+  background-color: dodgerblue;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+}
+
+input[type=range]::-ms-thumb{
+  background-color: dodgerblue;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+}
+
+input[type=range]::-webkit-slider-runnable-track{
+  height: 2px;
+  margin: auto;
+  cursor: pointer;
+  width: inherit;
+  background: lawngreen;
+}
+
+input[type=range]::-moz-range-track{
+  height: 2px;
+  margin: auto;
+  cursor: pointer;
+  width: inherit;
+  background: lawngreen;
+}
+
+input[type=range]::-ms-track{
+  height: 1px;
+  margin: auto;
+  cursor: pointer;
+  width: inherit;
+  background: lawngreen;
+}
+
+input[type=range]::-ms-fill-lower{
+
+}
+
+input[type=range]:focus::-ms-fill-lower{
+
+}
+
+input[type=range]::-ms-fill-upper{
+
+}
+
+input[type=range]:focus::-ms-fill-upper{
+
+}

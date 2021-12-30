@@ -6,7 +6,7 @@ venv/
 node_modules/
 
 music/
-
-app/static/dist/
+nauticalminds/static/dist/
+nauticalminds/static/css/build/
 
 contracts/build/
