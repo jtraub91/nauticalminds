@@ -45,7 +45,6 @@ function ConnectModal (props){
               <span>Install MetaMask</span>
             </div>
           }
-          
         </button>
       </div>
     </div>

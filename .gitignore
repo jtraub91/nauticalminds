@@ -6,9 +6,7 @@ venv/
 node_modules/
 
 music/
-video/
-logs/
 
 app/static/dist/
 
-contracts_build/
+contracts/build/

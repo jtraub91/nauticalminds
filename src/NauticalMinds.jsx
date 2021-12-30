@@ -34,7 +34,6 @@ function NauticalMinds(props){
     console.log("Please install MetaMask");
   }
   function rocketShipOnClick(){
-    console.log("mint");
     setMintModalVisible(true);
   }
   function connectOnClick(e){

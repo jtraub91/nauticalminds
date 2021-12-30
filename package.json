@@ -7,7 +7,9 @@
     "build": "webpack --config webpack.prod.js",
     "minify": "jsmin",
     "watch": "webpack --config webpack.dev.js --watch",
-    "tailwind-watch": "npx postcss -w -o ./app/static/css/build/tailwind.css ./src/css/Tailwind.css"
+    "tailwind-watch": "npx postcss -w -o ./app/static/css/build/tailwind.css ./src/css/Tailwind.css",
+    "localeth": "ganache-cli -h 127.0.0.1 -p 8545",
+    "truffle-deploy": "truffle deploy"
   },
   "author": "Jason Traub",
   "license": "ISC",

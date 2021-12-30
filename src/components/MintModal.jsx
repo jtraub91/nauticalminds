@@ -13,7 +13,11 @@ function MintModal(props){
         {
           props.userAccounts.length > 0 ? 
           <p className="text-white m-auto w-full p-5 text-center font-mono">
-            Mint info
+            <button className="wallet-btn mb-5 mx-10" onClick={()=>console.log("mint")}>
+              <div className="wallet-btn-text-container">
+                <span>Mint NMEP</span>
+              </div>
+            </button>
           </p> 
           :
           <p className="text-white m-auto w-full p-5">

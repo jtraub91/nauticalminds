@@ -7,7 +7,7 @@ class Develop(object):
     SECRET_KEY = "forgotten-plants-smirnoff-angels-in-western-carriages"
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://nautical_test:nautical_test@161.35.114.25/nauticalminds_test'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://nauticalminds_dev:nauticalminds_dev@127.0.0.1:5432/nauticalminds_web3_dev'
 
     LOG_DIR = os.path.join(basedir, "logs")
     if not os.path.exists(LOG_DIR):
