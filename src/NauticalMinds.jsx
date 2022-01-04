@@ -1,38 +1,51 @@
 import Web3 from 'web3';
-import NauticalMindsEp from "../contracts_build/NauticalMindsEp.json";
+// import NauticalMindsEp from "../contracts_build/NauticalMindsEp.json";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useDebugValue } from 'react';
 
 import AudioBar from './components/AudioBar.jsx';
 import AboutModal from './components/AboutModal.jsx';
 import ConnectModal from './components/ConnectModal.jsx';
 import MintModal from './components/MintModal.jsx';
 
-import SRC_LIST from './srcList.json';
+// const contractAbi = NauticalMindsEp.abi;
+// const contractAddress = "0x73C9499205a1fdc69539252dbE2Da96c01C8228D";
+const metaUri = "ipfs://QmbMJCJgN5WABDvVkuMJmMzPBF4wGBjme5igck1qCpdvd3";
 
-const contractAbi = NauticalMindsEp.abi;
-const contractAddress = "0x73C9499205a1fdc69539252dbE2Da96c01C8228D";
+import debugMeta from "./debugMeta.json";
 
 function NauticalMinds(props){
-  
+
   const [userData, setUserData] = useState({});
-  const [userAccounts, setUserAccounts] = useState([]);
+  const [userAccount, setUserAccount] = useState("");
   const [connectModalVisible, setConnectModalVisible] = useState(false);
   const [aboutModalVisible, setAboutModalVisible] = useState(false);
   const [mintModalVisible, setMintModalVisible] = useState(false)
   const [userAddressExpanded, setUserAddressExpanded] = useState(false);
+  const [metaData, setMetaData] = useState({})
 
-  if (window.ethereum) {
-    console.log("Metamask installed");
-
-    window.web3 = new Web3(window.ethereum);
-    const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
-
-    window.ethereum.on('accountsChanged', (accounts)=>setUserAccounts(accounts));
-    window.ethereum.on('chainChanged', (chainId)=>window.location.reload());
-  } else {
-    console.log("Please install MetaMask");
-  }
+  useEffect(()=>{
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      // const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
+  
+      window.ethereum.on('accountsChanged', (accounts)=>setUserAccount(accounts[0]));
+      window.ethereum.on('chainChanged', (chainId)=>window.location.reload());
+    } else {
+      console.log("Please install MetaMask");
+    }
+  
+    let metaReq = new XMLHttpRequest();
+    metaReq.onreadystatechange = (resp)=>{
+      if (resp.currentTarget.readyState === 4){
+        let data = JSON.parse(resp.currentTarget.responseText);
+        setMetaData(data);
+      }
+    }
+    metaReq.open("GET", `/ipfs/${metaUri.split("ipfs://")[1]}`);
+    metaReq.setRequestHeader("Content-Type", "application/json");
+    metaReq.send();
+  }, []);
   function rocketShipOnClick(){
     setMintModalVisible(true);
   }
@@ -76,12 +89,44 @@ function NauticalMinds(props){
       return addr
     }
   }
+
   function userAddressOnClick(){
-    console.log("other")
     setUserAddressExpanded(!userAddressExpanded)
   }
   function connectMetmaskCallback(accounts){
-    setUserAccounts(accounts)
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function (resp) {
+      if (xhr.readyState === 4){
+        let data = resp.currentTarget.response;
+        data = JSON.parse(data)
+        if (("0x" + data.ethAddress == accounts[0]) && (data.sigRequest !== undefined)){
+          window.web3.eth.sign(JSON.stringify(data), accounts[0]).then((resp)=>{
+            let req = new XMLHttpRequest();
+            req.onreadystatechange = (resp)=>{
+              console.log(resp)
+              // document.cookie = ""
+            };
+            req.onerror = (e)=>console.error(e);
+            req.open("POST", "/jwt");
+            req.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({
+              ethAddress: accounts[0],
+              signedData: resp,
+            }));
+
+          })
+        }
+      }
+    }
+    xhr.onerror = function (err){
+      console.error(err)
+    }
+    xhr.open("POST", "/connect");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify({
+      ethAddress: accounts[0]
+    }));
+    setUserAccount(accounts[0]);
     setConnectModalVisible(false);
   }
 
@@ -103,14 +148,14 @@ function NauticalMinds(props){
           Nautical Minds
         </h1>
         {
-          userAccounts.length > 0 ?
+          userAccount ?
           <div className="button-group">
             <div className={userAddressClassName} onClick={userAddressOnClick}>
               {
                 userAddressExpanded ? 
-                shortenAddress(userAccounts[0], 20, "......") 
+                shortenAddress(userAccount, 20, "......") 
                 : 
-                shortenAddress(userAccounts[0])
+                shortenAddress(userAccount)
               }
               {
                 userAddressExpanded ? 
@@ -147,7 +192,8 @@ function NauticalMinds(props){
       </div>
       {props.children}
       <MintModal
-        userAccounts={userAccounts}
+        _metaData={metaData}
+        userAccount={userAccount}
         visible={mintModalVisible}
         onClick={modalBackdropOnClick}/>
       <ConnectModal 
@@ -159,7 +205,8 @@ function NauticalMinds(props){
         onClick={modalBackdropOnClick}/>
       <AudioBar 
         _disabledStatus="Mint NMEP to listen"
-        src={document.cookie.jwt ? SRC_LIST : []} id="audioBar"/>
+        trackList={debugMeta.trackList}/>
+        {/* trackList={metaData.trackList ? metaData.trackList : []}/> */}
     </div>
   )
 }

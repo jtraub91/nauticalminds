@@ -5,7 +5,7 @@ module.exports = {
         index: "./src/index.js",
     },
     output: {
-        "path": path.resolve(__dirname, "app", "static", "dist"),
+        "path": path.resolve(__dirname, "nauticalminds", "static", "build"),
         "filename": "nauticalminds.bundle.js"
     },
     module: {

@@ -7,23 +7,19 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract NauticalMindsEp is ERC721, Ownable {
     
     uint256 public PRICE = 1e15;    // 0.0015 ether
-    uint256 public totalCopiesSold = 0;
+    uint256 public totalMintedCopies = 0;
 
-    mapping(uint8 => string) trackUris;
+    string private _baseUri = "ipfs://QmbMJCJgN5WABDvVkuMJmMzPBF4wGBjme5igck1qCpdvd3";
 
     constructor() ERC721("NauticalMindsEp", "NMEP") {}
 
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        // NMEP does not have unique tokenURI's
-        // all "tokens" or copies of NMEP point to the same URI, 
-        //   containing the ipfs content identifier for the folder of 
-        //   mp3 files for NauticalMindsEP. 
-        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-        return _baseURI();
+    function _baseURI() internal view virtual override returns (string memory) {
+        return _baseUri;
     }
 
-    function _baseURI() internal view virtual override returns (string memory) {
-        return "ipfs://fjjgkldgkljdgjldmsdbgjksklfjslvmskvxg";
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+        return _baseURI();
     }
 
     function _setTokenPrice(uint256 price) public onlyOwner returns (uint256) {
@@ -31,14 +27,14 @@ contract NauticalMindsEp is ERC721, Ownable {
         return price;
     }
 
-    function _withdraw(uint256 amount) public onlyOwner {
-
-
-        
+    function _withdraw(uint256 amount) public onlyOwner returns (uint256) {
+        require(msg.sender == owner());
+        payable(owner()).transfer(amount);
+        return amount;
     }
     function _balance() public view onlyOwner returns (uint256) {
-        uint256 contractBalance = address(this).balance;
-        return contractBalance;
+        uint256 bal = address(this).balance;
+        return bal;
     }
 
     function mintEp() public payable returns (uint256){
@@ -47,9 +43,9 @@ contract NauticalMindsEp is ERC721, Ownable {
          */
         require(PRICE < msg.value, "Value sent must exceed PRICE");
 
-        uint256 tokenId = totalCopiesSold + 1;
+        uint256 tokenId = totalMintedCopies + 1;
         _safeMint(msg.sender, tokenId);
-        totalCopiesSold = tokenId;
+        totalMintedCopies = tokenId;
         return tokenId;
     }
     
@@ -58,7 +54,7 @@ contract NauticalMindsEp is ERC721, Ownable {
          *  Burn your copy
          */
         require(_exists(tokenId), "Token does not exist");
-        require(msg.sender == ownerOf(tokenId), "Must be token owner to burn token");
+        require(_msgSender() == ownerOf(tokenId), "Must be token owner to burn token");
         _burn(tokenId);
         return tokenId;
     }

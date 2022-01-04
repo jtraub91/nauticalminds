@@ -10,7 +10,7 @@ function AboutModal (props){
   return (
     <div className={containerClass}>
       <div className="modal-backdrop" onClick={props.onClick}/>
-      <div className="modal-content dark-bg m-auto border-black border-solid border-2 max-w-md" onClick={(e)=>console.log('child')}>
+      <div className="modal-content dark-bg m-auto border-black border-solid border-2 max-w-md">
         <h3 className="form-header">About</h3>
         <p className="font-mono text-right text-white py-5 pr-5 pl-10 w-full text-mono">
           Nautical Minds is the musical collaboration of Jason Marcus and Jason Traub
@@ -27,7 +27,7 @@ function AboutModal (props){
           <a className="contact-link-green" href="https://linktr.ee/nauticalminds" target="_blank">linktr.ee</a>
         </p>
         <footer className='font-mono text-center'>
-          &copy; Nautical Records 2022
+          &copy; Nautical Records LLC 2022
         </footer>
       </div>
     </div>

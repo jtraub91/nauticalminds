@@ -36,15 +36,12 @@
   background-color: rgba(0,0,0,0.2);
   color: white;
 }
-
+.green.active {
+  background-color: lawngreen;
+  color: black;
+}
 .green.black {
   color: black !important;
-}
-
-.green-active {
-  border: 1px lawngreen solid;
-  background-color: lawngreen !important;
-  color: black;
 }
 .green:hover {
   border: 1px lawngreen solid;
@@ -84,13 +81,13 @@
 }
 
 .status-invert {
-  backdrop-filter: invert(100%);
+  backdrop-filter: invert(90%);
   -webkit-backdrop-filter: invert(100%);
   border-right: 1px solid lawngreen;
 }
 
 .clock {
-  letter-spacing: 3px;
+  letter-spacing: 0.35rem;
   font-family: 'ZCOOL QingKe HuangYou';
   color: lawngreen;
   border: solid 2px black;
@@ -129,6 +126,8 @@ button.no-border{
 }
 
 .bars-container-item {
+  font-family: 'Comic Sans MS';
+  font-weight: 100;
   padding: 4px;
   transition: background-color 0.33s linear;
 }
@@ -242,4 +241,72 @@ input[type=range]::-ms-fill-upper{
 
 input[type=range]:focus::-ms-fill-upper{
 
+}
+
+
+
+.info-container{
+  width: 250px;
+  height: auto;
+  min-height: 50px;
+  position: absolute;
+  /* transform: "translate(-90%, -115%)", */
+  border: 1px solid lawngreen;
+  background-color: rgba(0,0,0,0.5);
+  transition: height 0.3s linear, width 0.3s linear;
+  font-family: "Courier New";
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: white;
+  padding: 10px;
+  border-radius: 3px;
+  right: 15px;
+  bottom: 60px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.bars-container {
+  display: block;
+  width: 250px;
+  height: auto;
+  position: absolute;
+  transform: translate(-90%, -111%);
+  border: 1px solid lawngreen;
+  background-color: rgba(0,0,0,0.5);
+  transition: height 0.3s linear, width 0.3s linear;
+  font-family: "Courier New";
+  font-size: 1rem;
+  color: white;
+  border-radius: 3px;
+}
+
+.comment-container {
+  display: block;
+  position: fixed;
+  bottom: 50px;
+  /* border: 1px solid lawngreen; */
+  /* background-color: rgba(0,0,0,0.5); */
+  transition: height 0.3s linear, width 0.3s linear;
+  font-family: "Courier New";
+  font-size: 12px;
+  right: 25px;
+  border-radius: 3px;
+  min-width: 250px;
+  max-width: 350px;
+  width: 90%;
+}
+.comment-container textarea {
+  width: auto;
+  height: 150px;
+  margin: 4px;
+  font-family: "Comic Sans MS";
+  padding: 10px;
+  letter-spacing: 1px;
+  font-size: 14px;
+  resize: none;
+  min-height: 150px;
+  max-height: 720px;
+  padding: 5px 70px 10px 10px;
 }

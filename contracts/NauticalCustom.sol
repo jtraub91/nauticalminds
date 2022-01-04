@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract NauticalToken {    
+contract NauticalCustom {    
     mapping(address => bool) private _isUser;
 
     uint256 public price = 1e15;

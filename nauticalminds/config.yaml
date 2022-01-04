@@ -1,0 +1,14 @@
+SECRET_KEY: "extra-super-duper-secret-key"
+DB_URI: "postgresql://nauticalminds_dev:nauticalminds_dev@127.0.0.1:5432/nauticalminds_web3_dev"
+META_URI: "ipfs://QmbMJCJgN5WABDvVkuMJmMzPBF4wGBjme5igck1qCpdvd3"
+PINNED_CIDS:  # for ipfs
+  - QmbMJCJgN5WABDvVkuMJmMzPBF4wGBjme5igck1qCpdvd3  # meta
+  - QmVcQLX8RNVGLRxLfAnLZ7N2E4AHQdixZDtwGmKgNGDuXh  # cover
+  - QmVzPDfWLYw8orp2am84nKCycFPWqx56HaKHxZBbXmGdLT  # cover-alt
+  - Qmdn6qaJ9wpJgMpbsVKX3J4VPXEMJUMXrAd3BveY1MkYZb  # gotta let you know
+  - QmNdFeuMKumzEmjxCxuMZPATzZs2tBqnmYkCL3XHsofeUb  # ain't gotta care
+  - QmSvkz5PrrcJbsatGp44ifxqSaBck6j4D3Pd4mBQzbfSug  # funk 1
+  - QmbDERFuSA8LqPivHXoUfqUbvZxibBr4mKYudx4Zy5Pmby  # spacy stacy
+  - QmNk4yywJbp8b2Sse3Zse7bKBqpTuXomu3JY9Ut6LrQwS5  # side street robbery
+  - QmfLVRCeDv68b4i2zuBKrNvUz7fGpz1EMREpEJoqbf5kbt  # off the clock
+MUSIC_DIR: "C:\\Users\\Jason\\WebProjects\\nauticalminds\\music"

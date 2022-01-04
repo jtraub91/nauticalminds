@@ -5,9 +5,8 @@
   "private": true,
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "minify": "jsmin",
     "watch": "webpack --config webpack.dev.js --watch",
-    "tailwind-watch": "npx postcss -w -o ./app/static/css/build/tailwind.css ./src/css/Tailwind.css",
+    "tailwind-watch": "npx postcss -w -o ./nauticalminds/static/build/tailwind.css ./src/css/Tailwind.css",
     "localeth": "ganache-cli -h 127.0.0.1 -p 8545",
     "truffle-deploy": "truffle deploy"
   },
@@ -21,6 +20,7 @@
     "dotenv": "^10.0.0",
     "fontawesome": "^5.6.3",
     "history": "^5.1.0",
+    "ipfs-core": "^0.13.0",
     "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -36,7 +36,6 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-inline-json-import": "^0.3.2",
     "css-loader": "^6.5.1",
-    "jsmin": "^1.0.1",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "postcss-loader": "^6.2.1",

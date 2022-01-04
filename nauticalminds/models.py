@@ -1,19 +1,35 @@
-from sqlalchemy import MetaData
-from sqlalchemy import Integer
-from sqlalchemy import Table
-from sqlalchemy import String
+import secrets
+
 from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import String
+from sqlalchemy import Table
+from sqlalchemy.orm import declarative_base
 
 from nauticalminds import db_engine
 
-meta = MetaData()
+Base = declarative_base()
 
-users = Table(
-    "users", meta,
-    Column("id", Integer, primary_key=True),
-    Column("eth_address", String(64), index=True, nullable=False)
-)
+
+class User(Base):
+    __tablename__ = "users"
+
+    pk = Column("pk", Integer, primary_key=True)
+    eth_address = Column("eth_address", String(40), index=True, nullable=False)
+    nonce = Column("nonce", String(64))
+
+    def set_new_nonce(self, nbytes=32):
+        n = secrets.token_hex(nbytes=nbytes)
+        self.nonce = n
+        return n
+
+    def __repr__(self):
+        return f"<User (pk: {self.pk}, eth_address: {self.eth_address})"
 
 
 def create_tables():
-    meta.create_all(db_engine)
+    Base.metadata.create_all(db_engine)
+
+
+def drop_tables():
+    Base.metadata.drop_all(db_engine)
