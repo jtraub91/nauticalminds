@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
-
-import style from "./AudioBarStyle.js";
+import React from 'react';
 
 const TIMESTAMP = Math.round(new Date().getTime());
 const STATUS_DX = 60;
@@ -12,14 +10,13 @@ const id = {
   commentButton: `comment_button_${TIMESTAMP}`,
   barsButton: `bars_button_${TIMESTAMP}`,
   volumeButton: `volume_button_${TIMESTAMP}`,
-  volumeSliderInput: `volume_slider_input_${TIMESTAMP}`
 }
 
-const xsMediaMatch = window.matchMedia("screen and (max-width: 510px)");
+const xxxsMediaMatch = window.matchMedia("screen");
+const xxsMediaMatch = window.matchMedia("screen and (min-width: 210px)");
+const xsMediaMatch = window.matchMedia("screen and (min-width: 430px)");
 const smMediaMatch = window.matchMedia("screen and (min-width: 560px)");
-const mdMediaMatch = window.matchMedia("screen and (min-width: 800px)");
-
-const volMatch = window.matchMedia("screen and (min-width: 950px)");
+const mdMediaMatch = window.matchMedia("screen and (min-width: 775px)");
 
 function secondsToMMSS(floatTime) {
   if (floatTime == null || floatTime == undefined){
@@ -45,8 +42,6 @@ export default class AudioBar extends React.Component{
     this.audioElement = "";
 
     this.state = {
-      volumeButtonStyle: {display: "none"},
-      volumeSliderStyle: {display: "none"},
       statusBarStyle: {
         position: "absolute",
         height: "100%",
@@ -64,11 +59,9 @@ export default class AudioBar extends React.Component{
       audioMuted: false,
       dx: "0",
       dy: "0",
-      clockDisplay: false,
-      buttonsActive: ["playPause", "info", /*"comment",*/ "bars"],
-      // ^ for controlling visible buttons
-      // unordered list containing any of ["prev", "playPause", "next", "info", "comment", "bars"]
-      // volume button not considered here, handled via volumeButtonStyle
+      buttonsActive: ["playPause", "status", "bars"],
+      // unordered list containing any of:
+      // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars"]
       infoData: null,
       controlOpen: "",  // ["info"|"comment"|"bars"]
       playButtonClassName: "fa fa-play ctrl-btn audiobar-btn", // fa-play or fa-pause
@@ -204,14 +197,11 @@ export default class AudioBar extends React.Component{
       this.gainNode.gain.value = 10 ** (parseFloat(e.target.value) / 20);  // log scale
     }
 
-    // setup volume Button expansion listeners
-    this.initVolumeButtonListeners();
-    // and update on change to media match
-    volMatch.addEventListener("change", this.initVolumeButtonListeners);
-
     // set visible controls based on media match
     this.setControlsBasedOnMediaMatch();
     // and update on change to any
+    xxxsMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
+    xxsMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
     xsMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
     smMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch); 
     mdMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
@@ -220,109 +210,30 @@ export default class AudioBar extends React.Component{
     clearInterval(this.intervalHandle);
     clearInterval(this.statusIntervalHandle);
   }
-  handleMouseEnterX = ()=>{
-    this.setState({
-      volumeButtonStyle: { 
-        height: "33px",
-        width: "200px",
-        margin: "auto 4px",
-        display: "flex",
-      },
-      volumeSliderStyle: {
-        display: "inline-block",
-        width: "100%",
-        margin: "auto 10px"
-      }
-    });
-  }
-  handleMouseLeaveX = ()=>{
-    this.setState({
-      volumeButtonStyle: { 
-        height: "33px",
-        width: "33px",
-        minWidth: "33px",
-        margin: "auto 4px",
-        display: "flex"
-      },
-      volumeSliderStyle: {
-        display: "none"
-      }
-    });
-  }
-  handleMouseEnterY = ()=>{
-    this.setState({
-      volumeButtonStyle: { 
-        height: "33px",
-        width: "200px",
-        margin: "auto 4px",
-        display: "flex",
-        // transform: "rotate(-90deg)",
-        position: "relative",
-        // top: "-85px",
-        // left: "-85px"
-      },
-      volumeSliderStyle: {
-        display: "inline-block",
-        width: "100%",
-        margin: "auto 10px"
-      }
-    });
-  }
-  handleMouseLeaveY = ()=>{
-    this.setState({
-      volumeButtonStyle: { 
-        height: "33px",
-        width: "33px",
-        minWidth: "33px",
-        margin: "auto 4px",
-        display: "flex"
-      },
-      volumeSliderStyle: {
-        display: "none"
-      }
-    });
-  }
   setControlsBasedOnMediaMatch = ()=>{
+    // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars", "download"],
     if (mdMediaMatch.matches) {
       this.setState({
-        clockDisplay: true,
-        buttonsActive: ["prev", "playPause", "next", "info", /*"comment",*/ "bars"],
-        volumeButtonStyle: style.volumeButton
+        buttonsActive: ["prev", "playPause", "next", "vol", "clock", "status", "info", "bars", "download"],
       });
     } else if (smMediaMatch.matches) {
       this.setState({
-        clockDisplay: false,
-        buttonsActive: ["prev", "playPause", "next", "info", /*"comment",*/ "bars"],
-        volumeButtonStyle: style.volumeButton
+        buttonsActive: ["prev", "playPause", "next", "vol", "status", "info", "bars", "download"],
       });
     } else if (xsMediaMatch.matches) {
       this.setState({
-        clockDisplay: false,
-        buttonsActive: ["playPause", "info", /*"comment",*/ "bars"],
-        volumeButtonStyle: {display: "none"}
+        buttonsActive: ["prev", "playPause", "next", "status", "info", "bars", "download"],
+      })
+    } else if (xxsMediaMatch.matches){
+      this.setState({
+        buttonsActive: ["playPause", "status", "bars"],
+      });
+    } else if (xxxsMediaMatch.matches){
+      this.setState({
+        buttonsActive: ["playPause", "bars"],
       })
     } else {
       console.log("else")
-    }
-  }
-  initVolumeButtonListeners = ()=>{
-    // todo: need to remove listners on change?
-    if (volMatch.matches){
-      this.volumeButton.addEventListener("mouseenter", this.handleMouseEnterX);
-      this.volumeButton.addEventListener("click", this.handleMouseEnterX);
-      this.volumeButton.addEventListener("mouseleave", this.handleMouseLeaveX);
-
-      this.volumeButton.removeEventListener("mouseenter", this.handleMouseEnterY);
-      this.volumeButton.removeEventListener("click", this.handleMouseEnterY);
-      this.volumeButton.removeEventListener("mouseleave", this.handleMouseLeaveY);
-    } else {
-      this.volumeButton.addEventListener("mouseenter", this.handleMouseEnterY);
-      this.volumeButton.addEventListener("click", this.handleMouseEnterY);
-      this.volumeButton.addEventListener("mouseleave", this.handleMouseLeaveY);
-
-      this.volumeButton.removeEventListener("mouseenter", this.handleMouseEnterX);
-      this.volumeButton.removeEventListener("click", this.handleMouseEnterX);
-      this.volumeButton.removeEventListener("mouseleave", this.handleMouseLeaveX);
     }
   }
   onCommentSubmit = (e)=>{
@@ -507,7 +418,7 @@ export default class AudioBar extends React.Component{
     if (this.state.audioMuted){
       volumeButtonClass = "fa fa-volume-off ctrl-btn audiobar-btn";
     } else {
-      volumeButtonClass = "fa fa-volume-up ctrl-btn audiobar-btn";
+      volumeButtonClass = "fa fa-volume-up ctrl-btn audiobar-btn vol-btn-animation";
     }
     
     let infoClass = "fas fa fa-info-circle audiobar-btn green";
@@ -546,25 +457,28 @@ export default class AudioBar extends React.Component{
     }
     return (
       <div className="audioBar">
-        <div style={style.audioBar}>
-          <div style={style.controls} className="audioBarControls ml-15">
+        <div className="audiobar-container">
+          <div className="audioBarControls">
             <button className="fas fa-step-backward ctrl-btn audiobar-btn" 
-              style={this.state.buttonsActive.indexOf("prev") >= 0 ? style.button : {display: "none"}}
+              style={this.state.buttonsActive.indexOf("prev") >= 0 ? {} : {display: "none"}}
               title="Back" onClick={this.onPrev}/>
             <button className={this.state.playButtonClassName} id="playButton"
-              style={this.state.buttonsActive.indexOf("playPause") >= 0 ? style.button : {display: "none"}}
+              style={this.state.buttonsActive.indexOf("playPause") >= 0 ? {} : {display: "none"}}
               title="Play" onClick={this.onPlayPause}/>
             <button className="fas fa-step-forward ctrl-btn audiobar-btn" 
-              style={this.state.buttonsActive.indexOf("next") >= 0 ? style.button : {display: "none"}}
+              style={this.state.buttonsActive.indexOf("next") >= 0 ? {} : {display: "none"}}
               title="Forward" onClick={this.onNext}/>
-            <i className={volumeButtonClass} style={this.state.volumeButtonStyle} id={id.volumeButton}>
-              <input type="range" min="-36" max="6" step="0.5" defaultValue="0" 
-                style={this.state.volumeSliderStyle} id={id.volumeSliderInput}/>
+            <i style={this.state.buttonsActive.indexOf("vol") >= 0 ? {} : {display: "none"}}
+              className={volumeButtonClass} 
+              id={id.volumeButton}>
+              <input className="vol-slider"
+                type="range" min="-36" max="6" step="0.5" defaultValue="0" />
             </i>
           </div>
-          <div className="flex-group" style={{right: "0", bottom: "7.5px", width: "100%", justifyContent: "flex-end"}}>
-            <div className="flex-group" style={{width: "100%", justifyContent: "flex-end"}}>
-              <div style={this.state.clockDisplay ? style.clock : {display: "none"}} className="clock">
+          <div className="flex flex-row" style={{right: "0", bottom: "7.5px", width: "100%", justifyContent: "flex-end"}}>
+            <div className="flex flex-row" style={{width: "100%", justifyContent: "flex-end"}}>
+              <div className="clock"
+                style={this.state.buttonsActive.indexOf("clock") >= 0 ? {} : {display: "none"}}>
                 <span className="m-auto">
                   {secondsToMMSS(this.state.audioTime)}
                 </span>
@@ -575,28 +489,29 @@ export default class AudioBar extends React.Component{
                     {secondsToMMSS(this.state.audioDuration)}
                 </span>
               </div>
-              <div style={style.status} className="status">
-                <div style={style.statusBarContainer} id={id.statusBarContainer}>
+              <div style={this.state.buttonsActive.indexOf("status") >= 0 ? {}: {display: "none"}}
+                className="status">
+                <div className="absolute w-full h-full" id={id.statusBarContainer}>
                   <div style={this.state.statusBarStyle} className="status-invert"/>
                   <div style={this.state.mouseoverStatusBarStyle}/>
                 </div>
-                <svg viewBox="0 0 100 100" width="100%" height="20px" style={{margin: "auto 5px"}}>
+                <svg viewBox="0 0 100 100" width="0%" height="20px" style={{margin: "auto 5px"}}>
                   <text fill="lawngreen" x="-870" y="87"
                     dx={this.state.dx} dy={this.state.dy}
                     fontSize="100" letterSpacing="20" id={id.statusText}>
                     {title}
                   </text>
                 </svg>
+                <div className="status-title">
+                  {title}
+                </div>
               </div>
             </div>
-            <div className="flex-group my-auto mx-5">
+            <div className="audioBarControls">
               <button className={infoClass}
                 title="Song Info"
                 onClick={this.onInfo} id={id.infoButton}
-                style={
-                  this.state.buttonsActive.indexOf("info") >= 0 ? 
-                  style.button : {display: "none"}
-                }>
+                style={this.state.buttonsActive.indexOf("info") >= 0 ? {} : {display: "none"}}>
                   <div className="info-container" style={infoContainerStyle}>
                     {
                       this.props.trackList ? 
@@ -627,24 +542,19 @@ export default class AudioBar extends React.Component{
               <button className={commentClass} id={id.commentButton}
                 title="Comment"
                 onClick={this.onComment}
-                style={
-                  this.state.buttonsActive.indexOf("comment") >= 0 ?
-                  style.button : {display: "none"}}/>
+                style={this.state.buttonsActive.indexOf("comment") >= 0 ? {} : {display: "none"}}/>
               <button className={barsClass} id={id.barsButton}
                 title="Track List"
                 onClick={this.onBars}
-                style={
-                  this.state.buttonsActive.indexOf("bars") >= 0 ?
-                  style.button : {display: "none"}}>
+                style={this.state.buttonsActive.indexOf("bars") >= 0 ? {} : {display: "none"}}>
                 <div className="bars-container" style={barsContainerStyle}>
                   <ol>
                     {
                       this.props.trackList ? 
                       this.props.trackList.map(
                         (track)=>
-                          <li style={style.barsContainerItem}
+                          <li className="bars-container-item"
                             key={`bars_track_${this.props.trackList.indexOf(track)}`}
-                            className="bars-container-item"
                             onClick={()=>this.onClickBarsItem(track)}>
                             {track.title}
                           </li>
@@ -655,7 +565,7 @@ export default class AudioBar extends React.Component{
                 </div>
               </button>
               <button className="fa fa-download alt green audiobar-btn" 
-                style={style.button} 
+                style={this.state.buttonsActive.indexOf("download") >= 0 ? {} : {display: "none"}} 
                 title={`Download ${title}`}
                 onClick={this.onDownload}/>
             </div>
