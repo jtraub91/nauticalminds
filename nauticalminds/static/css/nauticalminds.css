@@ -615,6 +615,17 @@ img.social-icon.instagram{
   } 
 }
 /* endfrom https://tobiasahlin.com/spinkit/ */
+/*
+example usage:
+<div class="sk-chase m-auto">
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+  <div class="sk-chase-dot"></div>
+</div>
+*/
 .alert-container {
   top: 100px;
   left: 50%;

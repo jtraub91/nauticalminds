@@ -77,20 +77,17 @@ def sig():
     return jsonify({})
 
 
-def stream_gen(filepath, start_byte=0, chunk_size=1024):
-    music_file = open(filepath, "rb")
-    music_file.seek(start_byte)
-    while True:
+def stream_gen(filepath, chunk_size=1024):
+    with open(filepath, "rb") as music_file:
         data = music_file.read(chunk_size)
-        if not data:
-            music_file.close()
-            break
-        yield data
+        while data:
+            yield data
+            data = music_file.read(chunk_size)
 
 
-@app.route("/stream/<album>/<filename>")
+@app.route("/stream/nautical_minds/<album>/<filename>")
 def stream(album, filename):
-    filepath = os.path.join(app.config["MUSIC_DIR"], album, filename)
+    filepath = os.path.join(app.config["MUSIC_DIR"], "nautical_minds", album, filename)
     ext = os.path.splitext(filepath)[-1].split(".")[-1]
     return Response(stream_gen(filepath), mimetype=f"audio/{ext}")
 

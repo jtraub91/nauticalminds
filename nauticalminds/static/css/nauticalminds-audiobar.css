@@ -32,9 +32,15 @@
 
 .green {
   transition: background-color 0.1s ease-in, color 0.1s ease-in;
-  border: 1px lawngreen solid;
+  border-width: 1px;
+  border-color: lawngreen;
+  border-style: solid;
   background-color: rgba(0,0,0,0.2);
   color: white;
+}
+.green:hover {
+  background-color: lawngreen !important;
+  color: black;
 }
 .green.active {
   background-color: lawngreen;
@@ -42,11 +48,6 @@
 }
 .green.black {
   color: black !important;
-}
-.green:hover {
-  border: 1px lawngreen solid;
-  background-color: lawngreen !important;
-  color: black;
 }
 .yellow {
   transition: background-color 0.13s ease-in;
@@ -96,6 +97,7 @@
   width: 33px;
   margin: auto 4px;
   display: flex;
+  border-width: 2px;
 }
 .status {
   position: relative;
@@ -105,8 +107,8 @@
   display: flex;
   letter-spacing: 1px;
   font-family: 'ZCOOL QingKe HuangYou';
-  border: solid 2px black;
-  background-color: rgba(0,0,0,0.5);
+  border: solid 2px cyan;
+  background-color: rgba(0, 10, 29, 0.69);
   height: 33px;
   margin: auto 3px;
 }
@@ -138,9 +140,17 @@
   letter-spacing: 3px;
   font-family: 'ZCOOL QingKe HuangYou';
   color: lawngreen;
-  border: solid 2px black;
-  background-color: rgba(0,0,0,0.5);
-  
+  border: solid 1px green;
+  background-color: rgba(0, 29, 0, 0.75);
+  overflow: hidden;
+}
+.clock .clock-digit-container {
+  display: flex;
+  width: 50%;
+  border: 1px solid green;
+}
+.clock .clock-digit-container .clock-digit {
+  margin: auto;
 }
 
 button.no-border{
@@ -175,30 +185,40 @@ button.no-border{
 }
 
 .ctrl-btn {
-  border: 1px solid rgb(0,1,39);
-  background-color: rgba(0,1,39,0.3);
+  border: 2px solid rgb(39,0,70);
+  background-color: rgb(0,1,39);
   color: white;
+  transition: background-color 0.1s linear;
 }
 
 .ctrl-btn:hover{
   color: white;
-  border-color: turquoise;
-  background-color: rgb(0,1,39);
+  background-color: rgb(39,0,70);
 }
-
-.bars-container-item {
-  font-family: 'Comic Sans MS';
+.bars-container {
+  position: absolute;
+  bottom: 3rem;
+  right: 0.25rem;
+  border: 1px solid lawngreen;
+  background-color: rgba(0,0,0,0.69);
+  transition: height 0.3s linear, width 0.3s linear;
+  margin: 0.25rem;
+  font-size: 0.9rem;
+  border-radius: 3px;
+}
+.bars-container .bars-container-item {
+  color: white;
+  font-family: monospace;
   font-weight: 100;
-  padding: 4px;
-  height: 25px;
+  text-align: left;
+  border: 1px solid lawngreen;
+  padding: 0 0.25rem;
   width: 100%;
   transition: background-color 0.33s linear;
 }
-
 .bars-container-item:hover {
   background-color: #7cfc0080;
 }
-
 .fa-volume-up:before{
   margin: auto;
   margin-left: 5px !important;
@@ -245,7 +265,7 @@ input[type=range]::-ms-track {
 input[type=range]::-webkit-slider-thumb{
   -webkit-appearance: none;
 
-  background-color: dodgerblue;
+  background-color: darkgreen;
   border-radius: 15px;
   height: 15px;
   width: 15px;
@@ -253,14 +273,14 @@ input[type=range]::-webkit-slider-thumb{
 }
 
 input[type=range]::-moz-range-thumb{
-  background-color: dodgerblue;
+  background-color: darkgreen;
   border-radius: 15px;
   height: 15px;
   width: 15px;
 }
 
 input[type=range]::-ms-thumb{
-  background-color: dodgerblue;
+  background-color: darkgreen;
   border-radius: 15px;
   height: 15px;
   width: 15px;
@@ -305,46 +325,21 @@ input[type=range]::-ms-fill-upper{
 input[type=range]:focus::-ms-fill-upper{
 
 }
-
-
-
 .info-container{
-  width: 250px;
-  height: auto;
-  min-height: 50px;
+  min-height: 5rem;
   position: absolute;
-  /* transform: "translate(-90%, -115%)", */
+  bottom: 3rem;
+  right: 0.25rem;
   border: 1px solid lawngreen;
   background-color: rgba(0,0,0,0.5);
   transition: height 0.3s linear, width 0.3s linear;
-  font-family: "Courier New";
-  font-size: 0.75rem;
-  line-height: 1rem;
   color: white;
-  padding: 10px;
-  border-radius: 3px;
-  right: 15px;
-  bottom: 60px;
-
+  padding: 0.25rem;
+  border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
+  font-size: 0.9rem;
 }
-
-.bars-container {
-  display: block;
-  width: 250px;
-  height: auto;
-  position: absolute;
-  transform: translate(-90%, -111%);
-  border: 1px solid lawngreen;
-  background-color: rgba(0,0,0,0.5);
-  transition: height 0.3s linear, width 0.3s linear;
-  font-family: "Courier New";
-  font-size: 1rem;
-  color: white;
-  border-radius: 3px;
-}
-
 .comment-container {
   display: block;
   position: fixed;

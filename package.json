@@ -36,6 +36,7 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-inline-json-import": "^0.3.2",
     "css-loader": "^6.5.1",
+    "jslint": "^0.12.1",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
     "postcss-loader": "^6.2.1",

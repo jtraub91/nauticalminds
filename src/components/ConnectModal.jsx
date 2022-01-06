@@ -32,7 +32,7 @@ function ConnectModal (props){
       <div className="modal-content dark-bg m-auto border-black border-solid border-2 max-w-md">
         <h3 className="form-header">Connect</h3>
         <p className="font-mono text-white m-auto w-full p-5">
-          By connecting a wallet, you agree to Nautical Records' LLC <a className="contact-link-blue" href="#">Terms of Use</a> and <a className="contact-link-green" href="#">Privacy Policy</a>
+          By connecting a wallet, you agree to our <a className="contact-link-blue" href="#">Terms of Use</a> and <a className="contact-link-green" href="#">Privacy Policy</a>
         </p>
         <button className="wallet-btn mb-5 mx-10" onClick={metamaskOnClick}>
           <img className="wallet-logo" src="/static/images/metamask/metamask.svg"/> 

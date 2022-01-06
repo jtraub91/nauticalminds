@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 // import NauticalMindsEp from "../contracts_build/NauticalMindsEp.json";
 
-import React, { useState, useEffect, useDebugValue } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import AudioBar from './components/AudioBar.jsx';
 import AboutModal from './components/AboutModal.jsx';
