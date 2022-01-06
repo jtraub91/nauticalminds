@@ -529,8 +529,8 @@ export default class AudioBar extends React.Component{
         <div className="comment-container" style={this.state.controlOpen == "comment" ? {} : {display: "none"}}>
           <form className="flex-col">
             <textarea placeholder="Leave a comment"/>
-            <button className="fa fa-undo blue top-right comment-reset-btn" type="reset"/>
-            <button className="green black bottom-right form-btn">Submit</button>
+            <button className="fa fa-undo blue comment-reset-btn absolute top-3.5 right-3.5" type="reset"/>
+            <button className="green black form-btn absolute bottom-3.5 right-3.5">Submit</button>
           </form>
         </div>
         <div className="bars-container" style={this.state.controlOpen == "bars" ? {} : {display: "none"}}>

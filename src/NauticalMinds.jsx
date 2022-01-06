@@ -137,8 +137,8 @@ function NauticalMinds(props){
   return (
     <div>
       <div className="header">
-        <div className="button-group">
-          <button className="header-button nautical-btn purple purple-bg p-1" 
+        <div className="flex flex-col">
+          <button className="header-button about purple p-1" 
             onClick={(e)=>{aboutOnClick(e)}}
             id="aboutButton">
             About
@@ -149,7 +149,7 @@ function NauticalMinds(props){
         </h1>
         {
           userAccount ?
-          <div className="button-group">
+          <div className="flex flex-col">
             <div className={userAddressClassName} onClick={userAddressOnClick}>
               {
                 userAddressExpanded ? 
@@ -183,8 +183,8 @@ function NauticalMinds(props){
             </div>
           </div>
             :
-          <div className="button-group">
-            <button onClick={(e)=>{connectOnClick(e)}} className="header-button nautical-btn green green-bg p-1" id="connectButton">
+          <div className="flex flex-col">
+            <button onClick={(e)=>{connectOnClick(e)}} className="header-button connect green p-1" id="connectButton">
               Connect
             </button>
           </div>
