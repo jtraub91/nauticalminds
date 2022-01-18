@@ -6,6 +6,7 @@ venv/
 node_modules/
 
 music/
+nauticalminds/config.yaml
 nauticalminds/static/build/
 
 contracts/build/
