@@ -4,6 +4,7 @@ from subprocess import PIPE
 from subprocess import Popen
 
 import jwt
+from eth_account.messages import encode_defunct
 from flask import abort
 from flask import json
 from flask import jsonify
@@ -16,7 +17,11 @@ from flask import send_from_directory
 
 from nauticalminds import app
 from nauticalminds import db_session
+from nauticalminds import web3
+from nauticalminds.models import NauticalMindsEp
+from nauticalminds.models import Song
 from nauticalminds.models import User
+from nauticalminds.utils import token_required
 
 
 @app.route("/")
@@ -24,30 +29,47 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/tos")
+def tos():
+    return render_template("terms_of_service.html")
+
+
+@app.route("/pp")
+def pp():
+    return render_template("privacy_policy.html")
+
+
 @app.route("/connect", methods=["POST"])
 def connect():
     data = request.get_json()
-    print(data)
     eth_address = data.get("ethAddress")
     if not eth_address:
         return jsonify({"error": "ethAddress unspecified"})
-    eth_address = eth_address.split("0x")[-1]
+    eth_address = eth_address.split("0x")[-1]  # todo: enforce case in db
     user = db_session.query(User).filter_by(eth_address=eth_address).first()
     if not user:
         user = User()
         user.eth_address = eth_address
+        nonce = user.set_new_nonce()
         db_session.add(user)
         db_session.commit()
         return jsonify(
             {
                 "ethAddress": eth_address,
                 "message": "User account created.",
+                "sigRequest": "Sign this message to prove ownership of your account. "
+                + f"This won't cost you any ether.\n\nNonce: {nonce}",
             }
         )
+    nonce = user.set_new_nonce()
+    db_session.add(user)
+    db_session.commit()
     return jsonify(
         {
             "ethAddress": eth_address,
             "message": "User account exists.",
+            "sigRequest": "Sign this message to prove ownership of your account. "
+            + f"This won't cost you any ether.\n\nNonce: {nonce}",
         }
     )
 
@@ -69,62 +91,85 @@ def sig():
     eth_address = data.get("ethAddress")
     if not eth_address:
         return jsonify({"error": "ethAddress unspecified"})
-    signed_data = data.get("signedData")
-    if not signed_data:
-        return jsonify({"error": "signedData empty"})
+    eth_address = eth_address.split("0x")[-1]
+    print(eth_address)
+
+    signature = data.get("signature")
+    if not signature:
+        return jsonify({"error": "signature empty"})
+    print(signature)
+
+    user = db_session.query(User).filter_by(eth_address=eth_address).first()
+    if not user:
+        return abort(401)
+
     # verify sig
+    message = (
+        "Sign this message to prove ownership of your account. "
+        + f"This won't cost you any ether.\n\nNonce: {user.nonce}"
+    )
+    message_hash = encode_defunct(text=message)
+    recovered_address = web3.eth.account.recover_message(
+        message_hash, signature=signature
+    )
+    if eth_address.lower() != recovered_address.split("0x")[-1].lower():
+        return jsonify({"error": "recovered address does not match"})
 
-    return jsonify({})
+    # return token
+    payload = {
+        "ethAddress": eth_address,
+        # "exp":
+    }
+    token = jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
+    return jsonify(
+        {
+            "token": token,
+        }
+    )
 
 
-def stream_gen(filepath, chunk_size=1024):
+def stream_gen(filepath, chunk_size=1024, bitrate=320000):
+    filename = os.path.split(filepath)[-1]
+    song = db_session.query(Song).filter_by(filename=filename).first()
+    cycles = 0
     with open(filepath, "rb") as music_file:
         data = music_file.read(chunk_size)
         while data:
+            cycles += 1
             yield data
+            if cycles * chunk_size * 8 / bitrate > 1:
+                # round down in seconds
+                cycles = 0
+                song.total_seconds_streamed += 1
+                db_session.commit()
             data = music_file.read(chunk_size)
 
 
 @app.route("/stream/nautical_minds/<album>/<filename>")
+@token_required
 def stream(album, filename):
+    song = db_session.query(Song).filter_by(filename=filename).first()
+    song.streams += 1
+    db_session.commit()
     filepath = os.path.join(app.config["MUSIC_DIR"], "nautical_minds", album, filename)
     ext = os.path.splitext(filepath)[-1].split(".")[-1]
     return Response(stream_gen(filepath), mimetype=f"audio/{ext}")
 
 
-@app.route("/music/nautical_minds/<album>/<filename>")
-def music(album, filename):
-    print(request.headers)
-    song, ext = os.path.splitext(filename)
-    filename_map = {
-        "gotta_let_you_know": "Nautical Minds - Gotta Let You Know",
-        "aint_gotta_care": "Nautical Minds - Ain't Gotta Care",
-        "funk1": "Nautical Minds - Funk 1 (ft. B.I.G. Jay)",
-        "spacy_stacy": "Nautical Minds - Spacy Stacy",
-        "side_street_robbery": "Nautical Minds - Side Street Robbery",
-        "off_the_clock": "Nautical Minds - Off The Clock",
-    }
-    download = request.args.get("download")
+@app.route("/download")
+def download():
+    nmep = db_session.query(NauticalMindsEp).first()
+    nmep.downloads += 1
+    db_session.commit()
     return send_from_directory(
-        os.path.join(app.config["MUSIC_DIR"], "nautical_minds", album),
-        filename,
-        as_attachment=True if download else False,
-        attachment_filename=filename_map[song] + ext,
+        os.path.join(app.config["MUSIC_DIR"], "nautical_minds", "nautical_minds_ep"),
+        "NauticalMindsEP.zip",
+        as_attachment=True,
     )
 
 
-@app.route("/meta")
-def meta():
-    with Popen(
-        f"ipfs cat {app.config['META_URI'].split('ipfs://')[1]}".split(), stdout=PIPE
-    ) as proc:
-        stdout, stderr = proc.communicate()
-    if not stderr:
-        return jsonify(json.loads(stdout.decode("utf-8")))
-    return jsonify({"error": stderr.decode("utf-8")})
-
-
 @app.route("/ipfs/<cid>")
+@token_required
 def ipfs(cid):
     """
     Returns file contents from ipfs
@@ -132,6 +177,15 @@ def ipfs(cid):
     Request args:
         file_type: [json, jpeg, mp3]
     """
+    debug = request.args.get("debug", False)
+    if debug:
+        print("debug")
+        return send_from_directory(
+            os.path.join(
+                app.config["MUSIC_DIR"], "nautical_minds", "nautical_minds_ep"
+            ),
+            "debug.json",
+        )
     type_map = {"json": "application/json", "jpeg": "image/jpeg", "mp3": "audio/mpeg"}
     file_type = request.args.get("file_type", "json")
 
