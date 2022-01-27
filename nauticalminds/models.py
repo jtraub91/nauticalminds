@@ -2,6 +2,7 @@ import secrets
 
 from sqlalchemy import Column
 from sqlalchemy import DateTime
+from sqlalchemy import Float
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Table
@@ -23,6 +24,8 @@ class User(Base):
     )
     nonce = Column("nonce", String(64))
 
+    user_since = Column(DateTime, server_default=text("now()"), nullable=False)
+
     def set_new_nonce(self, nbytes=32):
         n = secrets.token_hex(nbytes=nbytes)
         self.nonce = n
@@ -38,6 +41,9 @@ class NauticalMindsEp(Base):
     pk = Column("pk", String(40), primary_key=True)
     downloads = Column("downloads", Integer, server_default=text("0"))
 
+    def __repr__(self):
+        return f"<{self.pk}>"
+
 
 class Song(Base):
     __tablename__ = "songs"
@@ -46,8 +52,11 @@ class Song(Base):
     filename = Column(String(40), unique=True, nullable=False)
     streams = Column("streams", Integer, server_default=text("0"))
     total_seconds_streamed = Column(
-        "total_seconds_streamed", Integer, server_default=text("0")
+        "total_seconds_streamed", Float, server_default=text("0")
     )
+
+    def __repr__(self):
+        return f"<Song {self.pk}>"
 
 
 def create_tables():

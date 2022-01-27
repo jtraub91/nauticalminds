@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { createCanvas, drawStars } from "./NauticalStarship";
+
+const TIMESTAMP = Date.now();
 
 function AboutModal(props) {
   let containerClass = "modal-container";
@@ -6,10 +9,19 @@ function AboutModal(props) {
     containerClass += " opaque";
   }
 
+  useEffect(() => {
+    let parent = document.getElementById(`__about_modal_content_${TIMESTAMP}`);
+    let canvas = createCanvas(parent);
+    drawStars(canvas);
+  }, []);
+
   return (
     <div className={containerClass}>
       <div className="modal-backdrop" onClick={props.onClick} />
-      <div className="modal-content dark-bg m-4 sm:m-auto sm:max-w-md">
+      <div
+        id={`__about_modal_content_${TIMESTAMP}`}
+        className="modal-content dark-bg m-4 sm:m-auto sm:max-w-md"
+      >
         <button
           className="far fa-window-close modal-close"
           onClick={props.onClick}
@@ -41,7 +53,7 @@ function AboutModal(props) {
             linktr.ee
           </a>
         </p>
-        <footer className="font-mono text-center">
+        <footer className="font-mono w-full text-center">
           &copy; Nautical Records LLC 2022
         </footer>
       </div>

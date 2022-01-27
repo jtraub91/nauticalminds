@@ -11,11 +11,14 @@ import MintModal from "./components/MintModal.jsx";
 import { getCookie, getCookieValue, clearCookie, parseJwt } from "./utils";
 import TipModal from "./components/TipModal.jsx";
 
+import config from "./config";
+
 // const contractAbi = NauticalMindsEp.abi;
 // const contractAddress = "0x73C9499205a1fdc69539252dbE2Da96c01C8228D";
 const metaUri = "ipfs://QmbMJCJgN5WABDvVkuMJmMzPBF4wGBjme5igck1qCpdvd3";
 
 function NauticalMinds(props) {
+  const [userEntered, setUserEntered] = useState(false);
   const [userAccount, setUserAccount] = useState("");
   const [connectModalVisible, setConnectModalVisible] = useState(false);
   const [aboutModalVisible, setAboutModalVisible] = useState(false);
@@ -161,8 +164,13 @@ function NauticalMinds(props) {
         onClick={modalBackdropOnClick}
       />
       <AboutModal visible={aboutModalVisible} onClick={modalBackdropOnClick} />
-      <TipModal visible={tipModalVisible} onClick={modalBackdropOnClick} />
-      {userAccount ? (
+      <TipModal
+        btcWalletAddress={config.btcWalletAddress}
+        ethWalletAddress={config.ethWalletAddress}
+        visible={tipModalVisible}
+        onClick={modalBackdropOnClick}
+      />
+      {userEntered ? (
         <AudioBar
           _metaData={metaData}
           _disabledStatus="Connect to listen"
@@ -171,9 +179,12 @@ function NauticalMinds(props) {
         />
       ) : (
         <div>
-          <div className="center-rocket-container">
+          <button
+            className="center-rocket-container"
+            onClick={(e) => setUserEntered(true)}
+          >
             <img src="/static/images/nauticalstarship-alt.svg" />
-          </div>
+          </button>
           <footer className="absolute bottom-0 left-0">
             &copy; 2022 Nautical Records LLC
           </footer>

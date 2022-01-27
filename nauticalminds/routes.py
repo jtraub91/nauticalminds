@@ -52,7 +52,11 @@ def connect():
         user.eth_address = eth_address
         nonce = user.set_new_nonce()
         db_session.add(user)
-        db_session.commit()
+        try:
+            db_session.commit()
+        except Exception as e:
+            app.logger.error(f"User creation failed for address {eth_address} - {e}")
+            return jsonify({"message": "Account creation failed."})
         return jsonify(
             {
                 "ethAddress": eth_address,
@@ -63,7 +67,11 @@ def connect():
         )
     nonce = user.set_new_nonce()
     db_session.add(user)
-    db_session.commit()
+    try:
+        db_session.commit()
+    except Exception as e:
+        app.logger.error(f"Failed to set new nonce for {user} - {e}")
+        return jsonify({"message": "Internal server error"})
     return jsonify(
         {
             "ethAddress": eth_address,
@@ -92,12 +100,10 @@ def sig():
     if not eth_address:
         return jsonify({"error": "ethAddress unspecified"})
     eth_address = eth_address.split("0x")[-1]
-    print(eth_address)
 
     signature = data.get("signature")
     if not signature:
         return jsonify({"error": "signature empty"})
-    print(signature)
 
     user = db_session.query(User).filter_by(eth_address=eth_address).first()
     if not user:
@@ -118,7 +124,7 @@ def sig():
     # return token
     payload = {
         "ethAddress": eth_address,
-        # "exp":
+        # "exp":  # todo
     }
     token = jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
     return jsonify(
@@ -131,17 +137,23 @@ def sig():
 def stream_gen(filepath, chunk_size=1024, bitrate=320000):
     filename = os.path.split(filepath)[-1]
     song = db_session.query(Song).filter_by(filename=filename).first()
-    cycles = 0
+    chunks = 1
     with open(filepath, "rb") as music_file:
         data = music_file.read(chunk_size)
         while data:
-            cycles += 1
             yield data
-            if cycles * chunk_size * 8 / bitrate > 1:
-                # round down in seconds
-                cycles = 0
-                song.total_seconds_streamed += 1
-                db_session.commit()
+            seconds = chunks * chunk_size * 8 / bitrate
+            chunks += 1
+            if seconds > 1:
+                song.total_seconds_streamed += seconds
+                chunks = 1
+                try:
+                    db_session.commit()
+                    app.logger.debug(seconds)
+                except Exception as e:
+                    app.logger.error(
+                        f"Failed to add {seconds}s to total seconds streamed for {song} - {e}"
+                    )
             data = music_file.read(chunk_size)
 
 
@@ -157,10 +169,14 @@ def stream(album, filename):
 
 
 @app.route("/download")
+@token_required
 def download():
     nmep = db_session.query(NauticalMindsEp).first()
     nmep.downloads += 1
-    db_session.commit()
+    try:
+        db_session.commit()
+    except Exception as e:
+        app.logger.error(f"Failed to increment downloads for {nmep} - {e}")
     return send_from_directory(
         os.path.join(app.config["MUSIC_DIR"], "nautical_minds", "nautical_minds_ep"),
         "NauticalMindsEP.zip",

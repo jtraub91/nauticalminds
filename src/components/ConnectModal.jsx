@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { createCanvas, drawStars } from "./NauticalStarship";
+
+const TIMESTAMP = Date.now();
 
 function ConnectModal(props) {
+  useEffect(() => {
+    let parent = document.getElementById(
+      `__connect_modal_content_${TIMESTAMP}`
+    );
+    let canvas = createCanvas(parent);
+    drawStars(canvas);
+  }, []);
+
   let containerClass = "modal-container";
   if (props.visible) {
     containerClass += " opaque";
@@ -29,7 +40,10 @@ function ConnectModal(props) {
   return (
     <div className={containerClass}>
       <div className="modal-backdrop" onClick={props.onClick} />
-      <div className="modal-content dark-bg m-auto border-black border-solid border-2 max-w-md">
+      <div
+        id={`__connect_modal_content_${TIMESTAMP}`}
+        className="modal-content dark-bg m-auto border-black border-solid border-2 max-w-md"
+      >
         <button
           className="far fa-window-close modal-close"
           onClick={props.onClick}

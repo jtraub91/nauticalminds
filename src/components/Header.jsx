@@ -9,7 +9,7 @@ const xsMediaMatch = window.matchMedia("screen and (min-width: 430px)");
 const smMediaMatch = window.matchMedia("screen and (min-width: 560px)");
 const mdMediaMatch = window.matchMedia("screen and (min-width: 775px)");
 
-function shortenAddress(address, length = 8, ellipsis = "...") {
+export function shortenAddress(address, length = 8, ellipsis = "...") {
   if (address == undefined) {
     return "";
   }

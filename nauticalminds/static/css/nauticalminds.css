@@ -283,22 +283,22 @@ h1.nautical-minds-header {
 .contact-link-blue {
   display: inline-block;
   overflow-wrap: anywhere;
-  color: lightblue;
+  color: #0a25ff;
   text-decoration: none;
   transition: color 0.1s ease-in;
 }
 .contact-link-blue:hover {
-  color: dodgerblue;
+  color: #8864ff;
 }
 .contact-link-green {
   display: inline-block;
   overflow-wrap: anywhere;
-  color: limegreen;
+  color: #008800;
   text-decoration: none;
   transition: color 0.1s ease-in;
 }
 .contact-link-green:hover {
-  color: greenyellow;
+  color: #ffff00;
 }
 @keyframes spinner-border {
   to {
@@ -377,7 +377,7 @@ h1.nautical-minds-header {
 .status-invert {
   backdrop-filter: invert(90%);
   -webkit-backdrop-filter: invert(100%);
-  border-right: 1px solid lawngreen;
+  border-right: 1px solid #fe6f5e;
 }
 .clock {
   display: flex;
@@ -559,8 +559,8 @@ input[type="range"].vol-slider:focus::-ms-fill-upper {
   position: absolute;
   bottom: 3rem;
   right: 0.5rem;
-  border: 1px solid lawngreen;
-  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid lawngreen;
+  background-color: darkgreen;
   transition: height 0.3s linear, width 0.3s linear;
   color: white;
   padding: 0.25rem;
@@ -569,8 +569,7 @@ input[type="range"].vol-slider:focus::-ms-fill-upper {
   justify-content: space-between;
   flex-direction: column;
   font-size: 0.9rem;
-  min-width: 5rem;
-  max-width: 20rem;
+  min-width: 10rem;
 }
 .tip-btn {
   height: 2rem;
@@ -720,7 +719,7 @@ input[type="range"].vol-slider:focus::-ms-fill-upper {
   color: black;
 }
 .dark-bg {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(3, 1, 4);
 }
 .modal-container {
   position: absolute;
@@ -753,7 +752,7 @@ input[type="range"].vol-slider:focus::-ms-fill-upper {
   max-height: 90%;
   overflow-x: hidden;
   overflow-y: scroll;
-  border: solid 2px var(--status-blue);
+  border: solid 2px cyan;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -914,4 +913,48 @@ input.join-input {
 }
 .border-grey:hover {
   background-color: darkslategrey;
+}
+
+.tip-address-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.tip-address-container-symbol {
+  text-decoration: underline;
+  color: cyan;
+  margin: 1px 2px 1px 4px;
+}
+.tip-address-container-address {
+  margin: 1px 2px;
+  background-color: rgb(0, 29, 0);
+  border-radius: 0.125rem;
+  font-size: 0.75rem;
+  color: lawngreen;
+  font-family: "Courier New", Courier, monospace;
+  width: 100%;
+}
+.tip-address-container-copy {
+  text-align: center;
+  margin: 1px 4px 1px 2px;
+}
+.tip-address-container-copy i.purple {
+  color: mediumpurple;
+  transition: color 0.3 linear;
+}
+.tip-address-container-copy i.purple:hover {
+  color: palevioletred;
+}
+.tip-address-container i.lime-green {
+  color: limegreen;
+}
+.wallet-address {
+  font-style: normal;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.75rem;
+  padding: 0.125rem;
+  border-radius: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.1);
 }

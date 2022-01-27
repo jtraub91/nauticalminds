@@ -1,5 +1,7 @@
 import React from "react";
 
+import config from "../config";
+
 const TIMESTAMP = Math.round(new Date().getTime());
 const id = {
   audio: `audio_element_${TIMESTAMP}`,
@@ -11,7 +13,8 @@ const xxxsMediaMatch = window.matchMedia("screen");
 const xxsMediaMatch = window.matchMedia("screen and (min-width: 250px)");
 const xsMediaMatch = window.matchMedia("screen and (min-width: 430px)");
 const smMediaMatch = window.matchMedia("screen and (min-width: 560px)");
-const mdMediaMatch = window.matchMedia("screen and (min-width: 775px)");
+const mdMediaMatch = window.matchMedia("screen and (min-width: 767px)");
+const lgMediaMatch = window.matchMedia("screen and (min-width: 910px)");
 
 function secondsToMMSS(floatTime) {
   if (floatTime == null || floatTime == undefined) {
@@ -205,6 +208,7 @@ export default class AudioBar extends React.Component {
     xsMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
     smMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
     mdMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
+    lgMediaMatch.addEventListener("change", this.setControlsBasedOnMediaMatch);
   }
   componentWillUnmount() {
     clearInterval(this.intervalHandle);
@@ -212,7 +216,7 @@ export default class AudioBar extends React.Component {
   }
   setControlsBasedOnMediaMatch = () => {
     // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars", "download"],
-    if (mdMediaMatch.matches) {
+    if (lgMediaMatch.matches) {
       this.setState({
         controlsActive: [
           "prev",
@@ -220,6 +224,21 @@ export default class AudioBar extends React.Component {
           "next",
           "vol",
           "clock",
+          "status",
+          "info",
+          "bars",
+          // "download",
+          "tip",
+        ],
+      });
+    } else if (mdMediaMatch.matches) {
+      this.setState({
+        controlsActive: [
+          "prev",
+          "playPause",
+          "next",
+          // "vol",
+          // "clock",
           "status",
           "info",
           "bars",
@@ -600,7 +619,7 @@ export default class AudioBar extends React.Component {
                     ? {}
                     : { display: "none" }
                 }
-                className="status w-full max-w-sm"
+                className="status w-full md:max-w-xs"
               >
                 <div
                   className="absolute w-full h-full"
@@ -610,7 +629,10 @@ export default class AudioBar extends React.Component {
                     style={this.state.statusBarStyle}
                     className="status-invert"
                   />
-                  <div style={this.state.mouseoverStatusBarStyle} />
+                  <div
+                    className=""
+                    style={this.state.mouseoverStatusBarStyle}
+                  />
                 </div>
                 <div className="status-title">{title}</div>
               </div>
@@ -841,15 +863,28 @@ export default class AudioBar extends React.Component {
               : {}
           }
         >
-          <div className="flex flex-col font-mono justify-between">
-            <h4>Tip</h4>
-            <button
-              className="tip-btn green flex justify-around"
-              onClick={this.tip}
-            >
-              <span className="m-auto">1.0</span>
-              <i className="fab fa-ethereum m-auto"></i>
-            </button>
+          <div className="flex flex-col font-mono">
+            <div className="flex w-full">
+              <h4 className="font-mono">Tip?</h4>
+              <select className="text-black mx-2">
+                <option value="BTC">BTC</option>
+                <option value="ETH">ETH</option>
+                <option value="XMR">XMR</option>
+                <option value="LTC">LTC</option>
+                <option value="ETC">ETC</option>
+              </select>
+            </div>
+            <div className="flex my-4">
+              <button
+                id="tip_btc"
+                className="tip-address-container-address w-auto"
+              >
+                {config.btcWalletAddress}
+              </button>
+              <button className="tip-address-container-copy">
+                <i className="far fa-copy purple" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
