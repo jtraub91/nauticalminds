@@ -9,14 +9,19 @@ const xsMediaMatch = window.matchMedia("screen and (min-width: 430px)");
 const smMediaMatch = window.matchMedia("screen and (min-width: 560px)");
 const mdMediaMatch = window.matchMedia("screen and (min-width: 775px)");
 
-export function shortenAddress(address, length = 8, ellipsis = "...") {
+export function shortenAddress(
+  address,
+  length = 8,
+  ellipsis = "...",
+  ethereum = false
+) {
   if (address == undefined) {
     return "";
   }
   let addressNormalized = address.split("0x");
   addressNormalized = addressNormalized[addressNormalized.length - 1];
 
-  let addr = "0x";
+  let addr = ethereum ? "0x" : "";
   let half_length = length / 2;
   if (parseInt(half_length) !== half_length) {
     // odd; UNTESTED
@@ -162,8 +167,9 @@ export default function Header(props) {
       ) : (
         <div className="flex flex-col mr-0 m-auto">
           <button
+            disabled
             onClick={props.connectOnClick}
-            className="header-button connect green px-0.5"
+            className="header-button connect green px-0.5 cursor-not-allowed"
             id="connectButton"
           >
             Connect

@@ -4,7 +4,8 @@
   "description": "Nautical Minds Website",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
+    "dist": "webpack --config webpack.prod.js",
+    "build": "webpack --config webpack.dev.js",
     "watch": "webpack --config webpack.dev.js --watch",
     "tailwind-watch": "npx postcss -w -o ./nauticalminds/static/build/tailwind.css ./src/css/Tailwind.css",
     "localeth": "ganache-cli -h 127.0.0.1 -p 8545",
@@ -15,7 +16,7 @@
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
     "@metamask/eth-sig-util": "^4.0.0",
-    "@openzeppelin/contracts": "^4.4.1",
+    "@openzeppelin/contracts": "^4.6.0",
     "@truffle/hdwallet-provider": "^2.0.0",
     "bignumber": "^1.1.0",
     "dotenv": "^10.0.0",

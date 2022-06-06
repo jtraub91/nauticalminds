@@ -1,6 +1,7 @@
 import React from "react";
 
 import config from "../config";
+import { shortenAddress } from "./Header.jsx";
 
 const TIMESTAMP = Math.round(new Date().getTime());
 const id = {
@@ -15,6 +16,8 @@ const xsMediaMatch = window.matchMedia("screen and (min-width: 430px)");
 const smMediaMatch = window.matchMedia("screen and (min-width: 560px)");
 const mdMediaMatch = window.matchMedia("screen and (min-width: 767px)");
 const lgMediaMatch = window.matchMedia("screen and (min-width: 910px)");
+
+const PREFER_ALT_URI = false;
 
 function secondsToMMSS(floatTime) {
   if (floatTime == null || floatTime == undefined) {
@@ -45,6 +48,11 @@ export default class AudioBar extends React.Component {
     this.audioElement = "";
 
     this.state = {
+      tipInfo: {
+        address: config.tipAddresses.btc,
+        currency: "BTC",
+      },
+      tipAddrCopyConfirmActive: false,
       statusBarStyle: {
         position: "absolute",
         height: "100%",
@@ -62,9 +70,9 @@ export default class AudioBar extends React.Component {
       audioMuted: false,
       dx: "0",
       dy: "0",
-      controlsActive: ["playPause", "info", "bars", "download"],
+      controlsActive: ["playPause", "info", "bars", "tip"],
       // unordered list containing any of:
-      // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars"]
+      // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars", "download", "tip"]
       infoData: null,
       controlOpen: "", // ["info"|"comment"|"bars"]
       playButtonClassName: "fa fa-play audiobar-btn deep-purple text-white", // fa-play or fa-pause
@@ -215,7 +223,7 @@ export default class AudioBar extends React.Component {
     clearInterval(this.statusIntervalHandle);
   }
   setControlsBasedOnMediaMatch = () => {
-    // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars", "download"],
+    // ["prev", "playPause", "next", "vol", "clock", "status", "info", "comment", "bars", "download", "tip"],
     if (lgMediaMatch.matches) {
       this.setState({
         controlsActive: [
@@ -227,7 +235,6 @@ export default class AudioBar extends React.Component {
           "status",
           "info",
           "bars",
-          // "download",
           "tip",
         ],
       });
@@ -242,7 +249,7 @@ export default class AudioBar extends React.Component {
           "status",
           "info",
           "bars",
-          "download",
+          "tip",
         ],
       });
     } else if (smMediaMatch.matches) {
@@ -254,7 +261,7 @@ export default class AudioBar extends React.Component {
           "status",
           "info",
           "bars",
-          "download",
+          "tip",
         ],
       });
     } else if (xsMediaMatch.matches) {
@@ -266,23 +273,16 @@ export default class AudioBar extends React.Component {
           "status",
           "info",
           "bars",
-          "download",
+          "tip",
         ],
       });
     } else if (xxsMediaMatch.matches) {
       this.setState({
-        controlsActive: [
-          "prev",
-          "playPause",
-          "next",
-          "info",
-          "bars",
-          "download",
-        ],
+        controlsActive: ["prev", "playPause", "next", "info", "bars", "tip"],
       });
     } else if (xxxsMediaMatch.matches) {
       this.setState({
-        controlsActive: ["playPause", "info", "bars", "download"],
+        controlsActive: ["playPause", "info", "bars", "tip"],
       });
     } else {
       console.log("else");
@@ -502,6 +502,39 @@ export default class AudioBar extends React.Component {
       });
     }
   };
+  setTipInfo = (e) => {
+    e.persist();
+    this.setState({
+      tipInfo: {
+        currency: e.target.value,
+        address: config.tipAddresses[e.target.value.toLowerCase()],
+      },
+    });
+    if (this.tipAddrCopyConfirmTimerHandle) {
+      clearInterval(this.tipAddrCopyConfirmTimerHandle);
+      this.setState({
+        tipAddrCopyConfirmActive: false,
+      });
+    }
+  };
+  tipAddressCopy = () => {
+    navigator.clipboard
+      .writeText(this.state.tipInfo.address)
+      .then(() => {
+        console.log(
+          `${this.state.tipInfo.currency} address copied to clipboard`
+        );
+      })
+      .catch(() => console.error("failed to copy tip address to clipboard"));
+    this.setState({
+      tipAddrCopyConfirmActive: true,
+    });
+    this.tipAddrCopyConfirmTimerHandle = setTimeout(() => {
+      this.setState({
+        tipAddrCopyConfirmActive: false,
+      });
+    }, 3333);
+  };
   render() {
     let runtime = 0;
     let noSongs = 0;
@@ -525,7 +558,7 @@ export default class AudioBar extends React.Component {
     let src = undefined;
     if (this.props.trackList.length > 0) {
       title = this.props.trackList[this.state.trackNo].title;
-      if (this.props.trackList[this.state.trackNo].altUri) {
+      if (this.props.trackList[this.state.trackNo].altUri && PREFER_ALT_URI) {
         src = this.props.trackList[this.state.trackNo].altUri;
       } else {
         let metaUri = this.props.trackList[this.state.trackNo].uri;
@@ -866,22 +899,29 @@ export default class AudioBar extends React.Component {
           <div className="flex flex-col font-mono">
             <div className="flex w-full">
               <h4 className="font-mono">Tip?</h4>
-              <select className="text-black mx-2">
+              <select
+                onChange={this.setTipInfo}
+                className="text-black ml-auto mr-0"
+              >
                 <option value="BTC">BTC</option>
-                <option value="ETH">ETH</option>
                 <option value="XMR">XMR</option>
-                <option value="LTC">LTC</option>
-                <option value="ETC">ETC</option>
               </select>
             </div>
             <div className="flex my-4">
-              <button
-                id="tip_btc"
-                className="tip-address-container-address w-auto"
+              <div
+                id="tip_addr"
+                className="tip-address-container-address w-auto select-none text-center"
+                title={this.state.tipInfo.address}
               >
-                {config.btcWalletAddress}
-              </button>
-              <button className="tip-address-container-copy">
+                {this.state.tipAddrCopyConfirmActive
+                  ? // `${this.state.tipInfo.currency} address copied to clipboard` :
+                    "address copied"
+                  : shortenAddress(this.state.tipInfo.address, (length = 16))}
+              </div>
+              <button
+                className="tip-address-container-copy"
+                onClick={this.tipAddressCopy}
+              >
                 <i className="far fa-copy purple" />
               </button>
             </div>

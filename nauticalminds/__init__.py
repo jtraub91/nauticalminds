@@ -13,8 +13,8 @@ with open(os.path.join(basedir, "config.yaml")) as c:
 
 app = Flask(__name__)
 app.config.from_mapping(config)
-db_engine = create_engine(config["DB_URI"], echo=True)
-db_session = Session(db_engine)
-web3 = Web3(Web3.HTTPProvider(config["WEB3_PROVIDER"]))
+# db_engine = create_engine(config["DB_URI"], echo=True)
+# db_session = Session(db_engine)
+# web3 = Web3(Web3.HTTPProvider(config["WEB3_PROVIDER"]))
 
 from nauticalminds import routes

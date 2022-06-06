@@ -16,12 +16,13 @@ from flask import Response
 from flask import send_from_directory
 
 from nauticalminds import app
-from nauticalminds import db_session
-from nauticalminds import web3
-from nauticalminds.models import NauticalMindsEp
-from nauticalminds.models import Song
-from nauticalminds.models import User
 from nauticalminds.utils import token_required
+
+# from nauticalminds import db_session
+# from nauticalminds import web3
+# from nauticalminds.models import NauticalMindsEp
+# from nauticalminds.models import Song
+# from nauticalminds.models import User
 
 
 @app.route("/")
@@ -29,109 +30,99 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/tos")
-def tos():
-    return render_template("terms_of_service.html")
+# @app.route("/connect", methods=["POST"])
+# def connect():
+#     data = request.get_json()
+#     eth_address = data.get("ethAddress")
+#     if not eth_address:
+#         return jsonify({"error": "ethAddress unspecified"})
+#     eth_address = eth_address.split("0x")[-1]  # todo: enforce case in db
+#     user = db_session.query(User).filter_by(eth_address=eth_address).first()
+#     if not user:
+#         user = User()
+#         user.eth_address = eth_address
+#         nonce = user.set_new_nonce()
+#         db_session.add(user)
+#         try:
+#             db_session.commit()
+#         except Exception as e:
+#             app.logger.error(f"User creation failed for address {eth_address} - {e}")
+#             return jsonify({"message": "Account creation failed."})
+#         return jsonify(
+#             {
+#                 "ethAddress": eth_address,
+#                 "message": "User account created.",
+#                 "sigRequest": "Sign this message to prove ownership of your account. "
+#                 + f"This won't cost you any ether.\n\nNonce: {nonce}",
+#             }
+#         )
+#     nonce = user.set_new_nonce()
+#     db_session.add(user)
+#     try:
+#         db_session.commit()
+#     except Exception as e:
+#         app.logger.error(f"Failed to set new nonce for {user} - {e}")
+#         return jsonify({"message": "Internal server error"})
+#     return jsonify(
+#         {
+#             "ethAddress": eth_address,
+#             "message": "User account exists.",
+#             "sigRequest": "Sign this message to prove ownership of your account. "
+#             + f"This won't cost you any ether.\n\nNonce: {nonce}",
+#         }
+#     )
 
 
-@app.route("/pp")
-def pp():
-    return render_template("privacy_policy.html")
+# @app.route("/sig", methods=["POST"])
+# def sig():
+#     """
+#     Respond to signature request response with a jwt token
 
+#     Request args (encoding application/json):
+#         ethAddress
 
-@app.route("/connect", methods=["POST"])
-def connect():
-    data = request.get_json()
-    eth_address = data.get("ethAddress")
-    if not eth_address:
-        return jsonify({"error": "ethAddress unspecified"})
-    eth_address = eth_address.split("0x")[-1]  # todo: enforce case in db
-    user = db_session.query(User).filter_by(eth_address=eth_address).first()
-    if not user:
-        user = User()
-        user.eth_address = eth_address
-        nonce = user.set_new_nonce()
-        db_session.add(user)
-        try:
-            db_session.commit()
-        except Exception as e:
-            app.logger.error(f"User creation failed for address {eth_address} - {e}")
-            return jsonify({"message": "Account creation failed."})
-        return jsonify(
-            {
-                "ethAddress": eth_address,
-                "message": "User account created.",
-                "sigRequest": "Sign this message to prove ownership of your account. "
-                + f"This won't cost you any ether.\n\nNonce: {nonce}",
-            }
-        )
-    nonce = user.set_new_nonce()
-    db_session.add(user)
-    try:
-        db_session.commit()
-    except Exception as e:
-        app.logger.error(f"Failed to set new nonce for {user} - {e}")
-        return jsonify({"message": "Internal server error"})
-    return jsonify(
-        {
-            "ethAddress": eth_address,
-            "message": "User account exists.",
-            "sigRequest": "Sign this message to prove ownership of your account. "
-            + f"This won't cost you any ether.\n\nNonce: {nonce}",
-        }
-    )
+#     Returns:
+#         Upon successful response, return a valid jwt auth token
+#     """
+#     if not request.is_json:
+#         return abort(400)
+#     data = request.get_json()
+#     eth_address = data.get("ethAddress")
+#     if not eth_address:
+#         return jsonify({"error": "ethAddress unspecified"})
+#     eth_address = eth_address.split("0x")[-1]
 
+#     signature = data.get("signature")
+#     if not signature:
+#         return jsonify({"error": "signature empty"})
 
-@app.route("/sig", methods=["POST"])
-def sig():
-    """
-    Respond to signature request response with a jwt token
+#     user = db_session.query(User).filter_by(eth_address=eth_address).first()
+#     if not user:
+#         return abort(401)
 
-    Request args (encoding application/json):
-        ethAddress
+#     # verify sig
+#     message = (
+#         "Sign this message to prove ownership of your account. "
+#         + f"This won't cost you any ether.\n\nNonce: {user.nonce}"
+#     )
+#     message_hash = encode_defunct(text=message)
+#     recovered_address = web3.eth.account.recover_message(
+#         message_hash, signature=signature
+#     )
+#     if eth_address.lower() != recovered_address.split("0x")[-1].lower():
+#         return jsonify({"error": "recovered address does not match"})
 
-    Returns:
-        Upon successful response, return a valid jwt auth token
-    """
-    if not request.is_json:
-        return abort(400)
-    data = request.get_json()
-    eth_address = data.get("ethAddress")
-    if not eth_address:
-        return jsonify({"error": "ethAddress unspecified"})
-    eth_address = eth_address.split("0x")[-1]
-
-    signature = data.get("signature")
-    if not signature:
-        return jsonify({"error": "signature empty"})
-
-    user = db_session.query(User).filter_by(eth_address=eth_address).first()
-    if not user:
-        return abort(401)
-
-    # verify sig
-    message = (
-        "Sign this message to prove ownership of your account. "
-        + f"This won't cost you any ether.\n\nNonce: {user.nonce}"
-    )
-    message_hash = encode_defunct(text=message)
-    recovered_address = web3.eth.account.recover_message(
-        message_hash, signature=signature
-    )
-    if eth_address.lower() != recovered_address.split("0x")[-1].lower():
-        return jsonify({"error": "recovered address does not match"})
-
-    # return token
-    payload = {
-        "ethAddress": eth_address,
-        # "exp":  # todo
-    }
-    token = jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
-    return jsonify(
-        {
-            "token": token,
-        }
-    )
+#     # return token
+#     payload = {
+#         "ethAddress": eth_address,
+#         # "exp":  # todo
+#     }
+#     token = jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
+#     return jsonify(
+#         {
+#             "token": token,
+#         }
+#     )
 
 
 def stream_gen(filepath, chunk_size=1024, bitrate=320000):
@@ -158,7 +149,7 @@ def stream_gen(filepath, chunk_size=1024, bitrate=320000):
 
 
 @app.route("/stream/nautical_minds/<album>/<filename>")
-@token_required
+# @token_required
 def stream(album, filename):
     song = db_session.query(Song).filter_by(filename=filename).first()
     song.streams += 1
@@ -168,24 +159,23 @@ def stream(album, filename):
     return Response(stream_gen(filepath), mimetype=f"audio/{ext}")
 
 
-@app.route("/download")
-@token_required
-def download():
-    nmep = db_session.query(NauticalMindsEp).first()
-    nmep.downloads += 1
-    try:
-        db_session.commit()
-    except Exception as e:
-        app.logger.error(f"Failed to increment downloads for {nmep} - {e}")
-    return send_from_directory(
-        os.path.join(app.config["MUSIC_DIR"], "nautical_minds", "nautical_minds_ep"),
-        "NauticalMindsEP.zip",
-        as_attachment=True,
-    )
+# @app.route("/download")
+# @token_required
+# def download():
+#     nmep = db_session.query(NauticalMindsEp).first()
+#     nmep.downloads += 1
+#     try:
+#         db_session.commit()
+#     except Exception as e:
+#         app.logger.error(f"Failed to increment downloads for {nmep} - {e}")
+#     return send_from_directory(
+#         os.path.join(app.config["MUSIC_DIR"], "nautical_minds", "nautical_minds_ep"),
+#         "NauticalMindsEP.zip",
+#         as_attachment=True,
+#     )
 
 
 @app.route("/ipfs/<cid>")
-@token_required
 def ipfs(cid):
     """
     Returns file contents from ipfs
@@ -193,15 +183,6 @@ def ipfs(cid):
     Request args:
         file_type: [json, jpeg, mp3]
     """
-    debug = request.args.get("debug", False)
-    if debug:
-        print("debug")
-        return send_from_directory(
-            os.path.join(
-                app.config["MUSIC_DIR"], "nautical_minds", "nautical_minds_ep"
-            ),
-            "debug.json",
-        )
     type_map = {"json": "application/json", "jpeg": "image/jpeg", "mp3": "audio/mpeg"}
     file_type = request.args.get("file_type", "json")
 

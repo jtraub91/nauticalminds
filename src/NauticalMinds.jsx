@@ -15,7 +15,7 @@ import config from "./config";
 
 // const contractAbi = NauticalMindsEp.abi;
 // const contractAddress = "0x73C9499205a1fdc69539252dbE2Da96c01C8228D";
-const metaUri = "ipfs://QmbMJCJgN5WABDvVkuMJmMzPBF4wGBjme5igck1qCpdvd3";
+const metaUri = "ipfs://QmTspwroiCnV3KpP3Gj63WmJpJaRDNMki8JbWGvdbrDzC3";
 
 function NauticalMinds(props) {
   const [userEntered, setUserEntered] = useState(false);
@@ -71,7 +71,7 @@ function NauticalMinds(props) {
         setMetaData(data);
       }
     };
-    metaReq.open("GET", `/ipfs/${metaUri.split("ipfs://")[1]}?debug=True`);
+    metaReq.open("GET", `/ipfs/${metaUri.split("ipfs://")[1]}?file_type=json`);
     metaReq.setRequestHeader("Content-Type", "application/json");
     metaReq.send();
   }
@@ -173,7 +173,7 @@ function NauticalMinds(props) {
       {userEntered ? (
         <AudioBar
           _metaData={metaData}
-          _disabledStatus="Connect to listen"
+          //   _disabledStatus="Connect to listen"
           tipModalOpenCallback={() => setTipModalVisible(true)}
           trackList={metaData.trackList ? metaData.trackList : []}
         />
@@ -181,8 +181,12 @@ function NauticalMinds(props) {
         <div>
           <button
             className="center-rocket-container"
-            onClick={(e) => setUserEntered(true)}
+            onClick={(e) => {
+              setUserEntered(true);
+              fetchMetadata();
+            }}
           >
+            <div className="enter-text">Enter</div>
             <img src="/static/images/nauticalstarship-alt.svg" />
           </button>
           <footer className="absolute bottom-0 left-0">
