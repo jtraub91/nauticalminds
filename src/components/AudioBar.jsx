@@ -679,7 +679,7 @@ export default class AudioBar extends React.Component {
                   : "fas fa fa-info-circle audiobar-btn green"
               }
               title="Info"
-              onClick={this.onInfo}
+              onClick={this.props._metaData.trackList ? this.onInfo : null}
               style={
                 this.state.controlsActive.indexOf("info") >= 0
                   ? {}

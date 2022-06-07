@@ -4,7 +4,8 @@ import yaml
 from flask import Flask
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from web3 import Web3
+
+# from web3 import Web3
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

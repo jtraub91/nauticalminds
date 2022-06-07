@@ -18,7 +18,7 @@ import config from "./config";
 const metaUri = "ipfs://QmTspwroiCnV3KpP3Gj63WmJpJaRDNMki8JbWGvdbrDzC3";
 
 function NauticalMinds(props) {
-  const [userEntered, setUserEntered] = useState(false);
+  const [userEntered, setUserEntered] = useState(true);
   const [userAccount, setUserAccount] = useState("");
   const [connectModalVisible, setConnectModalVisible] = useState(false);
   const [aboutModalVisible, setAboutModalVisible] = useState(false);
@@ -62,6 +62,7 @@ function NauticalMinds(props) {
     } else {
       console.log("Please install MetaMask");
     }
+    fetchMetadata();
   }, []);
   function fetchMetadata() {
     let metaReq = new XMLHttpRequest();

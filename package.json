@@ -4,10 +4,11 @@
   "description": "Nautical Minds Website",
   "private": true,
   "scripts": {
-    "dist": "webpack --config webpack.prod.js",
-    "build": "webpack --config webpack.dev.js",
     "watch": "webpack --config webpack.dev.js --watch",
+    "build": "webpack --config webpack.dev.js",
+    "dist": "webpack --config webpack.prod.js",
     "tailwind-watch": "npx postcss -w -o ./nauticalminds/static/build/tailwind.css ./src/css/Tailwind.css",
+    "tailwind-build": "npx postcss -o ./nauticalminds/static/build/tailwind.css ./src/css/Tailwind.css",
     "localeth": "ganache-cli -h 127.0.0.1 -p 8545",
     "truffle-deploy": "truffle deploy"
   },
@@ -26,6 +27,7 @@
     "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "web3": "^1.6.1"
   },
   "devDependencies": {

@@ -4,7 +4,6 @@ from subprocess import PIPE
 from subprocess import Popen
 
 import jwt
-from eth_account.messages import encode_defunct
 from flask import abort
 from flask import json
 from flask import jsonify
@@ -17,6 +16,8 @@ from flask import send_from_directory
 
 from nauticalminds import app
 from nauticalminds.utils import token_required
+
+# from eth_account.messages import encode_defunct
 
 # from nauticalminds import db_session
 # from nauticalminds import web3
@@ -125,38 +126,38 @@ def index():
 #     )
 
 
-def stream_gen(filepath, chunk_size=1024, bitrate=320000):
-    filename = os.path.split(filepath)[-1]
-    song = db_session.query(Song).filter_by(filename=filename).first()
-    chunks = 1
-    with open(filepath, "rb") as music_file:
-        data = music_file.read(chunk_size)
-        while data:
-            yield data
-            seconds = chunks * chunk_size * 8 / bitrate
-            chunks += 1
-            if seconds > 1:
-                song.total_seconds_streamed += seconds
-                chunks = 1
-                try:
-                    db_session.commit()
-                    app.logger.debug(seconds)
-                except Exception as e:
-                    app.logger.error(
-                        f"Failed to add {seconds}s to total seconds streamed for {song} - {e}"
-                    )
-            data = music_file.read(chunk_size)
+# def stream_gen(filepath, chunk_size=1024, bitrate=320000):
+#     filename = os.path.split(filepath)[-1]
+#     song = db_session.query(Song).filter_by(filename=filename).first()
+#     chunks = 1
+#     with open(filepath, "rb") as music_file:
+#         data = music_file.read(chunk_size)
+#         while data:
+#             yield data
+#             seconds = chunks * chunk_size * 8 / bitrate
+#             chunks += 1
+#             if seconds > 1:
+#                 song.total_seconds_streamed += seconds
+#                 chunks = 1
+#                 try:
+#                     db_session.commit()
+#                     app.logger.debug(seconds)
+#                 except Exception as e:
+#                     app.logger.error(
+#                         f"Failed to add {seconds}s to total seconds streamed for {song} - {e}"
+#                     )
+#             data = music_file.read(chunk_size)
 
 
-@app.route("/stream/nautical_minds/<album>/<filename>")
-# @token_required
-def stream(album, filename):
-    song = db_session.query(Song).filter_by(filename=filename).first()
-    song.streams += 1
-    db_session.commit()
-    filepath = os.path.join(app.config["MUSIC_DIR"], "nautical_minds", album, filename)
-    ext = os.path.splitext(filepath)[-1].split(".")[-1]
-    return Response(stream_gen(filepath), mimetype=f"audio/{ext}")
+# @app.route("/stream/nautical_minds/<album>/<filename>")
+# # @token_required
+# def stream(album, filename):
+#     song = db_session.query(Song).filter_by(filename=filename).first()
+#     song.streams += 1
+#     db_session.commit()
+#     filepath = os.path.join(app.config["MUSIC_DIR"], "nautical_minds", album, filename)
+#     ext = os.path.splitext(filepath)[-1].split(".")[-1]
+#     return Response(stream_gen(filepath), mimetype=f"audio/{ext}")
 
 
 # @app.route("/download")
