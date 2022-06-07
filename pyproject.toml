@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nauticalminds"
+version = "0.1.0"
+dependencies = [
+    "flask",
+]
+
+[tool.setuptools]
+include-package-data = false
