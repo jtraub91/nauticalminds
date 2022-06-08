@@ -178,27 +178,27 @@ def index():
 #     )
 
 
-@app.route("/ipfs/<cid>")
-def ipfs(cid):
-    """
-    Returns file contents from ipfs
+# @app.route("/ipfs/<cid>")
+# def ipfs(cid):
+#     """
+#     Returns file contents from ipfs
 
-    Request args:
-        file_type: [json, jpeg, mp3]
-    """
-    type_map = {"json": "application/json", "jpeg": "image/jpeg", "mp3": "audio/mpeg"}
-    file_type = request.args.get("file_type", "json")
+#     Request args:
+#         file_type: [json, jpeg, mp3]
+#     """
+#     type_map = {"json": "application/json", "jpeg": "image/jpeg", "mp3": "audio/mpeg"}
+#     file_type = request.args.get("file_type", "json")
 
-    if file_type not in type_map.keys():
-        return abort(403)
-    mime_type = type_map[file_type]
-    if cid not in app.config["PINNED_CIDS"]:
-        return abort(401)
-    with Popen(f"ipfs cat {cid}".split(), stdout=PIPE) as proc:
-        stdout, stderr = proc.communicate()
-    if not stderr:
-        if file_type == "json":
-            stdout = stdout.decode("utf-8")
-            return jsonify(json.loads(stdout))
-        return Response(stdout, mimetype=mime_type)
-    return jsonify({"error": stderr.decode("utf-8")})
+#     if file_type not in type_map.keys():
+#         return abort(403)
+#     mime_type = type_map[file_type]
+#     if cid not in app.config["PINNED_CIDS"]:
+#         return abort(401)
+#     with Popen(f"ipfs cat {cid}".split(), stdout=PIPE) as proc:
+#         stdout, stderr = proc.communicate()
+#     if not stderr:
+#         if file_type == "json":
+#             stdout = stdout.decode("utf-8")
+#             return jsonify(json.loads(stdout))
+#         return Response(stdout, mimetype=mime_type)
+#     return jsonify({"error": stderr.decode("utf-8")})

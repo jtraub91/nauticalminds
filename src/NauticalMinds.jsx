@@ -1,5 +1,4 @@
 import Web3 from "web3";
-// import NauticalMindsEp from "../contracts_build/NauticalMindsEp.json";
 
 import React, { useState, useEffect } from "react";
 
@@ -7,15 +6,14 @@ import AudioBar from "./components/AudioBar.jsx";
 import AboutModal from "./components/AboutModal.jsx";
 import ConnectModal from "./components/ConnectModal.jsx";
 import Header from "./components/Header.jsx";
-import MintModal from "./components/MintModal.jsx";
-import { getCookie, getCookieValue, clearCookie, parseJwt } from "./utils";
+import { getCookieValue, clearCookie, parseJwt } from "./utils";
 import TipModal from "./components/TipModal.jsx";
 
 import config from "./config";
 
-// const contractAbi = NauticalMindsEp.abi;
-// const contractAddress = "0x73C9499205a1fdc69539252dbE2Da96c01C8228D";
-const metaUri = "ipfs://QmTspwroiCnV3KpP3Gj63WmJpJaRDNMki8JbWGvdbrDzC3";
+const metaUri = config.metaUri;
+const metaAltUri = config.metaAltUri;
+const PREFER_ALT_URI = true;
 
 function NauticalMinds(props) {
   const [userEntered, setUserEntered] = useState(true);
@@ -29,7 +27,6 @@ function NauticalMinds(props) {
   useEffect(() => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
-      // const contract = new window.web3.eth.Contract(contractAbi, contractAddress);
 
       window.web3.eth
         .getAccounts()
@@ -72,7 +69,14 @@ function NauticalMinds(props) {
         setMetaData(data);
       }
     };
-    metaReq.open("GET", `/ipfs/${metaUri.split("ipfs://")[1]}?file_type=json`);
+    if (PREFER_ALT_URI) {
+      metaReq.open("GET", metaAltUri);
+    } else {
+      metaReq.open(
+        "GET",
+        `/ipfs/${metaUri.split("ipfs://")[1]}?file_type=json`
+      );
+    }
     metaReq.setRequestHeader("Content-Type", "application/json");
     metaReq.send();
   }

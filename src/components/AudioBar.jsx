@@ -17,7 +17,7 @@ const smMediaMatch = window.matchMedia("screen and (min-width: 560px)");
 const mdMediaMatch = window.matchMedia("screen and (min-width: 767px)");
 const lgMediaMatch = window.matchMedia("screen and (min-width: 910px)");
 
-const PREFER_ALT_URI = false;
+const PREFER_ALT_URI = true;
 
 function secondsToMMSS(floatTime) {
   if (floatTime == null || floatTime == undefined) {

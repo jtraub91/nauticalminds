@@ -8,6 +8,4 @@ node_modules/
 music/
 nauticalminds/config.yaml
 
-src/config.js
-
 contracts/build/
