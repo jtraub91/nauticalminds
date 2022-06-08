@@ -3,8 +3,9 @@ import platform
 
 import yaml
 from flask import Flask
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import Session
 
 # from web3 import Web3
 
