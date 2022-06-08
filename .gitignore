@@ -7,7 +7,6 @@ node_modules/
 
 music/
 nauticalminds/config.yaml
-nauticalminds/static/build/
 
 src/config.js
 
