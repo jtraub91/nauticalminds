@@ -14,7 +14,8 @@ from flask import Response
 from flask import send_from_directory
 
 from nauticalminds import app
-from nauticalminds.utils import token_required
+
+# from nauticalminds.utils import token_required
 
 # import jwt
 
