@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nauticalminds"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
-    "flask",
+    "Flask",
 ]
 
 [tool.setuptools]
