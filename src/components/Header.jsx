@@ -113,7 +113,7 @@ export default function Header(props) {
               <div className="wallet-detail-container">
                 <img
                   className="wallet-detail-img"
-                  src="/static/images/NauticalMindsEP.jpg"
+                  src="/images/NauticalMindsEP.jpg"
                 />
                 <div className="wallet-text-container">
                   <div className="font-zcool text-xs wallet-text-row">
@@ -140,7 +140,7 @@ export default function Header(props) {
             <div className="user-icon-container">
               <img
                 onClick={rocketShipOnClick}
-                src="/static/images/nauticalstarship-alt.svg"
+                src="/images/nauticalstarship-alt.svg"
               />
             </div>
           </div>

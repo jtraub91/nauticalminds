@@ -192,7 +192,7 @@ function NauticalMinds(props) {
             }}
           >
             <div className="enter-text">Enter</div>
-            <img src="/static/images/nauticalstarship-alt.svg" />
+            <img src="/images/nauticalstarship-alt.svg" />
           </button>
           <footer className="absolute bottom-0 left-0">
             &copy; 2022 Nautical Records LLC

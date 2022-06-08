@@ -29,7 +29,7 @@ function MintModal(props) {
           <div className="flex flex-col font-mono text-white">
             <img
               className="my-4 mx-auto w-6/12 border-cyan"
-              src="/static/images/NauticalMindsEP.jpg"
+              src="/images/NauticalMindsEP.jpg"
             />
             <div className="w-6/12 mt-2 mb-4 mx-auto">
               <div className="flex">

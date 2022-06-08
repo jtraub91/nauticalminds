@@ -60,10 +60,7 @@ function ConnectModal(props) {
           </a>
         </p>
         <button className="wallet-btn mb-5 mx-10" onClick={metamaskOnClick}>
-          <img
-            className="wallet-logo"
-            src="/static/images/metamask/metamask.svg"
-          />
+          <img className="wallet-logo" src="/images/metamask/metamask.svg" />
           {hasMetamask ? (
             <div className="wallet-btn-text-container">
               <span>Connect with MetaMask</span>
