@@ -3,7 +3,6 @@ import os
 from subprocess import PIPE
 from subprocess import Popen
 
-import jwt
 from flask import abort
 from flask import json
 from flask import jsonify
@@ -16,6 +15,8 @@ from flask import send_from_directory
 
 from nauticalminds import app
 from nauticalminds.utils import token_required
+
+# import jwt
 
 # from eth_account.messages import encode_defunct
 
