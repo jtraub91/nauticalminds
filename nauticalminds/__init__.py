@@ -9,7 +9,7 @@ from flask import Flask
 
 # from web3 import Web3
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 
 if app.config["ENV"] == "development":
     basedir = os.path.abspath(os.path.dirname(__file__))

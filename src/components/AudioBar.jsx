@@ -76,8 +76,12 @@ export default class AudioBar extends React.Component {
       infoData: null,
       controlOpen: "", // ["info"|"comment"|"bars"]
       playButtonClassName: "fa fa-play audiobar-btn deep-purple text-white", // fa-play or fa-pause
-      albumImgUri: true,
     };
+    if (this.props._metaData) {
+      this.state.albumCoverUri = PREFER_ALT_URI
+        ? this.props._metaData.albumCoverAltUri
+        : this.props._metaData.albumCoverUri;
+    }
   }
   componentDidMount() {
     // audio
@@ -497,9 +501,27 @@ export default class AudioBar extends React.Component {
   };
   onAlbumImg = () => {
     if (this.props._metaData) {
-      this.setState({
-        albumImgUri: !this.state.albumImgUri,
-      });
+      if (PREFER_ALT_URI) {
+        if (this.state.albumCoverUri == this.props._metaData.albumCoverAltUri) {
+          this.setState({
+            albumCoverUri: this.props._metaData.altAlbumCoverAltUri,
+          });
+        } else {
+          this.setState({
+            albumCoverUri: this.props._metaData.albumCoverAltUri,
+          });
+        }
+      } else {
+        if (this.state.albumCoverUri == this.props._metaData.albumCoverUri) {
+          this.setState({
+            albumCoverUri: this.props._metaData.altAlbumCoverUri,
+          });
+        } else {
+          this.setState({
+            albumCoverUri: this.props._metaData.albumCoverUri,
+          });
+        }
+      }
     }
   };
   setTipInfo = (e) => {
@@ -839,11 +861,7 @@ export default class AudioBar extends React.Component {
                 <img
                   onClick={this.onAlbumImg}
                   className="w-full h-full"
-                  src={
-                    this.state.albumImgUri
-                      ? this.props._metaData.albumCoverUri
-                      : this.props._metaData.altAlbumCoverUri
-                  }
+                  src={this.state.albumCoverUri}
                 />
               </div>
               <div className="download-container-album-details">
