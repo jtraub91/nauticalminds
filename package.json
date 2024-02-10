@@ -23,6 +23,7 @@
     "webpack-merge": "^5.10.0"
   },
   "scripts": {
+    "serve": "python -m http.server -d srv/com.nauticalminds 8080",
     "watch": "webpack --config webpack.dev.js --watch",
     "build": "webpack --config webpack.dev.js",
     "dist": "webpack --config webpack.prod.js",
