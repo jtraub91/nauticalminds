@@ -1,11 +1,1 @@
-.vscode/
-__pycache__/
-*.pyc
-
-venv/
 node_modules/
-
-music/
-nauticalminds/config.yaml
-
-contracts/build/
