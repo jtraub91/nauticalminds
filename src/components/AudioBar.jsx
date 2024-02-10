@@ -922,7 +922,6 @@ export default class AudioBar extends React.Component {
                 className="text-black ml-auto mr-0"
               >
                 <option value="BTC">BTC</option>
-                <option value="XMR">XMR</option>
               </select>
             </div>
             <div className="flex my-4">
@@ -932,8 +931,7 @@ export default class AudioBar extends React.Component {
                 title={this.state.tipInfo.address}
               >
                 {this.state.tipAddrCopyConfirmActive
-                  ? // `${this.state.tipInfo.currency} address copied to clipboard` :
-                    "address copied"
+                  ? "address copied"
                   : shortenAddress(this.state.tipInfo.address, (length = 16))}
               </div>
               <button

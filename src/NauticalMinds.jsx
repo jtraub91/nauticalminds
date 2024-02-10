@@ -195,7 +195,7 @@ function NauticalMinds(props) {
             <img src="/images/nauticalstarship-alt.svg" />
           </button>
           <footer className="absolute bottom-0 left-0">
-            &copy; 2022 Nautical Records LLC
+            &copy; 2024 Nautical Records
           </footer>
         </div>
       )}

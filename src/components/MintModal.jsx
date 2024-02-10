@@ -74,7 +74,7 @@ function MintModal(props) {
             <div className="w-8/12 text-center my-2 m-auto italic">
               NMEP is an ERC 721 token on the public Ethereum blockchain, that
               also gives you certain access on nauticalminds.com the terms of
-              such governed by Nautical Records LLC Terms of Service.
+              such governed by Nautical Records Terms of Service.
             </div>
             <button className="wallet-btn mt-2 mb-4 mx-auto p-1">
               <div className="wallet-btn-text-container">Mint EP</div>

@@ -54,7 +54,7 @@ function AboutModal(props) {
           </a>
         </p>
         <footer className="font-mono w-full text-center">
-          &copy; Nautical Records LLC 2022
+          &copy; Nautical Records 2024
         </footer>
       </div>
     </div>
