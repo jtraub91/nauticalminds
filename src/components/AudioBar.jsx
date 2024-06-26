@@ -922,7 +922,6 @@ export default class AudioBar extends React.Component {
                 className="text-black ml-auto mr-0"
               >
                 <option value="BTC">BTC</option>
-                <option value="XMR">XMR</option>
               </select>
             </div>
             <div className="flex my-4">
