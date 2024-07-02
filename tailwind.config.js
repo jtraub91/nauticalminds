@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/*.jsx", "./nauticalminds/templates/*.html"],
+  content: ["./src/**/*.jsx", "./public/index.html"],
   theme: {
     extend: {
       screens: {
