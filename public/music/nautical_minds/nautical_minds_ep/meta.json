@@ -1,0 +1,86 @@
+{
+  "name": "Nautical Minds EP",
+  "symbol": "NMEP",
+  "description": "Nautical Minds EP",
+  "artist": "Nautical Minds",
+  "album": "Nautical Minds",
+  "albumYear": 2015,
+  "albumCoverUri": "ipfs://QmVcQLX8RNVGLRxLfAnLZ7N2E4AHQdixZDtwGmKgNGDuXh",
+  "albumCoverAltUri": "/images/NauticalMindsEP.jpg", 
+  "altAlbumCoverUri": "ipfs://QmVzPDfWLYw8orp2am84nKCycFPWqx56HaKHxZBbXmGdLT",
+  "altAlbumCoverAltUri": "/images/NauticalMindsEPalt.jpg",
+  "trackList": [
+    {
+      "track": 1,
+      "title": "Gotta Let You Know",
+      "artist": "Nautical Minds",
+      "album": "Nautical Minds",
+      "year": 2015,
+      "uri": "ipfs://Qmdn6qaJ9wpJgMpbsVKX3J4VPXEMJUMXrAd3BveY1MkYZb",
+      "altUri": "/music/nautical_minds/nautical_minds_ep/gotta_let_you_know.mp3",
+      "fileType": "mp3",
+      "bitrate": 320000,
+      "size": 11991512
+    },
+    {
+      "track": 2,
+      "title": "Ain't Gotta Care",
+      "artist": "Nautical Minds",
+      "album": "Nautical Minds",
+      "year": 2015,
+      "uri": "ipfs://QmNdFeuMKumzEmjxCxuMZPATzZs2tBqnmYkCL3XHsofeUb",
+      "altUri": "/music/nautical_minds/nautical_minds_ep/aint_gotta_care.mp3",
+      "fileType": "mp3",
+      "bitrate": 320000,
+      "size": 18846416
+    },
+    {
+      "track": 3,
+      "title": "Funk 1 (f.t. B.I.G. Jay)",
+      "artist": "Nautical Minds",
+      "album": "Nautical Minds",
+      "year": 2015,
+      "uri": "ipfs://QmSvkz5PrrcJbsatGp44ifxqSaBck6j4D3Pd4mBQzbfSug",
+      "altUri": "/music/nautical_minds/nautical_minds_ep/funk1.mp3",
+      "fileType": "mp3",
+      "bitrate": 320000,
+      "size": 12848636
+    },
+    {
+      "track": 4,
+      "title": "Spacy Stacy",
+      "artist": "Nautical Minds",
+      "album": "Nautical Minds",
+      "year": 2015,
+      "uri": "ipfs://QmbDERFuSA8LqPivHXoUfqUbvZxibBr4mKYudx4Zy5Pmby",
+      "altUri": "/music/nautical_minds/nautical_minds_ep/spacy_stacy.mp3",
+      "fileType": "mp3",
+      "bitrate": 320000,
+      "size": 9974504
+    },
+    {
+      "track": 5,
+      "title": "Side Street Robbery",
+      "artist": "Nautical Minds",
+      "album": "Nautical Minds",
+      "year": 2015,
+      "uri": "ipfs://QmNk4yywJbp8b2Sse3Zse7bKBqpTuXomu3JY9Ut6LrQwS5",
+      "altUri": "/music/nautical_minds/nautical_minds_ep/side_street_robbery.mp3",
+      "fileType": "mp3",
+      "bitrate": 320000,
+      "size": 4357784
+    },
+    {
+      "track": 6,
+      "title": "Off The Clock",
+      "artist": "Nautical Minds",
+      "album": "Nautical Minds",
+      "year": 2015,
+      "uri": "ipfs://QmfLVRCeDv68b4i2zuBKrNvUz7fGpz1EMREpEJoqbf5kbt",
+      "altUri": "/music/nautical_minds/nautical_minds_ep/off_the_clock.mp3",
+      "fileType": "mp3",
+      "bitrate": 320000,
+      "size": 6880088
+    }
+  ]
+}
