@@ -7,9 +7,9 @@ import TipModal from "./components/TipModal.jsx";
 
 import config from "./config";
 
-const metaUri = config.metaUri;
-const metaAltUri = config.metaAltUri;
-const PREFER_ALT_URI = true;
+const metaUri: string = config.metaUri;
+const metaAltUri: string = config.metaAltUri;
+const PREFER_ALT_URI: boolean = true;
 
 function NauticalMinds(props) {
   const [userEntered, setUserEntered] = useState(true);
@@ -42,15 +42,13 @@ function NauticalMinds(props) {
     metaReq.setRequestHeader("Content-Type", "application/json");
     metaReq.send();
   }
-  function connectOnClick(e) {
-    console.log(document.cookie);
+  function connectOnClick() {
     setConnectModalVisible(true);
   }
-  function aboutOnClick(e) {
+  function aboutOnClick() {
     setAboutModalVisible(true);
   }
-  function modalBackdropOnClick(e) {
-    console.log("parent");
+  function modalBackdropOnClick() {
     setConnectModalVisible(false);
     setAboutModalVisible(false);
     setMintModalVisible(false);
@@ -65,11 +63,6 @@ function NauticalMinds(props) {
         connectOnClick={connectOnClick}
       />
       {props.children}
-      {/* <MintModal
-        _metaData={metaData}
-        userAccount={userAccount}
-        visible={mintModalVisible}
-        onClick={modalBackdropOnClick}/> */}
       <AboutModal visible={aboutModalVisible} onClick={modalBackdropOnClick} />
       <TipModal
         btcWalletAddress={config.btcWalletAddress}
