@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { shortenAddress } from "../components/Header.jsx";
+import { shortenAddress } from "../utils";
 import { createCanvas, drawStars } from "./NauticalStarship";
 
 const TIMESTAMP = Date.now();
@@ -104,7 +104,7 @@ function TipModal(props) {
         <div className="font-mono text-white">
           <div className="flex flex-col my-2 mx-0.5">
             <div className="w-50 m-auto">
-              <label className="mx-2" for="currency">
+              <label className="mx-2" htmlFor="currency">
                 Currency
               </label>
               <select name="currency" className="text-black mx-2">

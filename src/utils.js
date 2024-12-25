@@ -49,3 +49,41 @@ export function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+
+
+export function shortenAddress(
+  address,
+  length = 8,
+  ellipsis = "...",
+  ethereum = false
+) {
+  if (address == undefined) {
+    return "";
+  }
+  let addressNormalized = address.split("0x");
+  addressNormalized = addressNormalized[addressNormalized.length - 1];
+
+  let addr = ethereum ? "0x" : "";
+  let half_length = length / 2;
+  if (parseInt(half_length) !== half_length) {
+    // odd; UNTESTED
+    for (let i = 0; i < parseInt(half_length); i += 1) {
+      addr += addressNormalized[i];
+    }
+    addr += ellipsis;
+    for (let i = 0; i < Math.round(half_length); i += 1) {
+      addr += addressNormalized[addressNormalized.length - i + 1];
+    }
+    return addr;
+  } else {
+    // even
+    for (let i = 0; i < half_length; i += 1) {
+      addr += addressNormalized[i];
+    }
+    addr += ellipsis;
+    for (let i = 0; i < half_length; i += 1) {
+      addr += addressNormalized[addressNormalized.length - half_length + i];
+    }
+    return addr;
+  }
+}

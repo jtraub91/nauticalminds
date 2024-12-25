@@ -59,14 +59,7 @@ body {
 button:focus {
   outline: none;
 }
-footer {
-  width: 95%;
-  color: white;
-  font-family: monospace;
-  font-size: 1rem;
-  padding: 0.5rem 0.125rem;
-  text-align: center;
-}
+
 h1 > a {
   text-decoration: none;
   color: inherit;
@@ -151,9 +144,10 @@ a.no-link-style:hover {
   margin: auto;
 }
 .header-button {
-  text-decoration: none;
-  margin: 10px 10px;
-  font-family: "Comic Sans MS";
+  text-decoration: underline;
+  padding: 0.2rem 0.8rem;
+  margin: 0.6rem;
+  font-family: "Courier New", Courier, monospace;
   font-size: 1rem;
   z-index: 2;
   border-radius: 3px;
@@ -298,37 +292,41 @@ a.no-link-style:hover {
 .user-dropdown-container-item:hover {
   background-color: magenta;
 }
-#nauticalMindsHeader {
-  /* font-size: calc([minimum size] + ([maximum size] - [minimum size]) * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width]))); */
-  /* font-size: calc(23px + (50 - 23) * ((100vw - 300px) / (1600 - 300))); */
-  /* font-size: 1.5rem;
-  margin: auto; */
-}
 h1.nautical-minds-header {
   text-align: center;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
-.contact-link-blue {
+.contact-link-purple {
   display: inline-block;
   overflow-wrap: anywhere;
-  color: #0a25ff;
+  color: purple;
   text-decoration: none;
   transition: color 0.1s ease-in;
 }
+.contact-link-purple:hover {
+  color: yellow;
+}
 .contact-link-blue:hover {
-  color: #8864ff;
+  color: yellow;
+}
+.contact-link-blue {
+  display: inline-block;
+  overflow-wrap: anywhere;
+  color: dodgerblue;
+  text-decoration: none;
+  transition: color 0.1s ease-in;
 }
 .contact-link-green {
   display: inline-block;
   overflow-wrap: anywhere;
-  color: #008800;
+  color: limegreen;
   text-decoration: none;
   transition: color 0.1s ease-in;
 }
 .contact-link-green:hover {
-  color: #ffff00;
+  color: yellow
 }
 @keyframes spinner-border {
   to {
@@ -537,7 +535,6 @@ input[type="range"].vol-slider:focus::-ms-fill-upper {
   background-color: darkgreen;
   color: white;
   font-family: monospace;
-  font-weight: 100;
   text-align: left;
   border: 1px solid lawngreen;
   padding: 0 0.25rem;
@@ -774,31 +771,10 @@ input[type="range"].vol-slider:focus::-ms-fill-upper {
   opacity: 1;
   pointer-events: auto;
 }
-.modal-container .modal-content {
-  position: relative;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  max-height: 90%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  border: solid 2px cyan;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
 .modal-container .modal-content::-webkit-scrollbar {
   display: none;
 }
-.modal-container .modal-content .modal-close {
-  position: absolute;
-  color: lightgoldenrodyellow;
-  top: 0.33rem;
-  right: 0.75rem;
-  transition: color 0.1s linear;
-}
-.modal-container .modal-content .modal-close:hover {
-  color: greenyellow;
-}
+
 .modal-container .modal-backdrop {
   backdrop-filter: blur(10px);
   top: 0;
@@ -817,9 +793,6 @@ textarea:focus {
 }
 input.join-input {
   margin: 10px 10px 10px auto;
-}
-.form-header {
-  margin: 10px auto 10px 10px;
 }
 .form-alert {
   margin: 0 auto;

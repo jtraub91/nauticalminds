@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import AudioBar from "./components/AudioBar.jsx";
 import AboutModal from "./components/AboutModal.jsx";
+import BuyModal from "./components/BuyModal.jsx";
 import Header from "./components/Header.jsx";
 import TipModal from "./components/TipModal.jsx";
 
@@ -14,9 +15,8 @@ const PREFER_ALT_URI = true;
 function NauticalMinds(props) {
   const [userEntered, setUserEntered] = useState(true);
   const [userAccount, setUserAccount] = useState("");
-  const [connectModalVisible, setConnectModalVisible] = useState(false);
   const [aboutModalVisible, setAboutModalVisible] = useState(false);
-  const [mintModalVisible, setMintModalVisible] = useState(false);
+  const [buyModalVisible, setBuyModalVisible] = useState(false);
   const [tipModalVisible, setTipModalVisible] = useState(false);
   const [metaData, setMetaData] = useState({});
 
@@ -42,18 +42,17 @@ function NauticalMinds(props) {
     metaReq.setRequestHeader("Content-Type", "application/json");
     metaReq.send();
   }
-  function connectOnClick(e) {
+  function buyOnClick(e) {
     console.log(document.cookie);
-    setConnectModalVisible(true);
+    setBuyModalVisible(true);
   }
   function aboutOnClick(e) {
     setAboutModalVisible(true);
   }
   function modalBackdropOnClick(e) {
     console.log("parent");
-    setConnectModalVisible(false);
     setAboutModalVisible(false);
-    setMintModalVisible(false);
+    setBuyModalVisible(false);
     setTipModalVisible(false);
   }
   return (
@@ -62,15 +61,11 @@ function NauticalMinds(props) {
         userData={{}}
         userAccount={userAccount}
         aboutOnClick={aboutOnClick}
-        connectOnClick={connectOnClick}
+        buyOnClick={buyOnClick}
       />
       {props.children}
-      {/* <MintModal
-        _metaData={metaData}
-        userAccount={userAccount}
-        visible={mintModalVisible}
-        onClick={modalBackdropOnClick}/> */}
       <AboutModal visible={aboutModalVisible} onClick={modalBackdropOnClick} />
+      <BuyModal visible={buyModalVisible} onClick={modalBackdropOnClick}/>
       <TipModal
         btcWalletAddress={config.btcWalletAddress}
         ethWalletAddress={config.ethWalletAddress}
@@ -97,7 +92,7 @@ function NauticalMinds(props) {
             <img src="/images/nauticalstarship-alt.svg" />
           </button>
           <footer className="absolute bottom-0 left-0">
-            &copy; 2022 Nautical Records LLC
+            &copy; {Date.prototype.getFullYear} Nautical Records
           </footer>
         </div>
       )}

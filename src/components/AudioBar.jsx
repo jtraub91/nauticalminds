@@ -1,7 +1,7 @@
 import React from "react";
 
 import config from "../config";
-import { shortenAddress } from "./Header.jsx";
+import { shortenAddress } from "../utils";
 
 const TIMESTAMP = Math.round(new Date().getTime());
 const id = {
